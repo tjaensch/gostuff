@@ -93,10 +93,10 @@ func f29one2nc(f291File string) {
 	cmd.Stdout = &out
 	cmd.Stderr = &stderr
 	err = cmd.Run()
-	if err == nil {
+/*	if err == nil {
 		fmt.Println(f291File + " stdout: " + out.String())
 		log.Println(f291File + " stdout: " + out.String())
-	}
+	} */
 	if err != nil {
 		fmt.Println(f291File + " stderror: " + stderr.String())
 		log.Println(f291File + " stderror: " + stderr.String())

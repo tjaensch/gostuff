@@ -22,7 +22,7 @@ func checkError(reason string, err error) {
 }
 
 var (
-	ncFilePath string   = "./nc/"
+	ncFilePath string   = "./nc_derived_from_f291/"
 	ncFiles    []string = findNcFiles(ncFilePath)
 )
 
