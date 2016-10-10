@@ -9,7 +9,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"regexp"
 	"strings"
 	"sync"
 	"time"
@@ -37,7 +36,7 @@ func checkError(reason string, err error) {
 }
 
 var (
-	ncFilePath string = "/nodc/web/data.nodc/htdocs/ndbc/cmanwx"
+	ncFilePath string = "/nodc/projects/satdata/Granule_OneStop/C-MAN_Dewberry_files/nc_derived_from_f291/"
 	xslFile    string = "XSL/ncml2iso_modified_from_UnidataDD2MI_CMAN_Thomas_edits.xsl"
 	//C-MAN collection metadata template file
 	isocofile    string   = "/nodc/web/data.nodc/htdocs/nodc/archive/metadata/test/collection/NDBC-CMANWx.xml"
@@ -85,7 +84,7 @@ func getFileSegments() [][]string {
 	// Create a slice of ncFiles
 	fileSegments := make([][]string, 0)
 	// Determine the length of the subslices based on amount of files and how many files can be open at the same time in PuTTY
-	increaseRate := 50
+	increaseRate := 500
 	// Add subslices to fileSegments slice
 	for i := 0; i < len(ncFiles)-increaseRate; i += increaseRate {
 		fileSegments = append(fileSegments, ncFiles[i:i+increaseRate])
@@ -151,8 +150,7 @@ func getFileName(ncFile string) string {
 
 // Get "English" title for ISO XML
 func getEnglishTitle(ncFile string) string {
-	re := regexp.MustCompile("_D\\d+")
-	return "NDBC-CMANWx_" + strings.TrimPrefix(getFileName(ncFile), "NDBC_") + " - C-MAN/Wx buoy " + getFileName(ncFile)[5:10] + " for " + getFileName(ncFile)[11:17] + ", deployment " + re.FindString(getFileName(ncFile))[2:]
+	return "NDBC-CMANWx_" + getFileName(ncFile) + " - C-MAN/Wx buoy " + getFileName(ncFile)[:5] + " for " + getFileName(ncFile)[6:]
 }
 
 // Get .nc file size in KB
@@ -167,7 +165,7 @@ func getFileSize(ncFile string) int {
 
 // Get .nc file path on WAF
 func getFilePath(ncFile string) string {
-	trimmedPath := ncFile[27:len(ncFile)]
+	trimmedPath := ncFile[:len(ncFile)]
 	return strings.Replace(trimmedPath, filepath.Base(ncFile), "", -1)
 }
 

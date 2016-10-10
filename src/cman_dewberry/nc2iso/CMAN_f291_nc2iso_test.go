@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-var testFile string = "/nodc/projects/satdata/Granule_OneStop/ncml_derived_from_f291/45002_198709.ncml"
+var testFile string = "/nodc/projects/satdata/Granule_OneStop/C-MAN_Dewberry_files/nc_derived_from_f291/45002_198709.nc"
 
 func init() {
 	os.Mkdir("./ncml", 0777)
@@ -24,10 +24,10 @@ func TestGetFileName(t *testing.T) {
 }
 
 func TestGetEnglishTitle(t *testing.T) {
-	expected := "NDBC-CMANWx_44020_201605_D6_v00 - C-MAN/Wx buoy 44020 for 201605, deployment 6"
+	expected := "NDBC-CMANWx_45002_198709 - C-MAN/Wx buoy 45002 for 198709"
 	actual := getEnglishTitle(testFile)
 	if expected != actual {
-		t.Error("Expected 'NDBC-CMANWx_44020_201605_D6_v00 - C-MAN/Wx buoy 44020 for 201605, deployment 6', got ", actual)
+		t.Error("Expected 'NDBC-CMANWx_45002_198709 - C-MAN/Wx buoy 45002 for 198709', got ", actual)
 	}
 }
 
@@ -40,7 +40,7 @@ func TestGetFileSize(t *testing.T) {
 }
 
 func TestGetFilePath(t *testing.T) {
-	expected := "cmanwx/2016/05/"
+	expected := "/nodc/projects/satdata/Granule_OneStop/C-MAN_Dewberry_files/nc_derived_from_f291/"
 	actual := getFilePath(testFile)
 	if strings.Contains(actual, expected) != true {
 		t.Fatalf("File paths don't match %s: %s", expected, actual)
