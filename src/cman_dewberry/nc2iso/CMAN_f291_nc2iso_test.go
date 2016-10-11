@@ -48,7 +48,7 @@ func TestGetFilePath(t *testing.T) {
 }
 
 func TestFindNcFiles(t *testing.T) {
-	result := findNcFiles("/nodc/web/data.nodc/htdocs/ndbc/cmanwx/")
+	result := findNcFiles("/nodc/projects/satdata/Granule_OneStop/C-MAN_Dewberry_files/nc_derived_from_f291/")
 	if len(result) <= 0 {
 		t.Error("Got ", result)
 	}
@@ -63,7 +63,7 @@ func TestNcdump(t *testing.T) {
 }
 
 func TestAppendToNcml(t *testing.T) {
-	additions := ncmlAdditions{ncFileName: "NDBC_44020_201605_D6_v00", fileSize: 100, dataPath: "test/moo/blah", englishTitle: "English title"}
+	additions := ncmlAdditions{ncFileName: "45002_198709", fileSize: 100, dataPath: "test/moo/blah", englishTitle: "English title"}
 	appendToNcml(testFile, additions)
 	input, _ := ioutil.ReadFile("./ncml/" + getFileName(testFile) + ".ncml")
 	if !strings.Contains(string(input), "test/moo/blah") {

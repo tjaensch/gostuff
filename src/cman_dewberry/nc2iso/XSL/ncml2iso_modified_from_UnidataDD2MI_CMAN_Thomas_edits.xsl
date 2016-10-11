@@ -10,12 +10,12 @@
 	<xsl:variable name="physicalMeasurementCnt" select="count(netcdf/variable[not(contains((translate(@name,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')),'_qc'))])"/>
 	<xsl:variable name="qualityInformationCnt" select="count(netcdf/variable[contains((translate(@name,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')),'_qc')])"/>
 	<xsl:variable name="standardNameCnt" select="count(netcdf/variable/attribute[@name='standard_name'])"/>
-	
+
 <!-- Identifier Fields: 4 possible -->
 	<!--NCEI-MD modified to Pathfinder data-->
 	<xsl:variable name="id" select="netcdf/attribute[@name='title']/@value"/>
 	<xsl:variable name="title" select="netcdf/attribute[@name='title']/@value"/>
-	<xsl:variable name="datasetname" select="'NDBC-CMANWx'"/>	
+	<xsl:variable name="datasetname" select="'NDBC-CMANWx'"/>
 	<xsl:variable name="filesize" select="netcdf/filesize"/>
 	<xsl:variable name="fileidentifier" select="netcdf/title"/>
 	<xsl:variable name="englishtitle" select="netcdf/englishtitle"/>
@@ -24,13 +24,13 @@
 	<!-- Service Fields: 4 possible -->
 	<!--Need to edit based on the Pathfinder data-->
 	<xsl:variable name="thredds_netcdfsubsetCnt" select="count(netcdf/group[@name='Dataservicelinks']/group[@name='services']/attribute[@name='nccs_service'])"/>
-	
+
 <!--NCEI-MD added for extra service links -->
 	<xsl:variable name="Pathfinderthredds" select="normalize-space(concat('http://data.nodc.noaa.gov/thredds/catalog/', netcdf/path, 'catalog.html?dataset=',netcdf/path,netcdf/title,'.nc'))"/>
 	<xsl:variable name="Pathfinderhttp" select="normalize-space(concat('http://data.nodc.noaa.gov/', netcdf/path,netcdf/title,'.nc'))"/>
 	<xsl:variable name="Pathfinderopendap" select="normalize-space(concat('http://data.nodc.noaa.gov/thredds/dodsC/', netcdf/path,netcdf/title,'.nc.html'))"/>
 	<xsl:variable name="Pathfinderftp" select="normalize-space(concat('ftp://ftp.nodc.noaa.gov/pub/data.nodc/',netcdf/path,netcdf/title,'.nc'))"/>
-	
+
 	<!--Added for Cloud pilot project-->
 	<xsl:variable name="serviceMax">7</xsl:variable>
 
@@ -42,15 +42,15 @@
 	<xsl:variable name="stdNameVocabulary" select="netcdf/attribute[@name='standard_name_vocabulary']/@value"/>
 	<xsl:variable name="comment" select="netcdf/attribute[@name='comment']/@value"/>
 	<xsl:variable name="history" select="netcdf/attribute[@name='history']/@value"/>
-	
+
 <!-- Extent Search Fields: 17 possible -->
 
 	<xsl:variable name="geospatial_lat_min" select="netcdf/attribute[@name='geospatial_lat_min']/@value"/>
 	<xsl:variable name="geospatial_lat_max" select="netcdf/attribute[@name='geospatial_lat_max']/@value"/>
 	<xsl:variable name="geospatial_lon_min" select="netcdf/attribute[@name='geospatial_lon_min']/@value"/>
 	<xsl:variable name="geospatial_lon_max" select="netcdf/attribute[@name='geospatial_lon_max']/@value"/>
-	
-	
+
+
 	<xsl:variable name="timeStart" select="netcdf/attribute[@name='time_coverage_start']/@value"/>
 	<xsl:variable name="timeEnd" select="netcdf/attribute[@name='time_coverage_end']/@value"/>
 	<xsl:variable name="verticalMin" select="netcdf/group[@name='CFMetadata']/attribute[@name='geospatial_vertical_min']/@value"/>
@@ -66,7 +66,7 @@
 	<xsl:variable name="verticalResolution" select=" //attribute[@name='geospatial_vertical_resolution']/@value"/>
 	<xsl:variable name="verticalPositive" select="netcdf/attribute[@name='geospatial_vertical_positive']/@value"/>
 	<!-- dimension variables -->
-	
+
 <!--Need to check with Pathfinder-->
 	<xsl:variable name="longitudeVariableName" select="netcdf/variable[@name='lon']/attribute[@name='standard_name']/@value"/>
 	<xsl:variable name="latitudeVariableName" select="netcdf/variable[@name='lat']/attribute[@name='standard_name' ]/@value"/>
@@ -270,7 +270,7 @@
 								</xsl:call-template>
 							</xsl:if>
 							<gmd:cellGeometry>
-                 <gmd:MD_CellGeometryCode  codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_CellGeometryCode" codeListValue="area"> 
+                 <gmd:MD_CellGeometryCode  codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_CellGeometryCode" codeListValue="area">
 									<xsl:value-of select="'area'"/>
 								</gmd:MD_CellGeometryCode>
 							</gmd:cellGeometry>
@@ -298,21 +298,21 @@
 							</gmd:title>
 							<xsl:choose>
 								<xsl:when test="$dateCnt">
-									<xsl:if test="count($creatorDate)">
+									<xsl:if test="$creatorDate !=''">
 										<xsl:call-template name="writeDate">
 											<xsl:with-param name="testValue" select="count($creatorDate)"/>
 											<xsl:with-param name="dateToWrite" select="substring($creatorDate,0,11)"/>
 											<xsl:with-param name="dateType" select="'creation'"/>
 										</xsl:call-template>
 									</xsl:if>
-									<xsl:if test="count($issuedDate)">
+									<xsl:if test="$issuedDate !=''">
 										<xsl:call-template name="writeDate">
 											<xsl:with-param name="testValue" select="count($issuedDate)"/>
 											<xsl:with-param name="dateToWrite" select="$issuedDate[1]"/>
 											<xsl:with-param name="dateType" select="'issued'"/>
 										</xsl:call-template>
 									</xsl:if>
-									<xsl:if test="count($modifiedDate)">
+									<xsl:if test="$modifiedDate !=''">
 										<xsl:call-template name="writeDate">
 											<xsl:with-param name="testValue" select="count($modifiedDate)"/>
 											<xsl:with-param name="dateToWrite" select="$modifiedDate[1]"/>
@@ -430,7 +430,7 @@
 						</gmd:MD_BrowseGraphic>
 					</gmd:graphicOverview>
 					</xsl:if>
-					
+
 						<xsl:if test="count($keywords)">
 						<gmd:descriptiveKeywords>
 							<gmd:MD_Keywords>
@@ -471,12 +471,12 @@
 							</gmd:MD_Keywords>
 						</gmd:descriptiveKeywords>
 					</xsl:if>
-					
+
 					<gmd:descriptiveKeywords>
 						<gmd:MD_Keywords>
 							<gmd:keyword>
 								<xsl:call-template name="writeCharacterString">
-									<xsl:with-param name="stringToWrite" select="substring($fileidentifier, 6, 5)"/>
+									<xsl:with-param name="stringToWrite" select="substring($fileidentifier, 7, 7)"/>
 								</xsl:call-template>
 							</gmd:keyword>
 							<gmd:type>
@@ -492,7 +492,7 @@
 							</gmd:thesaurusName>
 						</gmd:MD_Keywords>
 					</gmd:descriptiveKeywords>
-					
+
 					<!-- <gmd:descriptiveKeywords>
 						<gmd:MD_Keywords>
 							<xsl:for-each select="netcdf/attribute[@name='keywords']">
@@ -528,7 +528,7 @@
 							</gmd:thesaurusName>
 						</gmd:MD_Keywords>
 					</gmd:descriptiveKeywords> -->
-					
+
 					<!-- <xsl:if test="$standardNameCnt">
 						<gmd:descriptiveKeywords>
 							<gmd:MD_Keywords>
@@ -557,7 +557,7 @@
 							</gmd:MD_Keywords>
 						</gmd:descriptiveKeywords>
 					</xsl:if> -->
-					
+
 					<xsl:if test="count($license)">
 						<gmd:resourceConstraints>
 							<gmd:MD_LegalConstraints>
@@ -651,7 +651,7 @@
 											</gmd:EX_TemporalExtent>
 										</gmd:temporalElement>
 									</xsl:if>
-									
+
 								</gmd:EX_Extent>
 							</xsl:when>
 
@@ -698,7 +698,7 @@
 											</gmd:extent>
 										</gmd:EX_TemporalExtent>
 									</gmd:temporalElement>
-									
+
 								</gmd:EX_Extent>
 							</xsl:otherwise>
 						</xsl:choose>
@@ -730,7 +730,7 @@
 					<xsl:with-param name="serviceOperationName" select="'THREDDS Client Access'"/>
 					<xsl:with-param name="operationURL" select="$Pathfinderthredds"/></xsl:call-template>
 			</xsl:if> -->
-	
+
 				<!-- WMS -->
 			        <xsl:call-template name="writeService">
 			          <xsl:with-param name="serviceID" select="'OGC_WMS'"/>
@@ -738,7 +738,7 @@
 			          <xsl:with-param name="serviceOperationName" select="'GetCapabilities'"/>
 			        	<xsl:with-param name="operationURL" select="translate(normalize-space(concat('http://data.nodc.noaa.gov/thredds/wms/', netcdf/path, netcdf/title,'.nc?service=WMS&amp;version=1.3.0&amp;request=GetCapabilities')),' ','')"/>
 			        </xsl:call-template>
-			      
+
 			     <!-- WCS -->
 			        <xsl:call-template name="writeService">
 			          <xsl:with-param name="serviceID" select="'OGC_WCS'"/>
@@ -746,7 +746,7 @@
 			          <xsl:with-param name="serviceOperationName" select="'GetCapabilities'"/>
 			        	<xsl:with-param name="operationURL" select="translate(normalize-space(concat('http://data.nodc.noaa.gov/thredds/wcs/', netcdf/path, netcdf/title,'.nc?service=WCS&amp;version=1.0.0&amp;request=GetCapabilities')),' ','')"/>
 			        </xsl:call-template>
-			     
+
 			      <xsl:if test="subsetcount">
 			        <xsl:call-template name="writeService">
 			          <xsl:with-param name="serviceID" select="'THREDDS_NetCDF_Subset'"/>
@@ -1155,7 +1155,7 @@
 												</gmd:CI_OnlineResource>
 											</gmd:onlineResource>
 										</xsl:if>
-									-->	
+									-->
 									</gmd:CI_Contact>
 								</xsl:when>
 								<xsl:otherwise>
@@ -1301,7 +1301,7 @@ Main NCEI website providing links to access data and data services.
 							<gco:Measure>
 								<xsl:attribute name="uom"><xsl:value-of select="$dimensionUnits"/></xsl:attribute>
 								<xsl:value-of select="$dimensionResolution"/>
-							</gco:Measure>	
+							</gco:Measure>
 						</xsl:when> -->
 						<xsl:when test="$dimensionUnits and not($dimensionResolution)">
 							<xsl:attribute name="gco:nilReason">missing</xsl:attribute>
@@ -1357,7 +1357,7 @@ Main NCEI website providing links to access data and data services.
 					</xsl:call-template>
 				</gmd:descriptor>
 				<!-- <gmd:units>
-					<xsl:attribute name="xlink:href"><xsl:value-of select="'http://someUnitsDictionary.xml#'"/><xsl:value-of select="$variableUnits"/></xsl:attribute> 
+					<xsl:attribute name="xlink:href"><xsl:value-of select="'http://someUnitsDictionary.xml#'"/><xsl:value-of select="$variableUnits"/></xsl:attribute>
 				</gmd:units> -->
 			</gmd:MD_Band>
 		</gmd:dimension>
@@ -1393,21 +1393,21 @@ Main NCEI website providing links to access data and data services.
 						</gmd:title>
 						<xsl:choose>
 							<xsl:when test="$dateCnt">
-								<xsl:if test="count($creatorDate)">
+								<xsl:if test="$creatorDate !=''">
 									<xsl:call-template name="writeDate">
 										<xsl:with-param name="testValue" select="count($creatorDate)"/>
 										<xsl:with-param name="dateToWrite" select="substring($creatorDate,0,11)"/>
 										<xsl:with-param name="dateType" select="'creation'"/>
 									</xsl:call-template>
 								</xsl:if>
-								<xsl:if test="count($issuedDate)">
+								<xsl:if test="$issuedDate !=''">
 									<xsl:call-template name="writeDate">
 										<xsl:with-param name="testValue" select="count($issuedDate)"/>
 										<xsl:with-param name="dateToWrite" select="$issuedDate"/>
 										<xsl:with-param name="dateType" select="'issued'"/>
 									</xsl:call-template>
 								</xsl:if>
-								<xsl:if test="count($modifiedDate)">
+								<xsl:if test="$modifiedDate !=''">
 									<xsl:call-template name="writeDate">
 										<xsl:with-param name="testValue" select="count($modifiedDate)"/>
 										<xsl:with-param name="dateToWrite" select="substring($modifiedDate,1,10)"/>
