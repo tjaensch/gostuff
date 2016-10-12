@@ -42,7 +42,7 @@
 
 	<xsl:variable name="geospatial_lat_min" select="substring-before(//variable[@name='lat']/attribute[@name='actual_range']/@value,' ')"/>
 	<xsl:variable name="geospatial_lat_max" select="substring-after(//variable[@name='lat']/attribute[@name='actual_range']/@value,' ')"/>
-	<xsl:variable name="geospatial_lon_min" select="substring-before(//variable[@name='lon']/attribute[@name='actual_range']/@value,' ')"/>
+	<xsl:variable name="geospatial_lon_min" select= "substring-before(//variable[@name='lon']/attribute[@name='actual_range']/@value,' ')" />
 	<xsl:variable name="geospatial_lon_max" select="substring-after(//variable[@name='lon']/attribute[@name='actual_range']/@value,' ')"/>
 
 <!-- Browse Graphic -->
@@ -553,12 +553,20 @@
 												</gmd:extentTypeCode>
 												<gmd:westBoundLongitude>
 													<gco:Decimal>
-														<xsl:value-of select="$geospatial_lon_min"/>
+														<xsl:choose>
+														<xsl:when test="$geospatial_lon_min > 180">
+															<xsl:value-of select="$geospatial_lon_min - 360"/>
+														</xsl:when>
+														</xsl:choose>
 													</gco:Decimal>
 												</gmd:westBoundLongitude>
 												<gmd:eastBoundLongitude>
 													<gco:Decimal>
-														<xsl:value-of select="$geospatial_lon_max"/>
+														<xsl:choose>
+															<xsl:when test="$geospatial_lon_max > 180">
+																<xsl:value-of select="$geospatial_lon_max - 360"/>
+															</xsl:when>
+														</xsl:choose>
 													</gco:Decimal>
 												</gmd:eastBoundLongitude>
 												<gmd:southBoundLatitude>
