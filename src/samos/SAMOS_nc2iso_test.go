@@ -10,9 +10,25 @@ import (
 
 var testFile string = "/nodc/web/data.nodc/htdocs/coaps/samos/WTEJ/2010/08/WTEJ_20100808v30001.nc"
 
+var testFiles []string = []string{
+	"/nodc/web/data.nodc/htdocs/coaps/samos/KAOU/2011/06/KAOU_20110613v10001.nc",
+	"/nodc/web/data.nodc/htdocs/coaps/samos/WBP3210/2011/10/WBP3210_20111008v10001.nc",
+	"/nodc/web/data.nodc/htdocs/coaps/samos/WTDF/2010/03/WTDF_20100318v10001.nc",
+	"/nodc/web/data.nodc/htdocs/coaps/samos/WTEK/2012/07/WTEK_20120714v20001.nc",
+	"/nodc/web/data.nodc/htdocs/coaps/samos/ZCYL5/2016/06/ZCYL5_20160630v30001.nc",
+}
+
 func init() {
 	os.Mkdir("./ncml", 0777)
 	os.Mkdir("./xml_output", 0777)
+}
+
+func TestNc2iso(t *testing.T) {
+	nc2iso(testFiles)
+	files, _ := ioutil.ReadDir("./xml_output")
+	if len(files) != 5 {
+		t.Error("Expected 5 files, got ", len(files))
+	}
 }
 
 func TestGetFileName(t *testing.T) {

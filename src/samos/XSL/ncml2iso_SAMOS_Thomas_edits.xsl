@@ -557,6 +557,9 @@
 														<xsl:when test="$geospatial_lon_min > 180">
 															<xsl:value-of select="$geospatial_lon_min - 360"/>
 														</xsl:when>
+														<xsl:otherwise>
+															<xsl:value-of select="$geospatial_lon_min"/>
+														</xsl:otherwise>
 														</xsl:choose>
 													</gco:Decimal>
 												</gmd:westBoundLongitude>
@@ -566,6 +569,9 @@
 															<xsl:when test="$geospatial_lon_max > 180">
 																<xsl:value-of select="$geospatial_lon_max - 360"/>
 															</xsl:when>
+															<xsl:otherwise>
+																<xsl:value-of select="$geospatial_lon_max"/>
+															</xsl:otherwise>
 														</xsl:choose>
 													</gco:Decimal>
 												</gmd:eastBoundLongitude>
