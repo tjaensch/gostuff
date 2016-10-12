@@ -1,0 +1,18 @@
+#aliases
+alias tj="cd /nodc/users/tjaensch"
+alias onestop="cd /nodc/projects/satdata/Granule_OneStop"
+
+#Command to make git work
+umask 0002
+
+#always show working directory
+export PS1="\`pwd\` $ "
+
+#ncdump
+export PATH=$PATH:/free/bin
+
+#GO blah
+export GOROOT=/nodc/users/tjaensch/go
+export PATH=$PATH:$GOROOT/bin
+export GOPATH=/nodc/users/tjaensch/git_repo/gostuff
+export GOBIN=/nodc/users/tjaensch/git_repo/gostuff/bin
