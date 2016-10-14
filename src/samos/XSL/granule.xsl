@@ -19,7 +19,16 @@
   <xsl:variable name='collDimensions' select='$coll//gmd:axisDimensionProperties/gmd:MD_Dimension[gmd:dimensionName/gmd:MD_DimensionNameTypeCode/@codeList = "http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_DimensionNameTypeCode"]' />
 
   <!-- all gmd:descriptiveKeywords in the collection metadata record -->
-  <xsl:variable name='collKeywords' select='$coll//gmd:MD_DataIdentification/gmd:descriptiveKeywords[not(contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString,"NCEI ACCESSION NUMBER"))]'/>
+  <xsl:variable name="collKeywords"
+    select='$coll//gmd:MD_DataIdentification/gmd:descriptiveKeywords[
+    not(contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, "NCEI ACCESSION NUMBER"))
+    and not(contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, "NODC DATA TYPES THESAURUS"))
+    and not(contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, "NODC INSTRUMENT TYPES THESAURUS"))
+    and not(contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, "NODC SEA AREA NAMES THESAURUS"))
+    and not(contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, "GCMD Keywords - Instruments"))
+    and not(contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, "GCMD Keywords - Locations"))
+    and not(contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, "NODC PROJECT NAMES THESAURUS"))
+    ]'/>
 
   <!-- start at the top of the granule. -->
   <xsl:template match='/'>
@@ -46,7 +55,7 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match='gmd:descriptiveKeywords[position() = last()]'>  
+  <xsl:template match='gmd:descriptiveKeywords[position() = last()]'>
     <!-- copy all of these keywords. -->
 	<xsl:copy>
     <xsl:apply-templates />
