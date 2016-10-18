@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-var testFile string = "/nodc/projects/satdata/Granule_OneStop/C-MAN_Dewberry_files/nc_derived_from_f291/45002_198709.nc"
+var testFile string = "/nodc/projects/buoy/F291_CDL/nc/45002_198709.nc"
 
 func init() {
 	os.Mkdir("./ncml", 0777)
@@ -40,7 +40,7 @@ func TestGetFileSize(t *testing.T) {
 }
 
 func TestGetFilePath(t *testing.T) {
-	expected := "/nodc/projects/satdata/Granule_OneStop/C-MAN_Dewberry_files/nc_derived_from_f291/"
+	expected := "/nodc/projects/buoy/F291_CDL/nc/"
 	actual := getFilePath(testFile)
 	if strings.Contains(actual, expected) != true {
 		t.Fatalf("File paths don't match %s: %s", expected, actual)
@@ -48,7 +48,7 @@ func TestGetFilePath(t *testing.T) {
 }
 
 func TestFindNcFiles(t *testing.T) {
-	result := findNcFiles("/nodc/projects/satdata/Granule_OneStop/C-MAN_Dewberry_files/nc_derived_from_f291/")
+	result := findNcFiles("/nodc/projects/buoy/F291_CDL/nc/")
 	if len(result) <= 0 {
 		t.Error("Got ", result)
 	}

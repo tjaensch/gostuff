@@ -36,7 +36,7 @@ func checkError(reason string, err error) {
 }
 
 var (
-	ncFilePath string = "/nodc/projects/satdata/Granule_OneStop/C-MAN_Dewberry_files/nc_derived_from_f291/"
+	ncFilePath string = "/nodc/projects/buoy/F291_CDL/nc/"
 	xslFile    string = "XSL/ncml2iso_modified_from_UnidataDD2MI_CMAN_Thomas_edits.xsl"
 	//C-MAN collection metadata template file
 	isocofile    string   = "/nodc/web/data.nodc/htdocs/nodc/archive/metadata/test/collection/NDBC-CMANWx.xml"
