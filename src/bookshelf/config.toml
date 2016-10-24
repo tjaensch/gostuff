@@ -1,0 +1,5 @@
+languageCode = "en-us"
+baseurl = "http://10.90.235.15:1313"
+title = "Meeeeehhh"
+theme = "hugo_theme_robust"
+buildDrafts = true

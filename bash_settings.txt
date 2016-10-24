@@ -19,3 +19,9 @@ export GOBIN=/nodc/users/tjaensch/onestop.git/bin
 
 #Hugo blah
 export PATH=$PATH:/nodc/users/tjaensch/hugo
+
+#Caddy blah
+export PATH=$PATH:/nodc/users/tjaensch/caddy
+
+#Hugo server
+# hugo server --bind=10.90.235.15
