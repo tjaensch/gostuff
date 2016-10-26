@@ -9,6 +9,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	//"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -36,7 +37,7 @@ func checkError(reason string, err error) {
 }
 
 var (
-	ncFilePath string = "/nodc/projects/buoy/F291_CDL/nc/"
+	ncFilePath string = "/nodc/web/data.nodc/htdocs/ndbc/cmanwx"
 	xslFile    string = "XSL/ncml2iso_modified_from_UnidataDD2MI_CMAN_Thomas_edits.xsl"
 	//C-MAN collection metadata template file
 	isocofile    string   = "/nodc/web/data.nodc/htdocs/nodc/archive/metadata/test/collection/NDBC-CMANWx.xml"
@@ -114,7 +115,7 @@ func findNcFiles(ncFilePath string) []string {
 	var files []byte
 	var err error
 	cmdName := "find"
-	cmdArgs := []string{"-L", ncFilePath, "-type", "f", "-name", "*.nc"}
+	cmdArgs := []string{"-L", ncFilePath, "-type", "f", "-name", "*.nc", "!", "-name", "NDBC*.nc"}
 	if files, err = exec.Command(cmdName, cmdArgs...).Output(); err != nil {
 		fmt.Printf("Something went wrong with finding .nc files in source directory, program exiting.", err)
 		os.Exit(1)
@@ -150,7 +151,7 @@ func getFileName(ncFile string) string {
 
 // Get "English" title for ISO XML
 func getEnglishTitle(ncFile string) string {
-	return "NDBC-CMANWx_" + getFileName(ncFile) + " - C-MAN/Wx buoy " + getFileName(ncFile)[:5] + " for " + getFileName(ncFile)[6:]
+	return "CMANWx_" + getFileName(ncFile) + " - C-MAN/Wx buoy " + getFileName(ncFile)[:5] + " for " + getFileName(ncFile)[6:]
 }
 
 // Get .nc file size in KB
@@ -165,7 +166,7 @@ func getFileSize(ncFile string) int {
 
 // Get .nc file path on WAF
 func getFilePath(ncFile string) string {
-	trimmedPath := ncFile[:len(ncFile)]
+	trimmedPath := ncFile[27:len(ncFile)]
 	return strings.Replace(trimmedPath, filepath.Base(ncFile), "", -1)
 }
 

@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-var testFile string = "/nodc/projects/buoy/F291_CDL/nc/45002_198709.nc"
+var testFile string = "/nodc/web/data.nodc/htdocs/ndbc/cmanwx/1987/09/45002_198709.nc"
 
 func init() {
 	os.Mkdir("./ncml", 0777)
@@ -24,23 +24,22 @@ func TestGetFileName(t *testing.T) {
 }
 
 func TestGetEnglishTitle(t *testing.T) {
-	expected := "NDBC-CMANWx_45002_198709 - C-MAN/Wx buoy 45002 for 198709"
+	expected := "CMANWx_45002_198709 - C-MAN/Wx buoy 45002 for 198709"
 	actual := getEnglishTitle(testFile)
 	if expected != actual {
-		t.Error("Expected 'NDBC-CMANWx_45002_198709 - C-MAN/Wx buoy 45002 for 198709', got ", actual)
+		t.Error("Expected 'CMANWx_45002_198709 - C-MAN/Wx buoy 45002 for 198709', got ", actual)
 	}
 }
 
 func TestGetFileSize(t *testing.T) {
-	expected := 1
 	actual := getFileSize(testFile)
-	if actual < expected {
-		t.Error("Expected filesize > 1, got ", actual)
+	if actual <= 0 {
+		t.Error("Expected filesize > 0, got ", actual)
 	}
 }
 
 func TestGetFilePath(t *testing.T) {
-	expected := "/nodc/projects/buoy/F291_CDL/nc/"
+	expected := "ndbc/cmanwx/1987/09/"
 	actual := getFilePath(testFile)
 	if strings.Contains(actual, expected) != true {
 		t.Fatalf("File paths don't match %s: %s", expected, actual)
@@ -63,10 +62,10 @@ func TestNcdump(t *testing.T) {
 }
 
 func TestAppendToNcml(t *testing.T) {
-	additions := ncmlAdditions{ncFileName: "45002_198709", fileSize: 100, dataPath: "test/moo/blah", englishTitle: "English title"}
+	additions := ncmlAdditions{ncFileName: getFileName(testFile), fileSize: getFileSize(testFile), dataPath: getFilePath(testFile), englishTitle: getEnglishTitle(testFile)}
 	appendToNcml(testFile, additions)
 	input, _ := ioutil.ReadFile("./ncml/" + getFileName(testFile) + ".ncml")
-	if !strings.Contains(string(input), "test/moo/blah") {
+	if !strings.Contains(string(input), "ndbc/cmanwx/1987/09/") {
 		t.Error("appendtoNcml tanked")
 	}
 }
