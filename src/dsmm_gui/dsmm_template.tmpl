@@ -1,3 +1,4 @@
+{{define "dsmm"}}
 <gmd:dataQualityInfo>
     <gmd:DQ_DataQuality>
         <gmd:scope>
@@ -115,47 +116,47 @@
                         <gmd:valueUnit gco:nilReason="inapplicable"/>
                         <gmd:value>
                             <gco:Record>
-                                <gco:CodeListValue codelist="http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/MM_StewCodelists.xml#Preservability" codeListValue="optimal">optimal</gco:CodeListValue>
+                                <gco:CodeListValue codelist="http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/MM_StewCodelists.xml#Preservability" codeListValue="{{.Preservability}}">{{.Preservability}}</gco:CodeListValue>
                             </gco:Record>
                         </gmd:value>
                         <gmd:value>
                             <gco:Record>
-                                <gco:CodeListValue codelist="http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/MM_StewCodelists.xml#Accessibility" codeListValue="advanced">advanced</gco:CodeListValue>
+                                <gco:CodeListValue codelist="http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/MM_StewCodelists.xml#Accessibility" codeListValue="{{.Accessibility}}">{{.Accessibility}}</gco:CodeListValue>
                             </gco:Record>
                         </gmd:value>
                         <gmd:value>
                             <gco:Record>
-                                <gco:CodeListValue codelist="http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/MM_StewCodelists.xml#Usability" codeListValue="intermediate">intermediate</gco:CodeListValue>
+                                <gco:CodeListValue codelist="http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/MM_StewCodelists.xml#Usability" codeListValue="{{.Usability}}">{{.Usability}}</gco:CodeListValue>
                             </gco:Record>
                         </gmd:value>
                         <gmd:value>
                             <gco:Record>
-                                <gco:CodeListValue codelist="http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/MM_StewCodelists.xml#ProductionSustainability" codeListValue="intermediate">intermediate</gco:CodeListValue>
+                                <gco:CodeListValue codelist="http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/MM_StewCodelists.xml#ProductionSustainability" codeListValue="{{.ProductionSustainability}}">{{.ProductionSustainability}}</gco:CodeListValue>
                             </gco:Record>
                         </gmd:value>
                         <gmd:value>
                             <gco:Record>
-                                <gco:CodeListValue codelist="http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/MM_StewCodelists.xml#DataQualityAssurance" codeListValue="advanced">advanced</gco:CodeListValue>
+                                <gco:CodeListValue codelist="http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/MM_StewCodelists.xml#DataQualityAssurance" codeListValue="{{.DataQualityAssurance}}">{{.DataQualityAssurance}}</gco:CodeListValue>
                             </gco:Record>
                         </gmd:value>
                         <gmd:value>
                             <gco:Record>
-                                <gco:CodeListValue codelist="http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/MM_StewCodelists.xml#DataQualityControlMonitoring" codeListValue="minimal">minimal</gco:CodeListValue>
+                                <gco:CodeListValue codelist="http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/MM_StewCodelists.xml#DataQualityControlMonitoring" codeListValue="{{.DataQualityControlMonitoring}}">{{.DataQualityControlMonitoring}}</gco:CodeListValue>
                             </gco:Record>
                         </gmd:value>
                         <gmd:value>
                             <gco:Record>
-                                <gco:CodeListValue codelist="http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/MM_StewCodelists.xml#DataQualityAssessment" codeListValue="adhoc">adhoc</gco:CodeListValue>
+                                <gco:CodeListValue codelist="http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/MM_StewCodelists.xml#DataQualityAssessment" codeListValue="{{.DataQualityAssessment}}">{{.DataQualityAssessment}}</gco:CodeListValue>
                             </gco:Record>
                         </gmd:value>
                         <gmd:value>
                             <gco:Record>
-                                <gco:CodeListValue codelist="http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/MM_StewCodelists.xml#TransparencyTraceability" codeListValue="minimal">minimal</gco:CodeListValue>
+                                <gco:CodeListValue codelist="http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/MM_StewCodelists.xml#TransparencyTraceability" codeListValue="{{.TransparencyTraceability}}">{{.TransparencyTraceability}}</gco:CodeListValue>
                             </gco:Record>
                         </gmd:value>
                         <gmd:value>
                             <gco:Record>
-                                <gco:CodeListValue codelist="http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/MM_StewCodelists.xml#DataIntegrity" codeListValue="optimal">optimal</gco:CodeListValue>
+                                <gco:CodeListValue codelist="http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/MM_StewCodelists.xml#DataIntegrity" codeListValue="{{.DataIntegrity}}">{{.DataIntegrity}}</gco:CodeListValue>
                             </gco:Record>
                         </gmd:value>
                     </gmd:DQ_QuantitativeResult>
@@ -164,4 +165,4 @@
         </gmd:report>
     </gmd:DQ_DataQuality>
 </gmd:dataQualityInfo>
-
+{{end}}

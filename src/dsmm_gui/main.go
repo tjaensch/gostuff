@@ -46,15 +46,15 @@ func getDsmmRatings(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		// Form submitted
 		err := r.ParseForm() // required if no r.FormValue()
-		checkError("parse form failed, program exiting", err)
+		checkError("parsing html form failed, program exiting", err)
 
 		err = decoder.Decode(ratingsValues, r.PostForm)
 		checkError("decode form failed, program exiting", err)
 
-		t := template.Must(template.New("t1").
-			Parse("Dot:{{.}}\n"))
-		t.Execute(os.Stdout, ratingsValues)
+		t, err := template.ParseFiles("dsmm_template.tmpl")
+		t.ExecuteTemplate(os.Stdout, "dsmm", ratingsValues)
 		checkError("parsing template failed, program exiting", err)
+		fmt.Println()
 
 	}
 	html_template, _ := ioutil.ReadFile("html_template.html")
