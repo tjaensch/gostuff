@@ -9,18 +9,6 @@ import (
 	"testing"
 )
 
-var initialFormItems map[string]string = map[string]string{
-	"Preservability":               "adhoc",
-	"Accessibility":                "minimal",
-	"Usability":                    "intermediate",
-	"ProductionSustainability":     "advanced",
-	"DataQualityAssurance":         "optimal",
-	"DataQualityControlMonitoring": "adhoc",
-	"DataQualityAssessment":        "minimal",
-	"TransparencyTraceability":     "minimal",
-	"DataIntegrity":                "optimal",
-}
-
 func TestGetDsmmRatings(t *testing.T) {
 	req, err := http.NewRequest("GET", "/", nil)
 	if err != nil {
@@ -43,6 +31,18 @@ func TestGetDsmmRatings(t *testing.T) {
 	}
 
 	// Test if form entries are processed correctly
+	initialFormItems := map[string]string{
+		"Preservability":               "adhoc",
+		"Accessibility":                "minimal",
+		"Usability":                    "intermediate",
+		"ProductionSustainability":     "advanced",
+		"DataQualityAssurance":         "optimal",
+		"DataQualityControlMonitoring": "adhoc",
+		"DataQualityAssessment":        "minimal",
+		"TransparencyTraceability":     "minimal",
+		"DataIntegrity":                "optimal",
+	}
+
 	req.Form = make(url.Values)
 	for k, v := range initialFormItems {
 		req.Form.Add(k, v)

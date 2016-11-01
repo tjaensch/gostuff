@@ -39,6 +39,7 @@ func main() {
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.HandleFunc("/", getDsmmRatings)
+	fmt.Println("Listening on 10.90.235.15:1313")
 	http.ListenAndServe("10.90.235.15:1313", nil)
 }
 
