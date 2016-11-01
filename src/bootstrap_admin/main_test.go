@@ -7,22 +7,22 @@ import (
 	"testing"
 )
 
-func TestDsmmRatings(t *testing.T) {
+func TestGetDsmmRatings(t *testing.T) {
 	req, err := http.NewRequest("GET", "/", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 
   rr := httptest.NewRecorder()
-  handler := http.HandlerFunc(dsmmRatings)
+  handler := http.HandlerFunc(getDsmmRatings)
 
   handler.ServeHTTP(rr, req)
 
   if status := rr.Code; status != http.StatusOK {
-    t.Errorf("handler returned wrong status code: got %v, want %v", status, http.StatusOK)
+    t.Errorf("dsmmRatings handler returned wrong status code: got %v, want %v", status, http.StatusOK)
   }
 
   if !strings.Contains(rr.Body.String(), "<label>Preservability</label>") {
-    t.Errorf("handler returned unexpected body")
+    t.Errorf("dsmmRatings handler returned unexpected body")
   }
 }
