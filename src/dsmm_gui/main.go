@@ -53,7 +53,12 @@ func getDsmmRatings(w http.ResponseWriter, r *http.Request) {
 		checkError("decode form failed, program exiting", err)
 
 		t, err := template.ParseFiles("dsmm_template.tmpl")
+		// Write executed dsmm_template to text file
+		f, err := os.Create("dsmm_snippet.txt")
+		checkError("write parsed template to file failed, program exiting", err)
+		defer f.Close()
 		t.ExecuteTemplate(os.Stdout, "dsmm", ratingsValues)
+		t.ExecuteTemplate(f, "dsmm", ratingsValues)
 		checkError("parsing template failed, program exiting", err)
 		fmt.Println()
 
