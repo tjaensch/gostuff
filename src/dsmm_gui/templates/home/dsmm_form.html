@@ -1,0 +1,128 @@
+{{ define "title" }}DSMM Select{{ end }}
+
+{{ define "content" }}
+
+<form action="dsmm_results" method="post">
+
+                <div class="col-sm-6">
+                                    <label>Instructions</label>
+                                    <div class="well">
+                                      <p>Spicy jalapeno bacon ipsum dolor amet biltong chicken pork meatloaf brisket kielbasa fatback landjaeger. Corned beef frankfurter tri-tip pork ham hock landjaeger tenderloin turkey jerky. Meatloaf spare ribs filet mignon shank andouille tongue pancetta. Chicken turkey pig, t-bone beef swine boudin filet mignon ham hock tri-tip meatball tail landjaeger doner beef ribs. Flank jowl spare ribs salami doner, shankle landjaeger porchetta corned beef alcatra. Alcatra beef sausage meatloaf, short loin landjaeger spare ribs ball tip salami corned beef ham hock.</p>
+
+                                      <p>Pig leberkas pork short ribs andouille cow pancetta frankfurter shank shankle ham hock. Turkey pork belly salami rump sirloin bresaola biltong ball tip. Venison leberkas biltong doner bacon. Turducken ribeye tail, bresaola pork leberkas spare ribs. Strip steak swine tongue brisket.</p>
+
+                                      <p>Landjaeger filet mignon capicola, kevin short ribs turkey jerky t-bone burgdoggen picanha. Short ribs filet mignon t-bone, cow capicola tail rump venison kielbasa kevin. Brisket turducken flank, tongue shankle landjaeger andouille ground round t-bone chuck pastrami hamburger tail. Capicola jerky shoulder ground round pork loin beef ribs strip steak salami short loin. Landjaeger rump biltong pancetta ham hock. Pork chop kielbasa pork belly bacon shank cow sausage chicken beef jerky pastrami ham. Filet mignon pork belly chuck, tri-tip pork chop bresaola picanha spare ribs corned beef porchetta brisket bacon cow chicken capicola.</p>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-success" value="send">Submit</button>
+                                    <button type="reset" class="btn btn-warning">Reset</button>
+
+                </div> <!-- end <div class="col-sm-6"> -->
+
+                <div class="col-sm-6">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                              <label>Preservability</label>
+                                              <select class="form-control" name="preservability" required>
+                                                    <option value="">Select value</option>
+                                                    <option value="adhoc">adhoc</option>
+                                                    <option value="minimum">minimum</option>
+                                                    <option value="intermediate">intermediate</option>
+                                                    <option value="advanced">advanced</option>
+                                                    <option value="optimal">optimal</option>
+                                              </select>
+                                        </li>
+                                        <li class="list-group-item">
+                                              <label>Accessibility</label>
+                                              <select class="form-control" name="accessibility" required>
+                                                    <option value="">Select value</option>
+                                                    <option value="adhoc">adhoc</option>
+                                                    <option value="minimum">minimum</option>
+                                                    <option value="intermediate">intermediate</option>
+                                                    <option value="advanced">advanced</option>
+                                                    <option value="optimal">optimal</option>
+                                              </select>
+                                        </li>
+                                        <li class="list-group-item">
+                                              <label>Usability</label>
+                                              <select class="form-control" name="usability" required>
+                                                    <option value="">Select value</option>
+                                                    <option value="adhoc">adhoc</option>
+                                                    <option value="minimum">minimum</option>
+                                                    <option value="intermediate">intermediate</option>
+                                                    <option value="advanced">advanced</option>
+                                                    <option value="optimal">optimal</option>
+                                              </select>
+                                        </li>
+                                        <li class="list-group-item">
+                                              <label>Production Sustainability</label>
+                                              <select class="form-control" name="production_sustainability" required>
+                                                    <option value="">Select value</option>
+                                                    <option value="adhoc">adhoc</option>
+                                                    <option value="minimum">minimum</option>
+                                                    <option value="intermediate">intermediate</option>
+                                                    <option value="advanced">advanced</option>
+                                                    <option value="optimal">optimal</option>
+                                              </select>
+                                        </li>
+                                        <li class="list-group-item">
+                                              <label>Data Quality Assurance</label>
+                                              <select class="form-control" name="data_quality_assurance" required>
+                                                    <option value="">Select value</option>
+                                                    <option value="adhoc">adhoc</option>
+                                                    <option value="minimum">minimum</option>
+                                                    <option value="intermediate">intermediate</option>
+                                                    <option value="advanced">advanced</option>
+                                                    <option value="optimal">optimal</option>
+                                              </select>
+                                        </li>
+                                        <li class="list-group-item">
+                                              <label>Data Quality Control/Monitoring</label>
+                                              <select class="form-control" name="data_quality_control_monitoring" required>
+                                                    <option value="">Select value</option>
+                                                    <option value="adhoc">adhoc</option>
+                                                    <option value="minimum">minimum</option>
+                                                    <option value="intermediate">intermediate</option>
+                                                    <option value="advanced">advanced</option>
+                                                    <option value="optimal">optimal</option>
+                                              </select>
+                                        </li>
+                                        <li class="list-group-item">
+                                              <label>Data Quality Assessment</label>
+                                              <select class="form-control" name="data_quality_assessment" required>
+                                                    <option value="">Select value</option>
+                                                    <option value="adhoc">adhoc</option>
+                                                    <option value="minimum">minimum</option>
+                                                    <option value="intermediate">intermediate</option>
+                                                    <option value="advanced">advanced</option>
+                                                    <option value="optimal">optimal</option>
+                                              </select>
+                                        </li>
+                                        <li class="list-group-item">
+                                              <label>Transparency/Traceability</label>
+                                              <select class="form-control" name="transparency_traceability" required>
+                                                    <option value="">Select value</option>
+                                                    <option value="adhoc">adhoc</option>
+                                                    <option value="minimum">minimum</option>
+                                                    <option value="intermediate">intermediate</option>
+                                                    <option value="advanced">advanced</option>
+                                                    <option value="optimal">optimal</option>
+                                              </select>
+                                        </li>
+                                        <li class="list-group-item">
+                                              <label>Data Integrity</label>
+                                              <select class="form-control" name="data_integrity" required>
+                                                    <option value="">Select value</option>
+                                                    <option value="adhoc">adhoc</option>
+                                                    <option value="minimum">minimum</option>
+                                                    <option value="intermediate">intermediate</option>
+                                                    <option value="advanced">advanced</option>
+                                                    <option value="optimal">optimal</option>
+                                              </select>
+                                        </li>
+                                    </ul>
+                      </div> <!-- end <div class="col-sm-6"> -->
+
+              </form> <!-- end of form -->
+
+{{ end }}

@@ -9,14 +9,14 @@ import (
 	"testing"
 )
 
-func TestGetDsmmRatings(t *testing.T) {
+func TestDsmmFormRoute(t *testing.T) {
 	req, err := http.NewRequest("GET", "/", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(getDsmmRatings)
+	handler := http.HandlerFunc(DsmmFormRoute)
 
 	handler.ServeHTTP(rr, req)
 

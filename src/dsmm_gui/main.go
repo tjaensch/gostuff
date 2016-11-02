@@ -2,15 +2,17 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 	"text/template"
 
+	"github.com/gorilla/mux"
 	"github.com/gorilla/schema"
 )
 
 var (
+	templates     map[string]*template.Template
 	decoder       = schema.NewDecoder()
 	ratingsValues = new(RatingsValues)
 )
@@ -35,34 +37,52 @@ func checkError(reason string, err error) {
 	}
 }
 
-func main() {
-	fs := http.FileServer(http.Dir("static"))
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
-	http.HandleFunc("/", getDsmmRatings)
-	fmt.Println("Listening on 10.90.235.15:1313")
-	http.ListenAndServe("10.90.235.15:1313", nil)
+func init() {
+	loadTemplates()
 }
 
-func getDsmmRatings(w http.ResponseWriter, r *http.Request) {
-	if r.Method == "POST" {
-		// Form submitted
-		err := r.ParseForm() // required if no r.FormValue()
-		checkError("parsing html form failed, program exiting", err)
+func main() {
 
-		err = decoder.Decode(ratingsValues, r.PostForm)
-		checkError("decode form failed, program exiting", err)
+	router := mux.NewRouter()
 
-		t, err := template.ParseFiles("templates/dsmm.tmpl")
-		// Write executed dsmm_template to text file
-		f, err := os.Create("dsmm_snippet.txt")
-		checkError("write parsed template to file failed, program exiting", err)
-		defer f.Close()
-		t.ExecuteTemplate(os.Stdout, "dsmm", ratingsValues)
-		t.ExecuteTemplate(f, "dsmm", ratingsValues)
-		checkError("parsing template failed, program exiting", err)
-		fmt.Println()
+	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("static/"))))
+	router.HandleFunc("/", DsmmFormRoute).Methods("GET")
+	router.HandleFunc("/dsmm_results", DsmmResultsRoute).Methods("POST")
 
+	fmt.Println("Listening on 10.90.235.15:1313")
+	if err := http.ListenAndServe("10.90.235.15:1313", router); err != nil {
+		log.Fatal("ListenAndServe: ", err.Error())
 	}
-	html_template, _ := ioutil.ReadFile("templates/ui.html")
-	w.Write([]byte(html_template))
+}
+
+func DsmmFormRoute(res http.ResponseWriter, req *http.Request) {
+
+	if err := templates["dsmm_form"].Execute(res, nil); err != nil {
+		http.Error(res, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+func DsmmResultsRoute(res http.ResponseWriter, req *http.Request) {
+
+	// Form submitted
+	err := req.ParseForm() // required if no r.FormValue()
+	checkError("parsing html form failed, program exiting", err)
+
+	err = decoder.Decode(ratingsValues, req.PostForm)
+	checkError("decode form failed, program exiting", err)
+
+	t, err := template.ParseFiles("templates/dsmm.tmpl")
+	t.ExecuteTemplate(os.Stdout, "dsmm", ratingsValues)
+
+	if err := templates["dsmm_results"].Execute(res, nil); err != nil {
+		http.Error(res, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+func loadTemplates() {
+	var baseTemplate = "templates/layout/_base.html"
+	templates = make(map[string]*template.Template)
+
+	templates["dsmm_form"] = template.Must(template.ParseFiles(baseTemplate, "templates/home/dsmm_form.html"))
+	templates["dsmm_results"] = template.Must(template.ParseFiles(baseTemplate, "templates/home/dsmm_results.html"))
 }
