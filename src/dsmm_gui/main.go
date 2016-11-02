@@ -52,7 +52,7 @@ func getDsmmRatings(w http.ResponseWriter, r *http.Request) {
 		err = decoder.Decode(ratingsValues, r.PostForm)
 		checkError("decode form failed, program exiting", err)
 
-		t, err := template.ParseFiles("dsmm_template.tmpl")
+		t, err := template.ParseFiles("templates/dsmm.tmpl")
 		// Write executed dsmm_template to text file
 		f, err := os.Create("dsmm_snippet.txt")
 		checkError("write parsed template to file failed, program exiting", err)
@@ -63,6 +63,6 @@ func getDsmmRatings(w http.ResponseWriter, r *http.Request) {
 		fmt.Println()
 
 	}
-	html_template, _ := ioutil.ReadFile("html_template.html")
+	html_template, _ := ioutil.ReadFile("templates/ui.html")
 	w.Write([]byte(html_template))
 }
