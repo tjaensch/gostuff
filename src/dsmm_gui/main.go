@@ -53,7 +53,7 @@ func main() {
 }
 
 func DsmmFormRoute(w http.ResponseWriter, r *http.Request) {
-	dsmm_form := template.Must(template.ParseFiles("templates/layout/_base.html", "templates/home/dsmm_form.html"))
+	dsmm_form := template.Must(template.ParseFiles("templates/layout/_base.html", "templates/dsmm/dsmm_form.html"))
 	if err := dsmm_form.Execute(w, nil); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
@@ -68,15 +68,12 @@ func DsmmResultsRoute(w http.ResponseWriter, r *http.Request) {
 	err = decoder.Decode(ratingsValues, r.PostForm)
 	checkError("decode form failed, program exiting", err)
 
-	t, err := template.ParseFiles("templates/dsmm.tmpl")
+	t, err := template.ParseFiles("templates/dsmm/dsmm.tmpl")
 	checkError("execute template failed, program exiting", err)
 	t.ExecuteTemplate(os.Stdout, "dsmm", ratingsValues)
 	//t.ExecuteTemplate(w, "dsmm", ratingsValues)
 
-	ratings := template.New("ratings")
-	ratings, _ = ratings.Parse("<li>{{ .Preservability }}</li>")
-
-	dsmm_form := template.Must(template.ParseFiles("templates/layout/_base.html", "templates/home/dsmm_results.html"))
+	dsmm_form := template.Must(template.ParseFiles("templates/layout/_base.html", "templates/dsmm/dsmm_results.html"))
 	if err := dsmm_form.Execute(w, ratingsValues); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
