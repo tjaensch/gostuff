@@ -1,6 +1,7 @@
 package main
 
 import (
+	//"bytes"
 	"fmt"
 	"log"
 	"net/http"
@@ -37,10 +38,6 @@ func checkError(reason string, err error) {
 	}
 }
 
-func init() {
-	loadTemplates()
-}
-
 func main() {
 
 	router := mux.NewRouter()
@@ -55,34 +52,23 @@ func main() {
 	}
 }
 
-func DsmmFormRoute(res http.ResponseWriter, req *http.Request) {
-
-	if err := templates["dsmm_form"].Execute(res, nil); err != nil {
-		http.Error(res, err.Error(), http.StatusInternalServerError)
+func DsmmFormRoute(w http.ResponseWriter, r *http.Request) {
+	dsmm_form := template.Must(template.ParseFiles("templates/layout/_base.html", "templates/home/dsmm_form.html"))
+	if err := dsmm_form.Execute(w, nil); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
 
-func DsmmResultsRoute(res http.ResponseWriter, req *http.Request) {
+func DsmmResultsRoute(w http.ResponseWriter, r *http.Request) {
 
 	// Form submitted
-	err := req.ParseForm() // required if no r.FormValue()
+	err := r.ParseForm() // required if no r.FormValue()
 	checkError("parsing html form failed, program exiting", err)
 
-	err = decoder.Decode(ratingsValues, req.PostForm)
+	err = decoder.Decode(ratingsValues, r.PostForm)
 	checkError("decode form failed, program exiting", err)
 
-	t, err := template.ParseFiles("templates/dsmm.tmpl")
-	t.ExecuteTemplate(os.Stdout, "dsmm", ratingsValues)
-
-	if err := templates["dsmm_results"].Execute(res, nil); err != nil {
-		http.Error(res, err.Error(), http.StatusInternalServerError)
-	}
-}
-
-func loadTemplates() {
-	var baseTemplate = "templates/layout/_base.html"
-	templates = make(map[string]*template.Template)
-
-	templates["dsmm_form"] = template.Must(template.ParseFiles(baseTemplate, "templates/home/dsmm_form.html"))
-	templates["dsmm_results"] = template.Must(template.ParseFiles(baseTemplate, "templates/home/dsmm_results.html"))
+	t, err := template.ParseFiles("templates/home/dsmm_results.html", "templates/dsmm.tmpl")
+	checkError("execute template failed, program exiting", err)
+	t.ExecuteTemplate(w, "dsmm", ratingsValues)
 }
