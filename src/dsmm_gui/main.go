@@ -1,7 +1,6 @@
 package main
 
 import (
-	//"bytes"
 	"fmt"
 	"log"
 	"net/http"
@@ -13,7 +12,6 @@ import (
 )
 
 var (
-	templates     map[string]*template.Template
 	decoder       = schema.NewDecoder()
 	ratingsValues = new(RatingsValues)
 )
@@ -60,7 +58,6 @@ func DsmmFormRoute(w http.ResponseWriter, r *http.Request) {
 }
 
 func DsmmResultsRoute(w http.ResponseWriter, r *http.Request) {
-
 	// Form submitted
 	err := r.ParseForm() // required if no r.FormValue()
 	checkError("parsing html form failed, program exiting", err)
