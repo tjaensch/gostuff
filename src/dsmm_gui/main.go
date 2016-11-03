@@ -68,7 +68,8 @@ func DsmmResultsRoute(w http.ResponseWriter, r *http.Request) {
 	err = decoder.Decode(ratingsValues, r.PostForm)
 	checkError("decode form failed, program exiting", err)
 
-	t, err := template.ParseFiles("templates/home/dsmm_results.html", "templates/dsmm.tmpl")
+	t, err := template.ParseFiles("templates/dsmm.tmpl")
 	checkError("execute template failed, program exiting", err)
+	t.ExecuteTemplate(os.Stdout, "dsmm", ratingsValues)
 	t.ExecuteTemplate(w, "dsmm", ratingsValues)
 }
