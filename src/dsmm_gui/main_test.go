@@ -62,5 +62,25 @@ func TestDsmmFormRoute(t *testing.T) {
 	if !reflect.DeepEqual(req.Form, wantForm) {
 		t.Fatalf("req.Form = %v, want %v", req.Form, wantForm)
 	}
+}
 
+func TestDsmmResultsRoute(t *testing.T) {
+	req, err := http.NewRequest("GET", "/dsmm_results", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(DsmmResultsRoute)
+
+	handler.ServeHTTP(rr, req)
+
+	// Test server response
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("DsmmResultsRoute handler returned wrong status code: got %v, want %v", status, http.StatusOK)
+	}
+
+	// Test if html template is returned properly
+	if !strings.Contains(rr.Body.String(), "<h1><strong>Success!</strong></h1>") {
+		t.Errorf("dsmmRatings handler returned unexpected body")
+	}
 }

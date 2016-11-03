@@ -65,13 +65,15 @@ func DsmmResultsRoute(w http.ResponseWriter, r *http.Request) {
 	err = decoder.Decode(ratingsValues, r.PostForm)
 	checkError("decode form failed, program exiting", err)
 
-	t, err := template.ParseFiles("templates/dsmm/dsmm.tmpl")
-	checkError("execute template failed, program exiting", err)
-	t.ExecuteTemplate(os.Stdout, "dsmm", ratingsValues)
-	//t.ExecuteTemplate(w, "dsmm", ratingsValues)
-
 	dsmm_form := template.Must(template.ParseFiles("templates/layout/_base.html", "templates/dsmm/dsmm_results.html"))
 	if err := dsmm_form.Execute(w, ratingsValues); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
+}
+
+func DsmmWriteToFile(w http.ResponseWriter, r *http.Request)  {
+	//t, err := template.ParseFiles("templates/dsmm/dsmm.tmpl")
+	//checkError("execute template failed, program exiting", err)
+	//t.ExecuteTemplate(os.Stdout, "dsmm", ratingsValues)
+	//t.ExecuteTemplate(w, "dsmm", ratingsValues)
 }
