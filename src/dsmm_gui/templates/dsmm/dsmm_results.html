@@ -1,27 +1,51 @@
 {{ define "title" }}DSMM Select XML{{ end }}
 
 {{ define "content" }}
+<div class="col-sm-6">
+    <div class="alert alert-success">
+      <h1><strong>Success!</strong></h1>
 
-<div class="alert alert-success">
-  <h1><strong>Success!</strong></h1>
+      <h2>Values selected</h2>
+        <ol>
+            <li>Preservability: {{ .Preservability }}</li>
+            <li>Accessibility: {{ .Accessibility }}</li>
+            <li>Usability: {{ .Usability }}</li>
+            <li>Production Sustainability: {{ .ProductionSustainability }}</li>
+            <li>Data Quality Assurance: {{ .DataQualityAssurance }}</li>
+            <li>Data Quality Control/Monitoring: {{ .DataQualityControlMonitoring }}</li>
+            <li>Data Quality Assessment: {{ .DataQualityAssessment }}</li>
+            <li>Transparency/Traceability: {{ .TransparencyTraceability }}</li>
+            <li>Data Integrity: {{ .DataIntegrity }}</li>
 
-  <h2>Values selected</h2>
-    <ol>
-        <li>Preservability: {{ .Preservability }}</li>
-        <li>Accessibility: {{ .Accessibility }}</li>
-        <li>Usability: {{ .Usability }}</li>
-        <li>Production Sustainability: {{ .ProductionSustainability }}</li>
-        <li>Data Quality Assurance: {{ .DataQualityAssurance }}</li>
-        <li>Data Quality Control/Monitoring: {{ .DataQualityControlMonitoring }}</li>
-        <li>Data Quality Assessment: {{ .DataQualityAssessment }}</li>
-        <li>Transparency/Traceability: {{ .TransparencyTraceability }}</li>
-        <li>Data Integrity: {{ .DataIntegrity }}</li>
+        </ol>
+    </div> <!-- end class="alert alert-success"> -->
 
-    </ol>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+          <h3 class="panel-title"><i class="fa fa-hand-o-right"></i> Options</h3>
+      </div>
+      <div class="panel-body">
+          <div class="list-group">
+              <a href="#" class="list-group-item">
+                <form action="dsmm_xml" method="post">
+                  <button type="submit" value="send">
+                    See DSMM XML snippet with selected values in browser window
+                  </button>
+                </form>
+              </a>
+              <a href="#" class="list-group-item">
+                <form action="upload_xml" method="post">
+                  <button type="submit" value="send">
+                    Add DSMM XML snippet to ISO XML file
+                  </button>
+                </form>
+              </a>
+          </div>
+          <div class="text-right">
+              <a href="/">Home <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+      </div>
+    </div> <!-- end class="panel panel-default"> -->
 
-  <form action="dsmm_xml" method="post">
-    <button type="submit" class="btn btn-primary" value="send">See DSMM XML snippet with selected values in browser window?</button>
-  </form> <!-- end of form -->
-</div>
-
+</div> <!-- end <div class="col-sm-6"> -->
 {{ end }}
