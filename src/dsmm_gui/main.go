@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -43,7 +44,7 @@ func main() {
 	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("static/"))))
 	router.HandleFunc("/", DsmmForm).Methods("GET")
 	router.HandleFunc("/dsmm_results", DsmmResults).Methods("POST")
-	router.HandleFunc("/dsmm_xml", DsmmWriteToFile).Methods("POST")
+	router.HandleFunc("/dsmm_xml", DsmmWriteSnippetToBrowser).Methods("POST")
 	router.HandleFunc("/upload_xml", UploadXmlFile).Methods("POST")
 
 	fmt.Println("Listening on 10.90.235.15:1313")
@@ -73,13 +74,27 @@ func DsmmResults(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func DsmmWriteToFile(w http.ResponseWriter, r *http.Request) {
+func DsmmWriteSnippetToBrowser(w http.ResponseWriter, r *http.Request) {
 	t, err := template.ParseFiles("templates/dsmm/dsmm.tmpl")
 	checkError("execute template failed, program exiting", err)
 	t.ExecuteTemplate(os.Stdout, "dsmm", ratingsValues)
 	t.ExecuteTemplate(w, "dsmm", ratingsValues)
 }
 
+// https://www.socketloop.com/tutorials/golang-upload-file
 func UploadXmlFile(w http.ResponseWriter, r *http.Request)  {
+	file, header, err := r.FormFile("file")
+	checkError("UploadXmlFile failed, program exiting", err)
+	defer file.Close()
 
+	out, err := os.Create("/tmp/uploadedfile")
+	checkError("create file folder for upload failed, program exiting", err)
+	defer out.Close()
+
+	// write content from POST to file
+	_, err = io.Copy(out, file)
+	checkError("write content from POST to file failed, program exiting", err)
+
+	fmt.Fprintf(w, "File uploaded successfully: ")
+	fmt.Fprintf(w, header.Filename)
 }

@@ -85,13 +85,13 @@ func TestDsmmResults(t *testing.T) {
 	}
 }
 
-func TestDsmmWriteToFile(t *testing.T) {
+func TestDsmmWriteSnippetToBrowser(t *testing.T) {
 	req, err := http.NewRequest("GET", "/dsmm_xml", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(DsmmWriteToFile)
+	handler := http.HandlerFunc(DsmmWriteSnippetToBrowser)
 
 	handler.ServeHTTP(rr, req)
 
