@@ -34,14 +34,14 @@
                 </form>
               </a>
               <a href="#" class="list-group-item">
-                <form action="upload_xml" method="post">
+                <form action="upload_xml" method="post" enctype="multipart/form-data">
                   <button class="btn btn-lg btn-default">
                     Add DSMM XML snippet to ISO XML file
                   </button>
                             <div class="form-group">
-                                <input type="file">
+                                <input type="file" name="file" id="file" required>
                             </div>
-                            <button type="submit" class="btn btn-success" value="send">Submit</button>
+                            <button type="submit" class="btn btn-success" value="Submit">Upload file</button>
                             <button type="reset" class="btn btn-warning">Reset</button>
                 </form>
               </a>

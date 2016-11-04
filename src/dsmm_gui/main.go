@@ -41,9 +41,10 @@ func main() {
 	router := mux.NewRouter()
 
 	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("static/"))))
-	router.HandleFunc("/", DsmmFormRoute).Methods("GET")
-	router.HandleFunc("/dsmm_results", DsmmResultsRoute).Methods("POST")
+	router.HandleFunc("/", DsmmForm).Methods("GET")
+	router.HandleFunc("/dsmm_results", DsmmResults).Methods("POST")
 	router.HandleFunc("/dsmm_xml", DsmmWriteToFile).Methods("POST")
+	router.HandleFunc("/upload_xml", UploadXmlFile).Methods("POST")
 
 	fmt.Println("Listening on 10.90.235.15:1313")
 	if err := http.ListenAndServe("10.90.235.15:1313", router); err != nil {
@@ -51,14 +52,14 @@ func main() {
 	}
 }
 
-func DsmmFormRoute(w http.ResponseWriter, r *http.Request) {
+func DsmmForm(w http.ResponseWriter, r *http.Request) {
 	dsmm_form := template.Must(template.ParseFiles("templates/layout/_base.html", "templates/dsmm/dsmm_form.html"))
 	if err := dsmm_form.Execute(w, nil); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
 
-func DsmmResultsRoute(w http.ResponseWriter, r *http.Request) {
+func DsmmResults(w http.ResponseWriter, r *http.Request) {
 	// Form submitted
 	err := r.ParseForm() // required if no r.FormValue()
 	checkError("parsing html form failed, program exiting", err)
@@ -77,4 +78,8 @@ func DsmmWriteToFile(w http.ResponseWriter, r *http.Request) {
 	checkError("execute template failed, program exiting", err)
 	t.ExecuteTemplate(os.Stdout, "dsmm", ratingsValues)
 	t.ExecuteTemplate(w, "dsmm", ratingsValues)
+}
+
+func UploadXmlFile(w http.ResponseWriter, r *http.Request)  {
+
 }

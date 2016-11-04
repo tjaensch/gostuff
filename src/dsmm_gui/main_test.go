@@ -9,14 +9,14 @@ import (
 	"testing"
 )
 
-func TestDsmmFormRoute(t *testing.T) {
+func TestDsmmForm(t *testing.T) {
 	req, err := http.NewRequest("GET", "/", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(DsmmFormRoute)
+	handler := http.HandlerFunc(DsmmForm)
 
 	handler.ServeHTTP(rr, req)
 
@@ -64,19 +64,19 @@ func TestDsmmFormRoute(t *testing.T) {
 	}
 }
 
-func TestDsmmResultsRoute(t *testing.T) {
+func TestDsmmResults(t *testing.T) {
 	req, err := http.NewRequest("GET", "/dsmm_results", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(DsmmResultsRoute)
+	handler := http.HandlerFunc(DsmmResults)
 
 	handler.ServeHTTP(rr, req)
 
 	// Test server response
 	if status := rr.Code; status != http.StatusOK {
-		t.Errorf("DsmmResultsRoute handler returned wrong status code: got %v, want %v", status, http.StatusOK)
+		t.Errorf("DsmmResults handler returned wrong status code: got %v, want %v", status, http.StatusOK)
 	}
 
 	// Test if html template is returned properly
@@ -97,7 +97,7 @@ func TestDsmmWriteToFile(t *testing.T) {
 
 	// Test server response
 	if status := rr.Code; status != http.StatusOK {
-		t.Errorf("DsmmResultsRoute handler returned wrong status code: got %v, want %v", status, http.StatusOK)
+		t.Errorf("DsmmResults handler returned wrong status code: got %v, want %v", status, http.StatusOK)
 	}
 
 	// Test if html template is returned properly
