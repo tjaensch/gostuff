@@ -84,3 +84,24 @@ func TestDsmmResultsRoute(t *testing.T) {
 		t.Errorf("dsmmRatings handler returned unexpected body")
 	}
 }
+
+func TestDsmmWriteToFile(t *testing.T) {
+	req, err := http.NewRequest("GET", "/dsmm_xml", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(DsmmWriteToFile)
+
+	handler.ServeHTTP(rr, req)
+
+	// Test server response
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("DsmmResultsRoute handler returned wrong status code: got %v, want %v", status, http.StatusOK)
+	}
+
+	// Test if html template is returned properly
+	if !strings.Contains(rr.Body.String(), "<gco:CharacterString>Data Stewardship Maturity Assessment</gco:CharacterString>") {
+		t.Errorf("dsmmRatings handler returned unexpected body")
+	}
+}

@@ -43,6 +43,7 @@ func main() {
 	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("static/"))))
 	router.HandleFunc("/", DsmmFormRoute).Methods("GET")
 	router.HandleFunc("/dsmm_results", DsmmResultsRoute).Methods("POST")
+	router.HandleFunc("/dsmm_xml", DsmmWriteToFile).Methods("POST")
 
 	fmt.Println("Listening on 10.90.235.15:1313")
 	if err := http.ListenAndServe("10.90.235.15:1313", router); err != nil {
@@ -71,9 +72,9 @@ func DsmmResultsRoute(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func DsmmWriteToFile(w http.ResponseWriter, r *http.Request)  {
-	//t, err := template.ParseFiles("templates/dsmm/dsmm.tmpl")
-	//checkError("execute template failed, program exiting", err)
-	//t.ExecuteTemplate(os.Stdout, "dsmm", ratingsValues)
-	//t.ExecuteTemplate(w, "dsmm", ratingsValues)
+func DsmmWriteToFile(w http.ResponseWriter, r *http.Request) {
+	t, err := template.ParseFiles("templates/dsmm/dsmm.tmpl")
+	checkError("execute template failed, program exiting", err)
+	t.ExecuteTemplate(os.Stdout, "dsmm", ratingsValues)
+	t.ExecuteTemplate(w, "dsmm", ratingsValues)
 }
