@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -83,7 +84,7 @@ func DsmmWriteSnippetToBrowser(w http.ResponseWriter, r *http.Request) {
 
 // https://www.socketloop.com/tutorials/golang-upload-file
 func UploadXmlFile(w http.ResponseWriter, r *http.Request)  {
-	file, header, err := r.FormFile("file")
+	file, _, err := r.FormFile("file")
 	checkError("UploadXmlFile failed, program exiting", err)
 	defer file.Close()
 
@@ -95,6 +96,7 @@ func UploadXmlFile(w http.ResponseWriter, r *http.Request)  {
 	_, err = io.Copy(out, file)
 	checkError("write content from POST to file failed, program exiting", err)
 
-	fmt.Fprintf(w, "File uploaded successfully: ")
-	fmt.Fprintf(w, header.Filename)
+	dat, err := ioutil.ReadFile("/tmp/uploadedfile")
+	checkError("read uploaded file failed, program exiting", err)
+	fmt.Fprintf(w, string(dat))
 }
