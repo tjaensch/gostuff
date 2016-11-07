@@ -1,12 +1,14 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"text/template"
 
 	"github.com/gorilla/mux"
@@ -16,6 +18,7 @@ import (
 var (
 	decoder       = schema.NewDecoder()
 	ratingsValues = new(RatingsValues)
+	dsmmSnippet   bytes.Buffer
 )
 
 type RatingsValues struct {
@@ -82,8 +85,11 @@ func DsmmWriteSnippetToBrowser(w http.ResponseWriter, r *http.Request) {
 	t.ExecuteTemplate(w, "dsmm", ratingsValues)
 }
 
-// https://www.socketloop.com/tutorials/golang-upload-file
-func UploadXmlFile(w http.ResponseWriter, r *http.Request)  {
+func UploadXmlFile(w http.ResponseWriter, r *http.Request) {
+	t, err := template.ParseFiles("templates/dsmm/dsmm.tmpl")
+	checkError("execute template failed, program exiting", err)
+	t.ExecuteTemplate(&dsmmSnippet, "dsmm", ratingsValues)
+
 	file, _, err := r.FormFile("file")
 	checkError("UploadXmlFile failed, program exiting", err)
 	defer file.Close()
@@ -98,5 +104,10 @@ func UploadXmlFile(w http.ResponseWriter, r *http.Request)  {
 
 	dat, err := ioutil.ReadFile("/tmp/uploadedfile")
 	checkError("read uploaded file failed, program exiting", err)
-	fmt.Fprintf(w, string(dat))
+
+	if strings.Contains(string(dat), "<gmd:metadataMaintenance>") {
+		fmt.Fprintf(w, strings.Replace(string(dat), "</gmd:metadataMaintenance>", "</gmd:metadataMaintenance>"+dsmmSnippet.String(), 1))
+	} else {
+		fmt.Fprintf(w, strings.Replace(string(dat), "</gmi:MI_Metadata>", dsmmSnippet.String()+"</gmi:MI_Metadata>", 1))
+	}
 }
