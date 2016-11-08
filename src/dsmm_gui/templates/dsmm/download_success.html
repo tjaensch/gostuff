@@ -1,0 +1,37 @@
+{{ define "title" }}DSMM Add To XML Success{{ end }}
+
+{{ define "content" }}
+<div class="col-sm-12">
+    <div class="alert alert-success">
+      <h1><strong>Success!</strong></h1>
+    </div> <!-- end class="alert alert-success"> -->
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+          <h2 class="panel-title"><i class="fa fa-hand-o-right"></i> Options</h2>
+      </div>
+      <div class="panel-body">
+          <div class="list-group">
+              <a href="#" class="list-group-item">
+                <form>
+                  <button type="submit" value="send" class="btn btn-lg btn-default">
+                    Download XML file with added DSMM snippet
+                  </button>
+                </form>
+              </a>
+              <a href="/" class="list-group-item">
+                <form action="/">
+                  <button type="submit" value="send" class="btn btn-lg btn-info">
+                    Start Over
+                  </button>
+                </form>
+              </a>
+          </div>
+          <div class="text-left">
+              <a href="/">Home <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+      </div>
+    </div> <!-- end class="panel panel-default"> -->
+
+</div> <!-- end <div class="col-sm-12"> -->
+{{ end }}

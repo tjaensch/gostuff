@@ -105,9 +105,27 @@ func UploadXmlFile(w http.ResponseWriter, r *http.Request) {
 	dat, err := ioutil.ReadFile("/tmp/uploadedfile")
 	checkError("read uploaded file failed, program exiting", err)
 
-	if strings.Contains(string(dat), "<gmd:metadataMaintenance>") {
-		fmt.Fprintf(w, strings.Replace(string(dat), "</gmd:metadataMaintenance>", "</gmd:metadataMaintenance>"+dsmmSnippet.String(), 1))
-	} else {
-		fmt.Fprintf(w, strings.Replace(string(dat), "</gmi:MI_Metadata>", dsmmSnippet.String()+"</gmi:MI_Metadata>", 1))
+	if !strings.Contains(string(dat), "</gmi:MI_Metadata>") {
+		fail := template.Must(template.ParseFiles("templates/layout/_base.html", "templates/dsmm/download_fail.html"))
+		if err := fail.Execute(w, nil); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+		return
 	}
+
+	if strings.Contains(string(dat), "<gmd:metadataMaintenance>") {
+		strings.Replace(string(dat), "</gmd:metadataMaintenance>", "</gmd:metadataMaintenance>" + dsmmSnippet.String(), 1)
+		success := template.Must(template.ParseFiles("templates/layout/_base.html", "templates/dsmm/download_success.html"))
+		if err := success.Execute(w, nil); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+	} else {
+		strings.Replace(string(dat), "</gmi:MI_Metadata>", dsmmSnippet.String() + "</gmi:MI_Metadata>", 1)
+		success := template.Must(template.ParseFiles("templates/layout/_base.html", "templates/dsmm/download_success.html"))
+		if err := success.Execute(w, nil); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+	}
+	err = os.Remove("/tmp/uploadedfile")
+	checkError("remove uploaded file failed, program exiting", err)
 }
