@@ -19,6 +19,7 @@ var (
 	decoder       = schema.NewDecoder()
 	ratingsValues = new(RatingsValues)
 	dsmmSnippet   bytes.Buffer
+	dat	[]byte
 )
 
 type RatingsValues struct {
@@ -50,6 +51,7 @@ func main() {
 	router.HandleFunc("/dsmm_results", DsmmResults).Methods("POST")
 	router.HandleFunc("/dsmm_xml", DsmmWriteSnippetToBrowser).Methods("POST")
 	router.HandleFunc("/upload_xml", UploadXmlFile).Methods("POST")
+	router.HandleFunc("/view_xml_with_dsmm", ViewXmlFileWithDsmmAdded).Methods("POST")
 
 	fmt.Println("Listening on 10.90.235.15:1313")
 	if err := http.ListenAndServe("10.90.235.15:1313", router); err != nil {
@@ -86,6 +88,11 @@ func DsmmWriteSnippetToBrowser(w http.ResponseWriter, r *http.Request) {
 }
 
 func UploadXmlFile(w http.ResponseWriter, r *http.Request) {
+	if _, err := os.Stat("/tmp/uploadedfile"); err == nil {
+		err = os.Remove("/tmp/uploadedfile")
+		checkError("remove uploaded file failed, program exiting", err)
+	}
+
 	t, err := template.ParseFiles("templates/dsmm/dsmm.tmpl")
 	checkError("execute template failed, program exiting", err)
 	t.ExecuteTemplate(&dsmmSnippet, "dsmm", ratingsValues)
@@ -102,7 +109,7 @@ func UploadXmlFile(w http.ResponseWriter, r *http.Request) {
 	_, err = io.Copy(out, file)
 	checkError("write content from POST to file failed, program exiting", err)
 
-	dat, err := ioutil.ReadFile("/tmp/uploadedfile")
+	dat, err = ioutil.ReadFile("/tmp/uploadedfile")
 	checkError("read uploaded file failed, program exiting", err)
 
 	if !strings.Contains(string(dat), "</gmi:MI_Metadata>") {
@@ -125,6 +132,25 @@ func UploadXmlFile(w http.ResponseWriter, r *http.Request) {
 		if err := success.Execute(w, nil); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
+	}
+}
+
+func ViewXmlFileWithDsmmAdded(w http.ResponseWriter, r *http.Request)  {
+	if _, err := os.Stat("/tmp/uploadedfile"); os.IsNotExist(err) {
+		http.Redirect(w, r, "http://10.90.235.15:1313", 301)
+		return
+	}
+	t, err := template.ParseFiles("templates/dsmm/dsmm.tmpl")
+	checkError("execute template failed, program exiting", err)
+	t.ExecuteTemplate(&dsmmSnippet, "dsmm", ratingsValues)
+
+	dat, err = ioutil.ReadFile("/tmp/uploadedfile")
+	checkError("read uploaded file failed, program exiting", err)
+
+if strings.Contains(string(dat), "<gmd:metadataMaintenance>") {
+		fmt.Fprint(w, strings.Replace(string(dat), "</gmd:metadataMaintenance>", "</gmd:metadataMaintenance>" + dsmmSnippet.String(), 1))
+	} else {
+		fmt.Fprint(w, strings.Replace(string(dat), "</gmi:MI_Metadata>", dsmmSnippet.String() + "</gmi:MI_Metadata>", 1))
 	}
 	err = os.Remove("/tmp/uploadedfile")
 	checkError("remove uploaded file failed, program exiting", err)
