@@ -7,7 +7,7 @@ import (
 )
 
 var (
-  xmlFile string = "testfiles/NDBC-CMANWx.NDBC_51000_201509_D3_v00.xml"
+  xmlFile string = "testfiles/WTDL_20150803v10001.xml"
   protocol string = "http://"
   host string = "localhost:"
   port string = "8097"
@@ -39,5 +39,10 @@ func postFile(xmlFile string)  {
   client := &http.Client{}
   res, err := client.Do(req)
   checkError("client request failed", err)
+  if res.Status == "201 Created" {
+    fmt.Printf("posting %v successful with %v\n", xmlFile, res.Status)
+  } else {
+    fmt.Printf("posting %v failed with %v\n", xmlFile, res.Status)
+  }
   defer res.Body.Close()
 }
