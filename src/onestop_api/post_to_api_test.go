@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 )
 
 var testFiles []string = []string{
@@ -25,14 +26,15 @@ func TestPostFile(t *testing.T) {
 	for _, testFile := range testFiles {
 		postFile(testFile)
 	}
-
-	resp, _ := http.Get("http://localhost:9200/_search?pretty")
-	defer resp.Body.Close()
-	data, _ := ioutil.ReadAll(resp.Body)
+	time.Sleep(time.Second * 2)
 
 	for _, testFile := range testFiles {
+		resp, _ := http.Get("http://localhost:9200/_search?pretty")
+		defer resp.Body.Close()
+		data, _ := ioutil.ReadAll(resp.Body)
+
 		if !strings.Contains(string(data), strings.TrimSuffix(filepath.Base(testFile), ".xml")) {
-			t.Fatalf("Expected http://localhost:9200/_search?pretty to contain %s", strings.TrimSuffix(filepath.Base(testFile), ".xml"))
+			t.Error("Expected http://localhost:9200/_search?pretty to contain %s", strings.TrimSuffix(filepath.Base(testFile), ".xml"))
 		}
 	}
 }

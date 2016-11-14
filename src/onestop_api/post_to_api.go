@@ -2,8 +2,10 @@ package main
 
 import (
     "fmt"
+    "io/ioutil"
     "net/http"
     "os"
+    "path/filepath"
 )
 
 var (
@@ -39,10 +41,15 @@ func postFile(xmlFile string)  {
   client := &http.Client{}
   res, err := client.Do(req)
   checkError("client request failed", err)
-  if res.Status == "201 Created" {
-    fmt.Printf("posting %v successful with %v\n", xmlFile, res.Status)
-  } else {
-    fmt.Printf("posting %v failed with %v\n", xmlFile, res.Status)
-  }
   defer res.Body.Close()
+
+  // Access res.Body to collect server response errors
+  bs, err := ioutil.ReadAll(res.Body)
+  checkError("reading res.Body tanked", err)
+
+  if res.Status == "201 Created" {
+    fmt.Printf("%v successfully posted\n", filepath.Base(xmlFile))
+  } else {
+    fmt.Printf("ERROR: %v failed with %v------%v\n", filepath.Base(xmlFile), res.Status, string(bs))
+  }
 }
