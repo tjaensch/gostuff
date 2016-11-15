@@ -22,6 +22,13 @@ var testFiles []string = []string{
 	"testfiles/WTEY_20070816v20001.xml",
 }
 
+func TestFindXmlFiles(t *testing.T) {
+	result := findXmlFiles("./testfiles/")
+	if len(result) <= 0 {
+		t.Error("Got ", result)
+	}
+}
+
 func TestPostFile(t *testing.T) {
 	for _, testFile := range testFiles {
 		postFile(testFile)
@@ -34,7 +41,7 @@ func TestPostFile(t *testing.T) {
 		data, _ := ioutil.ReadAll(resp.Body)
 
 		if !strings.Contains(string(data), strings.TrimSuffix(filepath.Base(testFile), ".xml")) {
-			t.Error("Expected http://localhost:9200/_search?pretty to contain %s", strings.TrimSuffix(filepath.Base(testFile), ".xml"))
+			t.Error("Expected http://localhost:9200/_search?pretty to contain", strings.TrimSuffix(filepath.Base(testFile), ".xml"))
 		}
 	}
 }

@@ -1,19 +1,24 @@
 package main
 
 import (
+    "bytes"
     "fmt"
     "io/ioutil"
+    "log"
     "net/http"
     "os"
+    "os/exec"
     "path/filepath"
+    "time"
 )
 
 var (
-  xmlFile string = "testfiles/WTDL_20150803v10001.xml"
   protocol string = "http://"
   host string = "localhost:"
   port string = "8097"
   path string = "/onestop/api/metadata/"
+  xmlFilePath string = "./testfiles/"
+	xmlFiles    []string = findXmlFiles(xmlFilePath)
 )
 
 // Generic error checking function
@@ -25,7 +30,35 @@ func checkError(reason string, err error) {
 }
 
 func main() {
-  postFile(xmlFile)
+  t0 := time.Now()
+
+  findXmlFiles(xmlFilePath)
+
+  for _ , xmlFile := range (xmlFiles) {
+    postFile(xmlFile)
+  }
+
+  t1 := time.Now()
+	log.Printf("The program took %v seconds to run.\n", t1.Sub(t0).Seconds())
+}
+
+func findXmlFiles(xmlFilePath string) []string {
+	var xmlFiles []string
+	var files []byte
+	var err error
+	cmdName := "find"
+	cmdArgs := []string{"-L", xmlFilePath, "-type", "f", "-name", "*.xml"}
+	if files, err = exec.Command(cmdName, cmdArgs...).Output(); err != nil {
+		fmt.Printf("Something went wrong with finding .xml files in source directory, program exiting.", err)
+		os.Exit(1)
+	}
+
+	for _, rune := range bytes.Split(files, []byte{'\n'}) {
+		xmlFiles = append(xmlFiles, string(rune))
+	}
+	log.Printf("%d files found in source directory", len(xmlFiles)-1)
+	//Last element is blank that's why -1
+	return xmlFiles[:len(xmlFiles)-1]
 }
 
 func postFile(xmlFile string)  {
