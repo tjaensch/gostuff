@@ -18,8 +18,6 @@ var testFiles []string = []string{
 	"testfiles/NOS_9076070_201312_D1_v00.xml",
 	"testfiles/woa13_8594_t05_04.xml",
 	"testfiles/WTDL_20150803v10001.xml",
-	"testfiles/WTEE_20150928v20001.xml",
-	"testfiles/WTEY_20070816v20001.xml",
 }
 
 func TestFindXmlFiles(t *testing.T) {

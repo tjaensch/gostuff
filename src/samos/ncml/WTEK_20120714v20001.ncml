@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<netcdf>
+  <dimension name="time" length="1440" isUnlimited="true" />
+  <dimension name="f_string" length="11" />
+  <dimension name="h_string" length="236" />
+  <dimension name="h_num" length="50" />
+  <attribute name="title" value="FERDINAND HASSSLER Meteorological Data" />
+  <attribute name="site" value="FERDINAND HASSSLER" />
+  <attribute name="elev" type="short" value="0" />
+  <attribute name="ID" value="WTEK" />
+  <attribute name="IMO" value="unknown at this time" />
+  <attribute name="platform" value="unknown at this time" />
+  <attribute name="platform_version" value="unknown at this time" />
+  <attribute name="facility" value="unknown at this time" />
+  <attribute name="data_provider" value="unknown at this time" />
+  <attribute name="contact_info" value="Center for Ocean-Atmospheric Prediction Studies, The Florida State University, Tallahassee, FL, 32306-2840, USA" />
+  <attribute name="contact_email" value="samos@coaps.fsu.edu" />
+  <attribute name="fsu_version" value="200" />
+  <attribute name="receipt_order" value="01" />
+  <attribute name="start_date_time" value="2012/07/14 -- 00:00  UTC" />
+  <attribute name="end_date_time" value="2012/07/14 -- 23:59  UTC" />
+  <attribute name="EXPOCODE" value="EXPOCODE undefined for now" />
+  <attribute name="Cruise_id" value="Cruise_id undefined for now" />
+  <attribute name="Data_modification_date" value="06/05/2014 16:46:20 EDT" />
+  <attribute name="Metadata_modification_date" value="06/05/2014 16:46:20 EDT" />
+  <variable name="time" shape="time" type="int">
+    <attribute name="long_name" value="time" />
+    <attribute name="units" value="minutes since 1-1-1980 00:00 UTC" />
+    <attribute name="original_units" value="YYYYMMDD UTC" />
+    <attribute name="data_interval" type="int" value="-9999" />
+    <attribute name="observation_type" value="unknown" />
+    <attribute name="actual_range" type="int" value="17111520 17112959" />
+    <attribute name="qcindex" type="int" value="1" />
+  </variable>
+  <variable name="lat" shape="time" type="float">
+    <attribute name="actual_range" type="float" value="37.04 37.1" />
+    <attribute name="long_name" value="latitude" />
+    <attribute name="units" value="degrees (+N)" />
+    <attribute name="original_units" value="degrees (+N)" />
+    <attribute name="instrument" value="unknown" />
+    <attribute name="observation_type" value="measured" />
+    <attribute name="average_method" value="unknown" />
+    <attribute name="average_center" value="unknown" />
+    <attribute name="average_length" type="short" value="-9999" />
+    <attribute name="sampling_rate" type="float" value="-9999." />
+    <attribute name="data_precision" type="float" value="-9999." />
+    <attribute name="qcindex" type="int" value="2" />
+  </variable>
+  <variable name="lon" shape="time" type="float">
+    <attribute name="actual_range" type="float" value="284.32 284.67" />
+    <attribute name="long_name" value="longitude" />
+    <attribute name="units" value="degrees (+E)" />
+    <attribute name="original_units" value="degrees (-W/+E)" />
+    <attribute name="instrument" value="unknown" />
+    <attribute name="observation_type" value="unknown" />
+    <attribute name="average_method" value="unknown" />
+    <attribute name="average_center" value="unknown" />
+    <attribute name="average_length" type="short" value="-9999" />
+    <attribute name="sampling_rate" type="float" value="-9999." />
+    <attribute name="data_precision" type="float" value="-9999." />
+    <attribute name="qcindex" type="int" value="3" />
+  </variable>
+  <variable name="PL_HD" shape="time" type="float">
+    <attribute name="actual_range" type="float" value="0.2 359.32" />
+    <attribute name="long_name" value="platform heading" />
+    <attribute name="units" value="degrees (clockwise towards true north)" />
+    <attribute name="original_units" value="degrees (clockwise towards true north)" />
+    <attribute name="instrument" value="unknown" />
+    <attribute name="observation_type" value="unknown" />
+    <attribute name="average_method" value="unknown" />
+    <attribute name="average_center" value="unknown" />
+    <attribute name="average_length" type="short" value="-9999" />
+    <attribute name="sampling_rate" type="float" value="-9999." />
+    <attribute name="data_precision" type="float" value="-9999." />
+    <attribute name="missing_value" type="float" value="-9999." />
+    <attribute name="special_value" type="float" value="-8888." />
+    <attribute name="qcindex" type="int" value="4" />
+  </variable>
+  <variable name="PL_CRS" shape="time" type="float">
+    <attribute name="actual_range" type="float" value="1.23 351.59" />
+    <attribute name="long_name" value="platform course" />
+    <attribute name="units" value="degrees (clockwise towards true north)" />
+    <attribute name="original_units" value="degrees (clockwise towards true north)" />
+    <attribute name="instrument" value="unknown" />
+    <attribute name="observation_type" value="unknown" />
+    <attribute name="average_method" value="unknown" />
+    <attribute name="average_center" value="unknown" />
+    <attribute name="average_length" type="short" value="-9999" />
+    <attribute name="sampling_rate" type="float" value="-9999." />
+    <attribute name="data_precision" type="float" value="-9999." />
+    <attribute name="missing_value" type="float" value="-9999." />
+    <attribute name="special_value" type="float" value="-8888." />
+    <attribute name="qcindex" type="int" value="5" />
+  </variable>
+  <variable name="PL_WDIR" shape="time" type="float">
+    <attribute name="actual_range" type="float" value="354.9 354.9" />
+    <attribute name="long_name" value="platform relative wind direction" />
+    <attribute name="units" value="degrees (clockwise from bow)" />
+    <attribute name="original_units" value="degrees (clockwise from bow)" />
+    <attribute name="data_interval" type="int" value="-9999" />
+    <attribute name="instrument" value="unknown" />
+    <attribute name="zero_line_reference" type="float" value="-9999." />
+    <attribute name="observation_type" value="measured" />
+    <attribute name="distance_from_bow" type="float" value="-9999." />
+    <attribute name="centerline_offset" type="float" value="-9999." />
+    <attribute name="height" type="float" value="-9999." />
+    <attribute name="average_method" value="unknown" />
+    <attribute name="average_center" value="unknown" />
+    <attribute name="average_length" type="short" value="-9999" />
+    <attribute name="sampling_rate" type="float" value="-9999." />
+    <attribute name="data_precision" type="float" value="-9999." />
+    <attribute name="missing_value" type="float" value="-9999." />
+    <attribute name="special_value" type="float" value="-8888." />
+    <attribute name="qcindex" type="int" value="6" />
+  </variable>
+  <variable name="PL_SPD" shape="time" type="float">
+    <attribute name="actual_range" type="float" value="0.354936 5.776712" />
+    <attribute name="long_name" value="platform speed over ground" />
+    <attribute name="units" value="meter second-1" />
+    <attribute name="original_units" value="knot" />
+    <attribute name="instrument" value="unknown" />
+    <attribute name="observation_type" value="unknown" />
+    <attribute name="average_method" value="unknown" />
+    <attribute name="average_center" value="unknown" />
+    <attribute name="average_length" type="short" value="-9999" />
+    <attribute name="sampling_rate" type="float" value="-9999." />
+    <attribute name="data_precision" type="float" value="-9999." />
+    <attribute name="missing_value" type="float" value="-9999." />
+    <attribute name="special_value" type="float" value="-8888." />
+    <attribute name="qcindex" type="int" value="7" />
+  </variable>
+  <variable name="PL_WSPD" shape="time" type="float">
+    <attribute name="actual_range" type="float" value="1.36316 10.15426" />
+    <attribute name="long_name" value="platform relative wind speed" />
+    <attribute name="units" value="meter second-1" />
+    <attribute name="original_units" value="knot" />
+    <attribute name="data_interval" type="int" value="-9999" />
+    <attribute name="instrument" value="unknown" />
+    <attribute name="observation_type" value="measured" />
+    <attribute name="distance_from_bow" type="float" value="-9999." />
+    <attribute name="centerline_offset" type="float" value="-9999." />
+    <attribute name="height" type="float" value="-9999." />
+    <attribute name="average_method" value="unknown" />
+    <attribute name="average_center" value="unknown" />
+    <attribute name="average_length" type="short" value="-9999" />
+    <attribute name="sampling_rate" type="float" value="-9999." />
+    <attribute name="data_precision" type="float" value="-9999." />
+    <attribute name="missing_value" type="float" value="-9999." />
+    <attribute name="special_value" type="float" value="-8888." />
+    <attribute name="qcindex" type="int" value="8" />
+  </variable>
+  <variable name="P" shape="time" type="float">
+    <attribute name="actual_range" type="float" value="1018.13 1021.05" />
+    <attribute name="long_name" value="atmospheric pressure" />
+    <attribute name="units" value="millibar" />
+    <attribute name="original_units" value="millibar" />
+    <attribute name="instrument" value="unknown" />
+    <attribute name="mslp_indicator" value="unknown" />
+    <attribute name="observation_type" value="measured" />
+    <attribute name="distance_from_bow" type="float" value="-9999." />
+    <attribute name="centerline_offset" type="float" value="-9999." />
+    <attribute name="height" type="float" value="-9999." />
+    <attribute name="average_method" value="unknown" />
+    <attribute name="average_center" value="unknown" />
+    <attribute name="average_length" type="short" value="-9999" />
+    <attribute name="sampling_rate" type="float" value="-9999." />
+    <attribute name="data_precision" type="float" value="-9999." />
+    <attribute name="missing_value" type="float" value="-9999." />
+    <attribute name="special_value" type="float" value="-8888." />
+    <attribute name="qcindex" type="int" value="9" />
+  </variable>
+  <variable name="T" shape="time" type="float">
+    <attribute name="actual_range" type="float" value="24.17 26.97" />
+    <attribute name="long_name" value="air temperature" />
+    <attribute name="units" value="celsius" />
+    <attribute name="original_units" value="celsius" />
+    <attribute name="instrument" value="unknown" />
+    <attribute name="observation_type" value="measured" />
+    <attribute name="distance_from_bow" type="float" value="-9999." />
+    <attribute name="centerline_offset" type="float" value="-9999." />
+    <attribute name="height" type="float" value="-9999." />
+    <attribute name="average_method" value="unknown" />
+    <attribute name="average_center" value="unknown" />
+    <attribute name="average_length" type="short" value="-9999" />
+    <attribute name="sampling_rate" type="float" value="-9999." />
+    <attribute name="data_precision" type="float" value="-9999." />
+    <attribute name="missing_value" type="float" value="-9999." />
+    <attribute name="special_value" type="float" value="-8888." />
+    <attribute name="qcindex" type="int" value="10" />
+  </variable>
+  <variable name="RH" shape="time" type="float">
+    <attribute name="actual_range" type="float" value="-8888. -8888." />
+    <attribute name="long_name" value="relative humidity" />
+    <attribute name="units" value="percent" />
+    <attribute name="original_units" value="percent" />
+    <attribute name="instrument" value="unknown" />
+    <attribute name="observation_type" value="measured" />
+    <attribute name="distance_from_bow" type="float" value="-9999." />
+    <attribute name="centerline_offset" type="float" value="-9999." />
+    <attribute name="height" type="float" value="-9999." />
+    <attribute name="average_method" value="unknown" />
+    <attribute name="average_center" value="unknown" />
+    <attribute name="average_length" type="short" value="-9999" />
+    <attribute name="sampling_rate" type="float" value="-9999." />
+    <attribute name="data_precision" type="float" value="-9999." />
+    <attribute name="missing_value" type="float" value="-9999." />
+    <attribute name="special_value" type="float" value="-8888." />
+    <attribute name="qcindex" type="int" value="11" />
+  </variable>
+  <variable name="date" shape="time" type="int">
+    <attribute name="long_name" value="calender date" />
+    <attribute name="units" value="YYYYMMDD UTC" />
+    <attribute name="observation_type" value="unknown" />
+    <attribute name="actual_range" type="int" value="20120714 20120714" />
+    <attribute name="qcindex" type="int" value="1" />
+  </variable>
+  <variable name="time_of_day" shape="time" type="int">
+    <attribute name="long_name" value="time of day" />
+    <attribute name="units" value="hhmmss UTC" />
+    <attribute name="observation_type" value="unknown" />
+    <attribute name="actual_range" type="int" value="0 235900" />
+    <attribute name="qcindex" type="int" value="1" />
+  </variable>
+  <variable name="flag" shape="time f_string" type="char">
+    <attribute name="long_name" value="quality control flags" />
+    <attribute name="A" value="Units added" />
+    <attribute name="B" value="Data out of range" />
+    <attribute name="C" value="Non-sequential time" />
+    <attribute name="D" value="Failed T&gt;=Tw&gt;=Td" />
+    <attribute name="E" value="True wind error" />
+    <attribute name="F" value="Velocity unrealistic" />
+    <attribute name="G" value="Value &gt; 4 s. d. from climatology" />
+    <attribute name="H" value="Discontinuity" />
+    <attribute name="I" value="Interesting feature" />
+    <attribute name="J" value="Erroneous" />
+    <attribute name="K" value="Suspect - visual" />
+    <attribute name="L" value="Ocean platform over land" />
+    <attribute name="M" value="Instrument malfunction" />
+    <attribute name="N" value="In Port" />
+    <attribute name="O" value="Multiple original units" />
+    <attribute name="P" value="Movement uncertain" />
+    <attribute name="Q" value="Pre-flagged as suspect" />
+    <attribute name="R" value="Interpolated data" />
+    <attribute name="S" value="Spike - visual" />
+    <attribute name="T" value="Time duplicate" />
+    <attribute name="U" value="Suspect - statistial" />
+    <attribute name="V" value="Spike - statistical" />
+    <attribute name="X" value="Step - statistical" />
+    <attribute name="Y" value="Suspect between X-flags" />
+    <attribute name="Z" value="Good data" />
+  </variable>
+  <variable name="history" shape="h_num h_string" type="char">
+    <attribute name="long_name" value="file history information" />
+  </variable>
+
+<title>WTEK_20120714v20001</title>
+<filesize>109</filesize>
+<path>coaps/samos/WTEK/2012/07/</path>
+</netcdf>

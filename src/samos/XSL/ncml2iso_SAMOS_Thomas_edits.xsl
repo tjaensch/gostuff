@@ -14,7 +14,7 @@
 	<!--NCEI-MD NCML data-->
 	<xsl:variable name="id" select="//*[@name='title']/@value"/>
 	<xsl:variable name="title" select="//*[@name='title']/@value"/>
-	<xsl:variable name="datasetname" select="'COAPS.SAMOS'"/>	
+	<xsl:variable name="datasetname" select="'COAPS.SAMOS'"/>
 	<xsl:variable name="filesize" select="netcdf/filesize"/>
 	<xsl:variable name="fileidentifier" select="netcdf/title"/>
 
@@ -600,9 +600,11 @@
 															<xsl:value-of select="$temporalUnits"/>
 														</gml:description>
 														<gml:beginPosition>
-															<xsl:value-of select="substring($timeStart,0,11)"/>
+															<xsl:value-of select="concat(substring($timeStart,0,5),'-',substring($timeStart,6,2),'-',substring($timeStart,9,2))"/>
 														</gml:beginPosition>
-														<gml:endPosition indeterminatePosition="now"/>
+														<gml:endPosition>
+															<xsl:value-of select="concat(substring($timeEnd,0,5),'-',substring($timeEnd,6,2),'-',substring($timeEnd,9,2))"/>
+														</gml:endPosition>
 													</gml:TimePeriod>
 												</gmd:extent>
 											</gmd:EX_TemporalExtent>
