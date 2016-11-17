@@ -10,23 +10,23 @@
 	<xsl:variable name="physicalMeasurementCnt" select="count(netcdf/variable[not(contains((translate(@name,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')),'_qc'))])"/>
 	<xsl:variable name="qualityInformationCnt" select="count(netcdf/variable[contains((translate(@name,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')),'_qc')])"/>
 	<xsl:variable name="standardNameCnt" select="count(netcdf/variable/attribute[@name='standard_name'])"/>
-	
+
 	<!--NCEI-MD NCML data-->
 	<xsl:variable name="id" select="//*[@name='title']/@value"/>
 	<xsl:variable name="title" select="//*[@name='title']/@value"/>
-	<xsl:variable name="datasetname" select="'COAPS/SAMOS'"/>	
+	<xsl:variable name="datasetname" select="'COAPS.SAMOS'"/>	
 	<xsl:variable name="filesize" select="netcdf/filesize"/>
 	<xsl:variable name="fileidentifier" select="netcdf/title"/>
 
 	<!--Need to edit based on the Pathfinder data-->
 	<xsl:variable name="thredds_netcdfsubsetCnt" select="count(netcdf/group[@name='Dataservicelinks']/group[@name='services']/attribute[@name='nccs_service'])"/>
-	
+
 <!--NCEI-MD added for extra service links -->
 	<xsl:variable name="Pathfinderthredds" select="translate(normalize-space(concat('http://data.nodc.noaa.gov/thredds/catalog/', netcdf/path, 'catalog.html?dataset=',netcdf/path,netcdf/title,'.nc')),' ','')"/>
 	<xsl:variable name="Pathfinderhttp" select="translate(normalize-space(concat('http://data.nodc.noaa.gov/', netcdf/path,netcdf/title,'.nc')),' ','')"/>
 	<xsl:variable name="Pathfinderopendap" select="translate(normalize-space(concat('http://data.nodc.noaa.gov/thredds/dodsC/', netcdf/path,netcdf/title,'.nc.html')),' ','')"/>
 	<xsl:variable name="Pathfinderftp" select="translate(normalize-space(concat('ftp://ftp.nodc.noaa.gov/pub/data.nodc/',netcdf/path,netcdf/title,'.nc')),' ','')"/>
-	
+
 	<!--Added for Cloud pilot project-->
 	<xsl:variable name="serviceMax">7</xsl:variable>
 
@@ -37,7 +37,7 @@
 	<xsl:variable name="stdNameVocabulary" select="//*[@name='standard_name_vocabulary']/@value"/>
 	<xsl:variable name="comment" select="//*[@name='comment']/@value"/>
 	<xsl:variable name="history" select="//*[@name='history']/@value"/>
-	
+
 <!-- Extent Search Fields: 17 possible -->
 
 	<xsl:variable name="geospatial_lat_min" select="substring-before(//variable[@name='lat']/attribute[@name='actual_range']/@value,' ')"/>
@@ -49,7 +49,7 @@
 	<xsl:variable name="browsegraphic_geospatial_lat_min" select="($geospatial_lat_min + $geospatial_lat_max) div 2"/>
 	<xsl:variable name="browsegraphic_geospatial_lon_min" select="($geospatial_lon_min + $geospatial_lon_max) div 2"/>
 	<xsl:variable name="browsegraphic" select="translate(normalize-space(concat('http://maps.googleapis.com/maps/api/staticmap?center=', $browsegraphic_geospatial_lat_min,',',$browsegraphic_geospatial_lon_min, '&amp;zoom=7&amp;scale=false&amp;size=600x600&amp;maptype=satellite&amp;format=png&amp;visual_refresh=true', $browsegraphic_geospatial_lat_min,',',$browsegraphic_geospatial_lon_min, '&amp;stream=true&amp;stream_ID=plot_image')),' ','')"/>
-	
+
 	<xsl:variable name="timeStart" select="//*[@name='start_date_time']/@value"/>
 	<xsl:variable name="timeEnd" select="//*[@name='end_date_time']/@value"/>
 	<xsl:variable name="verticalMin" select="netcdf/group[@name='CFMetadata']/attribute[@name='geospatial_vertical_min']/@value"/>
@@ -65,7 +65,7 @@
 	<xsl:variable name="verticalResolution" select=" //attribute[@name='geospatial_vertical_resolution']/@value"/>
 	<xsl:variable name="verticalPositive" select="//*[@name='geospatial_vertical_positive']/@value"/>
 	<!-- dimension variables -->
-	
+
 <!--Need to check with Pathfinder-->
 	<xsl:variable name="longitudeVariableName" select="netcdf/variable[@name='lon']/attribute[@name='long_name']/@value"/>
 	<xsl:variable name="latitudeVariableName" select="netcdf/variable[@name='lat']/attribute[@name='long_name' ]/@value"/>
@@ -269,7 +269,7 @@
 								</xsl:call-template>
 							</xsl:if>
 							<gmd:cellGeometry>
-                 <gmd:MD_CellGeometryCode  codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_CellGeometryCode" codeListValue="area"> 
+                 <gmd:MD_CellGeometryCode  codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_CellGeometryCode" codeListValue="area">
 									<xsl:value-of select="'area'"/>
 								</gmd:MD_CellGeometryCode>
 							</gmd:cellGeometry>
@@ -429,11 +429,11 @@
 						</gmd:MD_BrowseGraphic>
 					</gmd:graphicOverview>
 					</xsl:if>
-					
+
 					<xsl:if test="not($keywords)">
 						<gmd:descriptiveKeywords />
 					</xsl:if>
-					
+
 					<xsl:if test="count($keywords)">
 						<gmd:descriptiveKeywords>
 							<gmd:MD_Keywords>
@@ -474,7 +474,7 @@
 							</gmd:MD_Keywords>
 						</gmd:descriptiveKeywords>
 					</xsl:if>
-					
+
 					<xsl:if test="$standardNameCnt">
 						<gmd:descriptiveKeywords>
 							<gmd:MD_Keywords>
@@ -608,7 +608,7 @@
 											</gmd:EX_TemporalExtent>
 										</gmd:temporalElement>
 									</xsl:if>
-									
+
 								</gmd:EX_Extent>
 							</xsl:when>
 
@@ -655,7 +655,7 @@
 											</gmd:extent>
 										</gmd:EX_TemporalExtent>
 									</gmd:temporalElement>
-									
+
 								</gmd:EX_Extent>
 							</xsl:otherwise>
 						</xsl:choose>
@@ -687,7 +687,7 @@
 					<xsl:with-param name="serviceOperationName" select="'THREDDS Client Access'"/>
 					<xsl:with-param name="operationURL" select="$Pathfinderthredds"/></xsl:call-template>
 			</xsl:if> -->
-	
+
 				<!-- WMS -->
 			        <xsl:call-template name="writeService">
 			          <xsl:with-param name="serviceID" select="'OGC_WMS'"/>
@@ -695,7 +695,7 @@
 			          <xsl:with-param name="serviceOperationName" select="'GetCapabilities'"/>
 			        	<xsl:with-param name="operationURL" select="translate(normalize-space(concat('http://data.nodc.noaa.gov/thredds/wms/', netcdf/path, netcdf/title,'.nc?service=WMS&amp;version=1.3.0&amp;request=GetCapabilities')),' ','')"/>
 			        </xsl:call-template>
-			      
+
 			     <!-- WCS -->
 			        <xsl:call-template name="writeService">
 			          <xsl:with-param name="serviceID" select="'OGC_WCS'"/>
@@ -703,7 +703,7 @@
 			          <xsl:with-param name="serviceOperationName" select="'GetCapabilities'"/>
 			        	<xsl:with-param name="operationURL" select="translate(normalize-space(concat('http://data.nodc.noaa.gov/thredds/wcs/', netcdf/path, netcdf/title,'.nc?service=WCS&amp;version=1.0.0&amp;request=GetCapabilities')),' ','')"/>
 			        </xsl:call-template>
-			     
+
 			      <xsl:if test="subsetcount">
 			        <xsl:call-template name="writeService">
 			          <xsl:with-param name="serviceID" select="'THREDDS_NetCDF_Subset'"/>
@@ -1133,7 +1133,7 @@
 												</gmd:CI_OnlineResource>
 											</gmd:onlineResource>
 										</xsl:if>
-									-->	
+									-->
 									</gmd:CI_Contact>
 								</xsl:when>
 								<xsl:otherwise>
@@ -1279,7 +1279,7 @@ Main NCEI website providing links to access data and data services.
 							<gco:Measure>
 								<xsl:attribute name="uom"><xsl:value-of select="$dimensionUnits"/></xsl:attribute>
 								<xsl:value-of select="$dimensionResolution"/>
-							</gco:Measure>	
+							</gco:Measure>
 						</xsl:when> -->
 						<xsl:when test="$dimensionUnits and not($dimensionResolution)">
 							<xsl:attribute name="gco:nilReason">missing</xsl:attribute>
@@ -1444,7 +1444,7 @@ Main NCEI website providing links to access data and data services.
 
 				<srv:couplingType>
 					<srv:SV_CouplingType codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml" codeListValue="tight">tight</srv:SV_CouplingType>
-				</srv:couplingType> 
+				</srv:couplingType>
 				<srv:containsOperations>
 					<srv:SV_OperationMetadata>
 						<srv:operationName>

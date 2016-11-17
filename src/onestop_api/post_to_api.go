@@ -14,10 +14,10 @@ import (
 
 var (
   protocol string = "http://"
-  host string = "localhost:"
+  host string = "10.90.235.15:"
   port string = "8097"
   path string = "/onestop/api/metadata/"
-  xmlFilePath string = "./testfiles/"
+  xmlFilePath string = "/nodc/projects/satdata/Granule_OneStop/SAMOS/xml_output"
 	xmlFiles    []string = findXmlFiles(xmlFilePath)
 )
 
