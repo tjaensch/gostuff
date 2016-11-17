@@ -17,7 +17,7 @@ var (
   host string = "10.90.235.15:"
   port string = "8097"
   path string = "/onestop/api/metadata/"
-  xmlFilePath string = "/nodc/projects/satdata/Granule_OneStop/SAMOS/xml_output"
+  xmlFilePath string = "/nodc/users/tjaensch/onestop.git/src/samos/xml_output"
 	xmlFiles    []string = findXmlFiles(xmlFilePath)
 )
 
