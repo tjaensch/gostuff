@@ -78,6 +78,7 @@ func main() {
 func prepDirs() {
 	os.Mkdir("./ncml", 0777)
 	os.Mkdir("./xml_output", 0777)
+	os.Mkdir("./netcdf3", 0777)
 }
 
 // Create fileSegments slice of slice for concurrent processing
@@ -132,8 +133,15 @@ func findNcFiles(ncFilePath string) []string {
 func ncdump(ncFile string) {
 	var ncml []byte
 	var err error
-	cmdName := "ncdump"
-	cmdArgs := []string{"-x", ncFile}
+	// Convert netcdf4 to netcdf3 for ncdump -x to work
+	cmdName := "ncks"
+	cmdArgs := []string{"-3", ncFile, "netcdf3/" + filepath.Base(ncFile)}
+	if _, err = exec.Command(cmdName, cmdArgs...).Output(); err != nil {
+		fmt.Printf("Something went wrong with ncks, program exiting.", err)
+		os.Exit(1)
+	}
+	cmdName = "ncdump"
+	cmdArgs = []string{"-x", "./netcdf3/" + filepath.Base(ncFile)}
 	if ncml, err = exec.Command(cmdName, cmdArgs...).Output(); err != nil {
 		fmt.Printf("Something went wrong with ncdump, program exiting.", err)
 		os.Exit(1)

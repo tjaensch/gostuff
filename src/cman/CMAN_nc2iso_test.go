@@ -13,6 +13,7 @@ var testFile string = "/nodc/web/data.nodc/htdocs/ndbc/cmanwx/2016/05/NDBC_44020
 func init() {
 	os.Mkdir("./ncml", 0777)
 	os.Mkdir("./xml_output", 0777)
+	os.Mkdir("./netcdf3", 0777)
 }
 
 func TestGetFileName(t *testing.T) {
@@ -63,16 +64,16 @@ func TestNcdump(t *testing.T) {
 }
 
 func TestAppendToNcml(t *testing.T) {
-	additions := ncmlAdditions{ncFileName: "NDBC_44020_201605_D6_v00", fileSize: 100, dataPath: "test/moo/blah", englishTitle: "English title"}
+	additions := ncmlAdditions{ncFileName: getFileName(testFile), fileSize: getFileSize(testFile), dataPath: getFilePath(testFile), englishTitle: getEnglishTitle(testFile)}
 	appendToNcml(testFile, additions)
 	input, _ := ioutil.ReadFile("./ncml/" + getFileName(testFile) + ".ncml")
-	if !strings.Contains(string(input), "test/moo/blah") {
+	if !strings.Contains(string(input), "/ndbc/cmanwx/2016/05/") {
 		t.Error("appendtoNcml tanked")
 	}
 }
 
 func TestXsltprocToISO(t *testing.T) {
-	xsltprocToISO(testFile, "XSL/ncml2iso_modified_from_UnidataDD2MI_CMAN_Thomas_edits.xsl")
+	xsltprocToISO(testFile, "/nodc/users/tjaensch/onestop.git/xsl/cman/XSL/ncml2iso_modified_from_UnidataDD2MI_CMAN_Thomas_edits.xsl")
 	input, _ := ioutil.ReadFile("./xml_output/" + getFileName(testFile) + ".xml")
 	if !strings.Contains(string(input), "<gmi:MI_Metadata") {
 		t.Error("xsltprocToISO tanked")
