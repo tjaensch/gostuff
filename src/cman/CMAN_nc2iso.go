@@ -97,17 +97,19 @@ func getFileSegments() [][]string {
 
 func nc2iso(ncFiles []string) {
 	for _, ncFile := range ncFiles {
-		var (
-			ncFileName   string = getFileName(ncFile)
-			fileSize     int    = getFileSize(ncFile)
-			dataPath     string = getFilePath(ncFile)
-			englishTitle string = getEnglishTitle(ncFile)
-			additions           = ncmlAdditions{ncFileName, fileSize, dataPath, englishTitle}
-		)
-		ncdump(ncFile)
-		appendToNcml(ncFile, additions)
-		xsltprocToISO(ncFile, xslFile)
-		addCollectionMetadata(ncFile)
+		if _, err := os.Stat("./xml_output/" + getFileName(ncFile) + ".xml"); os.IsNotExist(err) {
+			var (
+				ncFileName   string = getFileName(ncFile)
+				fileSize     int    = getFileSize(ncFile)
+				dataPath     string = getFilePath(ncFile)
+				englishTitle string = getEnglishTitle(ncFile)
+				additions           = ncmlAdditions{ncFileName, fileSize, dataPath, englishTitle}
+			)
+			ncdump(ncFile)
+			appendToNcml(ncFile, additions)
+			xsltprocToISO(ncFile, xslFile)
+			addCollectionMetadata(ncFile)
+		}
 	}
 }
 
@@ -136,10 +138,23 @@ func ncdump(ncFile string) {
 	// Convert netcdf4 to netcdf3 for ncdump -x to work
 	cmdName := "ncks"
 	cmdArgs := []string{"-3", ncFile, "netcdf3/" + filepath.Base(ncFile)}
-	if _, err = exec.Command(cmdName, cmdArgs...).Output(); err != nil {
-		fmt.Printf("Something went wrong with ncks, program exiting.", err)
-		os.Exit(1)
+	// Open log file
+	f, err := os.OpenFile("CMAN_nc2iso_conversion_failures.log", os.O_APPEND|os.O_CREATE|os.O_RDWR, 0666)
+	checkError("open log file failed", err)
+	defer f.Close()
+	// Assign it to the standard logger
+	log.SetOutput(f)
+	cmd := exec.Command(cmdName, cmdArgs...)
+	var out bytes.Buffer
+	var stderr bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &stderr
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println(ncFile + " stderror: " + stderr.String())
+		log.Println(ncFile + " stderror: " + stderr.String())
 	}
+
 	cmdName = "ncdump"
 	cmdArgs = []string{"-x", "./netcdf3/" + filepath.Base(ncFile)}
 	if ncml, err = exec.Command(cmdName, cmdArgs...).Output(); err != nil {
@@ -147,7 +162,7 @@ func ncdump(ncFile string) {
 		os.Exit(1)
 	}
 	// Write ncdump conversion to file
-	err = ioutil.WriteFile("./ncml/" + getFileName(ncFile) + ".ncml", ncml, 0644)
+	err = ioutil.WriteFile("./ncml/"+getFileName(ncFile)+".ncml", ncml, 0644)
 	checkError("write ncml file failed, program exiting", err)
 }
 
