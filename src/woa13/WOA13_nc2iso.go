@@ -38,7 +38,7 @@ func checkError(reason string, err error) {
 
 var (
 	ncFilePath string = "/nodc/web/data.nodc/htdocs/nodc/archive/data/0114815/public"
-	xslFile    string = "XSL/ncml2iso_modified_from_UnidataDD2MI_demo_WOA_Thomas_edits.xsl"
+	xslFile    string = "/nodc/users/tjaensch/onestop.git/xsl/woa13/XSL/ncml2iso_modified_from_UnidataDD2MI_demo_WOA_Thomas_edits.xsl"
 	//WOA13 collection metadata template file
 	isocofile     string   = "/nodc/web/data.nodc/htdocs/nodc/archive/metadata/approved/iso/0114815.xml"
 	ncFiles       []string = findNcFiles(ncFilePath)
@@ -212,7 +212,7 @@ func addCollectionMetadata(ncFile string) {
 	var isoXML []byte
 	var err error
 	cmdName := "xsltproc"
-	cmdArgs := []string{"--stringparam", "collFile", isocofile, "XSL/granule.xsl", "./xml_output/" + getFileName(ncFile) + ".xml"}
+	cmdArgs := []string{"--stringparam", "collFile", isocofile, "/nodc/users/tjaensch/onestop.git/xsl/woa13/XSL/granule.xsl", "./xml_output/" + getFileName(ncFile) + ".xml"}
 	if isoXML, err = exec.Command(cmdName, cmdArgs...).Output(); err != nil {
 		fmt.Printf("Something went wrong with the collection metadata addition, program exiting.", err)
 		os.Exit(1)

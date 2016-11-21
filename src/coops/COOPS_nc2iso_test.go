@@ -72,7 +72,7 @@ func TestAppendToNcml(t *testing.T) {
 }
 
 func TestXsltprocToISO(t *testing.T) {
-	xsltprocToISO(testFile, "XSL/ncml2iso_modified_from_UnidataDD2MI_COOPS_Thomas_edits.xsl")
+	xsltprocToISO(testFile, "/nodc/users/tjaensch/onestop.git/xsl/coops/XSL/ncml2iso_modified_from_UnidataDD2MI_COOPS_Thomas_edits.xsl")
 	input, _ := ioutil.ReadFile("./xml_output/" + getFileName(testFile) + ".xml")
 	if !strings.Contains(string(input), "<gmi:MI_Metadata") {
 		t.Error("xsltprocToISO tanked")

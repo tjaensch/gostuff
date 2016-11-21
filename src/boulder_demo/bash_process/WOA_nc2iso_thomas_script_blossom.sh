@@ -11,7 +11,7 @@ function error_exit
 isocofile="/nodc/web/data.nodc/htdocs/nodc/archive/metadata/approved/iso/0114815.xml"
 
 #Loop through script arguments and process one by one
-for filename in "$@" 
+for filename in "$@"
 	do
 		if [ -z "$filename" ]; then
 			error_exit "File not available, program exiting."
@@ -41,7 +41,7 @@ for filename in "$@"
 			ncdump -x $filename.nc 2>&1 | tee -a errors.txt
 			sed -i '$ a ++++++++++++++++: ' errors.txt
 			error_exit "Something went wrong with nccopy/ncdump, program exiting."
-		fi	
+		fi
 
 		#Replace the second line in the ncml file with <netcdf>
 		if sed -i '2 c\ \<netcdf\>' $filename.ncml;
@@ -50,10 +50,10 @@ for filename in "$@"
 		   sed -i '4 a <title>'$filename'</title>' $filename.ncml;
 		   sed -i '5 a <filesize>'$filesize'</filesize>' $filename.ncml; then
 			#Apply modified UnidataDD2MI XSL to work with WOA data
-			xsltproc XSL/ncml2iso_modified_from_UnidataDD2MI_demo_WOA_Thomas_edits.xsl $filename.ncml > $filename.xml
+			xsltproc /nodc/users/tjaensch/onestop.git/xsl/boulder_demo/bash_process/XSL/ncml2iso_modified_from_UnidataDD2MI_demo_WOA_Thomas_edits.xsl $filename.ncml > $filename.xml
 			#Apply WOA collection metadata
-			xsltproc --stringparam collFile $isocofile XSL/granule.xsl $filename.xml > output/$filename.xml
-		else 
+			xsltproc --stringparam collFile $isocofile /nodc/users/tjaensch/onestop.git/xsl/boulder_demo/bash_process/XSL/granule.xsl $filename.xml > output/$filename.xml
+		else
 			error_exit "Something went wrong with xsltproc, program exiting."
 		fi
 
