@@ -1,0 +1,33 @@
+Timestamp,Username,Dataset Short Name,Dataset Title,Dataset Information URL(s),Data Provider Point-Of-Contact,Dataset Point-Of-Contact ,DSMM Version,DSMM Point-Of-Contact,DSMM template version,This DSMM Assessment Version,This DSMM Assessment Date,DSMM Assessment Point-Of-Contact for This Version,DSMM Assessment Point-Of-Contact for This Version,Preservability Rating,Accessibility Rating,Usability Rating,Production Sustainability Rating,Data Quality Assurance Rating,Data Quality Control/Monitoring Rating,Data Quality Assessment Rating,Transparency/Traceability Rating,Data Integrity Rating,DSMM Original Assessment Date,DSMM Original Assessment Point-Of-Contact,DSMM Last Assessment Date ,DSMM Last Assessment Point-Of-Contact,What Is New - Last Assessment,Maturity Matrix Tag,Last DSMM Assessment Modified Date,Preservability Rating Justification,Accessibility Rating Justification,Usability Rating Justification,Production Sustainability Rating Justification,Data Quality Assurance Justification,Data Quality Control/Monitoring Rating Justification,Data Quality Assessment Rating Justification,Transparency/Traceability Rating Justification,Data Integrity Rating Justification,Status of Inputing the Assessment Results,Comments - Preservability,Comments - Accessibility,Comments - Usability,Comments - Production Sustainability,Comments - Data Quality Assurance,Comments - Data Quality Control/Monitoring,Comments - Data Quality Assessment,Comments - Transparency/Traceability,Comments - Data Integrity ,Dataset Collection-Level Metadata Record File Name,Data Group Code
+6/30/2016 14:40,ge.peng@noaa.gov,NOAA-NSIDC_PMSIC_CDR-v2,"NOAA/NSIDC Passive Microwave Sea Ice Concentration Climate Data Record (CDR), Version 2",http://nsidc.org/data/G02202/,"Walter Meier, Walt.Meier@nasa.gov, NASA Goddard Space Flight Center (GSFC)","Donna Scott, dscott@nsidc.org,  National Snow and Ice Center (NSIDC)",NCDC-CICS-SMM_001_Rev.1,"Ge Peng, Ge Peng@noaa.gov, CICS-NC/NCEI",NCDC_CICS_SMM_0001_Rev1_template_v4.0_20150623,v02r01,6/23/2015,"Ge Peng, Ge.Peng@noaa.gov, CICS-NC/NCEI-NC",Added url to science paper and updated Data Quality Assessment rating to Level 3 from Level 2.,4,2,3.5,4,3.5,2,3,3,4,10/16/2014,"Donna Scott, dscott@nsidc.org, NSIDC; Ge Peng, Ge.Peng@noaa.gov, CICS-NC/NCEI-NC",,,,MM-Stew,,"•	Archived at NOAA’s NCEI-NC (formerly known as NCDC)
+•	Following NOAA’s Climate Data Record (CDR) Research-2-Operation(R2O) transition process with the Initial Operation Capability (IOC)
+•	Following ISO OAIS RM 
+•	Conforming to ISO 19115-2 metadata standards 
+•	Conforming to NetCDF CF metadata conventions
+•	Conforming to CDR Program (CDRP) guidelines on coding and NCEI Archive Branch (AB) guidance on file and variable naming conventions per Submission Agreement (SA)","•	Public ftp site (ftp://sidads.colorado.edu/pub/DATASETS/NOAA/G02202_v2)
+•	Collection searchable online","•	NetCDF CF-1.5 and CDRP data format guideline
+•	Documentation (Algorithm description, source code package, data overview, data flow diagram, product maturity rating) online (http://www.ncdc.noaa.gov/cdr/operationalcdrs.html)
+•	Data paper online – user’s guide (doi:http://dx.doi.org/10.5194/essd-5-311-2013)
+•	Some data characterization on the global scale (data paper see doi above and science papers- doi:http://dx.doi.org/10.3402/polar.v33.21004)
+•	No subsetting or aggregating on data server site","•	Under NOAA’s CDR Operation & Maintenance (O&M)
+•	Update annually
+•	Funding is allocated yearly
+•	Product improvement process is in place","•	Agile development procedure in place with a defined/fixed set of analysis metrics 
+•	Master reference data are included in the source code package which is available online
+•	Weather filters
+•	SST mask
+•	Cell data quality flag in each data file
+•	No data quality assurance metadata implemented","•	DQC is done after each data processing
+•	Sampling is regular in space but not automatic
+•	Procedure not documented nor online","•	Sea ice concentration retrieval algorithms (NASA Team and Bootstrap) have been validated extensively with many published peer-reviewed papers
+•	So are research products (Goddard products) for this dataset
+•	Verification of the dataset is done and described in Science paper which is online (doi:http://dx.doi.org/10.3402/polar.v33.21004)","•	C-ATBD assigned unique documentation ID (CDRP-ATBD-0107) and online (http://www1.ncdc.noaa.gov/pub/data/sds/cdr/CDRs/Sea_Ice_Concentration/AlgorithmDescription.pdf)
+•	Source code package online (http://www.ncdc.noaa.gov/cdr/operationalcdrs.html)
+•	DOI for dataset is assigned (http://dx.doi.org/10.7265/N55M63M1)
+•	Dataset assigned NCEI-NC dataset ID (DSI-3628-02)
+•	 Source code package and documentation package are assigned a unique documentation ID including version number.
+•	Both dataset and documentations are under configuration management at NCEI-NC.","•	Checksum is created by NSIDC for each monthly tar file staged for NCEI-NC
+•	NCEI-NC ingest validate each file based on check-sum before archive
+•	NSIDC generate the check-sum for each data file and online for users to verify data integrity.",Final,,,,,,,,,,C00808.xml,CDR
+5/18/2016 14:45,ge.peng@noaa.gov,GHCN-M-v3,"Global Historical Climatology Network-Monthly, Version 3",http://www.ncdc.noaa.gov/ghcnm/v3.php; http://dx.doi.org/10.7289/V5X34VDR; ,"Jay Lawrimore, Jay.Lawrimore@noaa.gov, NCEI/CWC/CSD/DSB","Jay Lawrimore, Jay.Lawrimore@noaa.gov, NCEI/CWC/CSD/DSB",NCDC-CICS-SMM_001_Rev.1,"Ge Peng, Ge Peng@noaa.gov, CICS-NC/NCEI",NCDC_CICS_SMM_0001_Rev1_template_v4.0_20150623,v01r03,9/4/2015,"Jay Lawrimore;,Jay.Lawrimore@noaa.gov, NCEI/CWC/CSD/DSB; Valerie Toner, valerie.toner@noaa.gov, NCEI/DSD/AB; Christina Lief, Christina.Lief@noaa.gov, NCEI/DSD/AB; Ge Peng, Ge.Peng@noaa.gov, NCEI/CWC/CSD/PRB & CICS-NC; Rich Baldwin, Rich.Baldwin@noaa.gov,NCEI/DSD/DAB",Baseline,4,2,2.5,4.5,3.5,2.5,3,2.5,3.5,6/8/2015,"Valerie Toner, valerie.toner@noaa.gov, NCEI/DSD/AB",,,,MM-Stew,,,,,,,,,,,,,,,,,,,,,,
+5/18/2016 14:56,ge.peng@noaa.gov,NOAA-WDS_ITRDB,NOAA/WDS Paleoclimatology International Tree-Ring Data Bank ,https://www.ncdc.noaa.gov/data-access/paleoclimatology-data/datasets/tree-ring,"Bruce Bauer, Bruce.A.Bauer@NOAA.gov, NOAA/NCEI","Bruce Bauer, Bruce.A.Bauer@NOAA.gov, NOAA/NCEI",NCDC-CICS-SMM_001_Rev.1,"Ge Peng, Ge Peng@noaa.gov, CICS-NC/NCEI",NCDC_CICS_SMM_0001_Rev1_template_v4.0_20150623,v01r00,4/15/2016,"Bruce Bauer, Bruce.A.Bauer@NOAA.gov, NOAA/NCEI; Wendy Gross,Wendy.Gross@NOAA.gov, NOAA/NCEI",Initial Release,3,3.5,3,4.5,3.5,2,3,2,3.5,2/29/2016,"Bruce Bauer, Bruce.A.Bauer@NOAA.gov, NOAA/NCEI; Wendy Gross,Wendy.Gross@NOAA.gov, NOAA/NCEI",4/15/2016,"Ge Peng, Ge.Peng@noaa.gov, CICS-NC/NCEI",Review and baseline,MM-Stew,,,,,,,,,,,,,,,,,,,,,,
