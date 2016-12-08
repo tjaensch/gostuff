@@ -9,6 +9,8 @@ import (
 
 var (
 	csvfile string = "DSMM_CSV_input_file/dsmm_assessments.csv"
+	singleRecord DsmmAssessmentRecord
+	allRecords []DsmmAssessmentRecord
 )
 
 // Struct that represents values of one line of CSV input file
@@ -77,11 +79,6 @@ func getCsvData() []DsmmAssessmentRecord {
 
 	rawCSVdata, err := reader.ReadAll()
 	checkError("reading csv data failed", err)
-
-	// Initialize struct with default values
-	singleRecord := DsmmAssessmentRecord{A: "N/A", B: "N/A", AA: "N/A", AD: "N/A"}
-
-	var allRecords []DsmmAssessmentRecord
 
 	for _, cell := range rawCSVdata {
 		singleRecord.A = cell[0]
