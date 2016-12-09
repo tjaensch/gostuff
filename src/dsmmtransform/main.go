@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
+	"time"
 )
 
 // Generic error checking function
@@ -13,9 +15,20 @@ func checkError(reason string, err error) {
 	}
 }
 
+// Create file directories
+func prepDirs() {
+	os.Mkdir("./output", 0777)
+}
+
 func main() {
+	log.Printf("Working digging up files...")
+	t0 := time.Now()
 
 	allRecords := getCsvData()
+	prepDirs()
 	writeCsvDataToWordDoc(allRecords)
 
-}
+	t1 := time.Now()
+	log.Printf("The program took %v minutes to run.\n", t1.Sub(t0).Minutes())
+
+} // end main()
