@@ -188,7 +188,7 @@ func writeCsvDataToWordDoc(allRecords []DsmmAssessmentRecord) {
 		} else {
 			docx.Replace("DSM_AY", allRecords[i].AY, -1)
 		}
-		// Write to file with Dataset Short Name as doc title
+		// Write to file with Dataset Short Name and version number as doc title
 			docx.WriteToFile("./output/" + allRecords[i].C + "_" + allRecords[i].K + ".docx")
 
 	} // end writeCsvDataToWordDoc
