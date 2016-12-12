@@ -24,7 +24,7 @@ func main() {
 	log.Printf("Working digging up files...")
 	t0 := time.Now()
 
-	allRecords := getCsvData()
+	allRecords := getCsvData(csvfile)
 	prepDirs()
 	writeCsvDataToWordDoc(allRecords)
 

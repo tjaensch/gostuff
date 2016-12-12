@@ -69,8 +69,8 @@ type DsmmAssessmentRecord struct {
 }
 
 // Read CSV data into struct slice
-func getCsvData() []DsmmAssessmentRecord {
-	csvfile, err := os.Open(csvfile)
+func getCsvData(datafile string) []DsmmAssessmentRecord {
+	csvfile, err := os.Open(datafile)
 	checkError("open csv file failed", err)
 	defer csvfile.Close()
 
