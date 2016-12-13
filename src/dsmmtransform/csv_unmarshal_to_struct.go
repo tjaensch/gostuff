@@ -7,12 +7,6 @@ import (
 	"reflect"
 )
 
-var (
-	csvfile string = "DSMM_CSV_input_file/dsmm_assessments.csv"
-	singleRecord DsmmAssessmentRecord
-	allRecords []DsmmAssessmentRecord
-)
-
 // Struct that represents values of one line of CSV input file
 type DsmmAssessmentRecord struct {
 	A  string
