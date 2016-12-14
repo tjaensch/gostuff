@@ -34,7 +34,7 @@ func main() {
 	prepDirs()
 
 	// Loop over all CSV records and process one by one
-	for _, singleRecord := range allRecords {
+	for _, singleRecord := range allRecords[1:] {
 		writeCsvDataToWordDoc(singleRecord)
 		parseCsvDataToPptxXml(singleRecord)
 	}
