@@ -37,5 +37,8 @@ func TestParseCsvDataToPptxXml(t *testing.T) {
 		if _, err := os.Stat("./output/" + singleRecord.C + "_Star_rating_template.pptx"); os.IsNotExist(err) {
 			t.Error("expected %s_Star_rating_template.pptx in output directory", singleRecord.C)
 		}
+    if _, err := os.Stat("./output/" + singleRecord.C + "_Scoreboard_rating_template.pptx"); os.IsNotExist(err) {
+      t.Error("expected %s_Scoreboard_rating_template.pptx in output directory", singleRecord.C)
+    }
 	}
 }
