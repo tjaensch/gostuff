@@ -42,3 +42,15 @@ func TestParseCsvDataToPptxXml(t *testing.T) {
     }
 	}
 }
+
+func TestConvertPptxToPn(t *testing.T) {
+	for _, singleRecord := range allRecords[1:4] {
+		convertPptxToPng(singleRecord)
+		if _, err := os.Stat("./output/" + singleRecord.C + "_Star_rating_template.png"); os.IsNotExist(err) {
+			t.Error("expected %s_Star_rating_template.png in output directory", singleRecord.C)
+		}
+    if _, err := os.Stat("./output/" + singleRecord.C + "_Scoreboard_rating_template.png"); os.IsNotExist(err) {
+      t.Error("expected %s_Scoreboard_rating_template.png in output directory", singleRecord.C)
+    }
+	}
+}

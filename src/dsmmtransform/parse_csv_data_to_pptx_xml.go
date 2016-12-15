@@ -42,7 +42,7 @@ func parseCsvDataToPptxXml(singleRecord DsmmAssessmentRecord) {
 	// Add CSV values to PPTX slide1.xml for Star Rating image
 	err = tmpl.ExecuteTemplate(f, "slide2.xml", singleRecord)
 	checkError("execute template failed", err)
-	// Change into Star_rating_template and zip up files
+	// Change into Scoreboard_rating_template and zip up files
 	os.Chdir("./Scoreboard_rating_template")
 	cmdName = "zip"
 	cmdArgs = []string{"-r", "../" + singleRecord.C + "_Scoreboard_rating_template.zip", "_rels", "[Content_Types].xml", "ppt", "docProps" }
