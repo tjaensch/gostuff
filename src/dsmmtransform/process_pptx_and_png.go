@@ -24,18 +24,18 @@ func convertPptxToPng(singleRecord DsmmAssessmentRecord) {
 func updateWordTemplateWithNewPng(singleRecord DsmmAssessmentRecord) {
 	os.Chdir("./output")
 	cmdName := "cp"
-	cmdArgs := []string{singleRecord.C + "_Scoreboard_rating_template.png", "image7.png"}
+	cmdArgs := []string{singleRecord.C + "_Scoreboard_rating_template.png", "image4.png"}
 	if _, err := exec.Command(cmdName, cmdArgs...).Output(); err != nil {
 		fmt.Printf("something went wrong with copying .png file: %s_Scoreboard_rating_template.png\n", singleRecord.C, err)
 	}
-	os.Rename("./image7.png", "../DSMM_WORDDOC_template_unzipped/word/media/image7.png")
+	os.Rename("./image4.png", "../DSMM_WORDDOC_template_unzipped/word/media/image4.png")
 	cmdName = "cp"
-	cmdArgs = []string{singleRecord.C + "_Star_rating_template.png", "image8.png"}
+	cmdArgs = []string{singleRecord.C + "_Star_rating_template.png", "image2.png"}
 	if _, err := exec.Command(cmdName, cmdArgs...).Output(); err != nil {
 		fmt.Printf("something went wrong with copying .png file: %s_Star_rating_template.png\n", singleRecord.C, err)
 	}
-	os.Rename("./image8.png", "../DSMM_WORDDOC_template_unzipped/word/media/image8.png")
-	// Create new Word template with updated media folder, image7.png and image8.png
+	os.Rename("./image2.png", "../DSMM_WORDDOC_template_unzipped/word/media/image2.png")
+	// Create new Word template with updated media folder, image4.png and image2.png
 	os.Chdir("../DSMM_WORDDOC_template_unzipped")
 	cmdName = "zip"
 	cmdArgs = []string{"-r", "../zippedWord.zip", "_rels", "customXml", "docProps", "word", "[Content_Types].xml"}
@@ -44,5 +44,5 @@ func updateWordTemplateWithNewPng(singleRecord DsmmAssessmentRecord) {
 		os.Exit(1)
 	}
 	os.Chdir("..")
-	os.Rename("./zippedWord.zip", "./DSMM_WORDDOC_template/IRDSMMTemplate_Body.docx")
+	os.Rename("./zippedWord.zip", "./DSMM_WORDDOC_template/IRDSMMTemplate_Body_Rev_1.3.docx")
 }

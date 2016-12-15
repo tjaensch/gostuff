@@ -45,12 +45,6 @@ func TestConvertPptxToPn(t *testing.T) {
 	}
 }
 
-func TestUpdateWordTemplateWithNewPng(t *testing.T) {
-for _, singleRecord := range allRecords[1:4] {
-	updateWordTemplateWithNewPng(singleRecord)
-	}
-}
-
 func TestWriteCsvDataToWordDoc(t *testing.T) {
 	for _, singleRecord := range allRecords[1:4] {
 		parseCsvDataToPptxXml(singleRecord)

@@ -6,7 +6,7 @@ import (
 
 func writeCsvDataToWordDoc(singleRecord DsmmAssessmentRecord) {
 
-		r, err := docx.ReadDocxFile("DSMM_WORDDOC_template/IRDSMMTemplate_Body.docx")
+		r, err := docx.ReadDocxFile("DSMM_WORDDOC_template/IRDSMMTemplate_Body_Rev_1.3.docx")
 		checkError("read doc template file failed", err)
 		defer r.Close()
 
