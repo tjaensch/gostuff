@@ -21,16 +21,6 @@ func TestGetCsvData(t *testing.T) {
 	}
 }
 
-func TestWriteCsvDataToWordDoc(t *testing.T) {
-	for _, singleRecord := range allRecords[1:4] {
-		writeCsvDataToWordDoc(singleRecord)
-	}
-	testData, _ := ioutil.ReadDir("./output")
-	if len(testData) != 3 {
-		t.Error("Expected 3 files in output dir, got ", len(testData))
-	}
-}
-
 func TestParseCsvDataToPptxXml(t *testing.T) {
 	for _, singleRecord := range allRecords[1:4] {
 		parseCsvDataToPptxXml(singleRecord)
@@ -52,5 +42,24 @@ func TestConvertPptxToPn(t *testing.T) {
     if _, err := os.Stat("./output/" + singleRecord.C + "_Scoreboard_rating_template.png"); os.IsNotExist(err) {
       t.Error("expected %s_Scoreboard_rating_template.png in output directory", singleRecord.C)
     }
+	}
+}
+
+func TestUpdateWordTemplateWithNewPng(t *testing.T) {
+for _, singleRecord := range allRecords[1:4] {
+	updateWordTemplateWithNewPng(singleRecord)
+	}
+}
+
+func TestWriteCsvDataToWordDoc(t *testing.T) {
+	for _, singleRecord := range allRecords[1:4] {
+		parseCsvDataToPptxXml(singleRecord)
+		convertPptxToPng(singleRecord)
+		updateWordTemplateWithNewPng(singleRecord)
+		writeCsvDataToWordDoc(singleRecord)
+	}
+	testData, _ := ioutil.ReadDir("./output")
+	if len(testData) != 15 {
+		t.Error("Expected 15 files in output dir, got ", len(testData))
 	}
 }

@@ -35,9 +35,10 @@ func main() {
 
 	// Loop over all CSV records and process one by one
 	for _, singleRecord := range allRecords[1:] {
-		writeCsvDataToWordDoc(singleRecord)
 		parseCsvDataToPptxXml(singleRecord)
 		convertPptxToPng(singleRecord)
+		updateWordTemplateWithNewPng(singleRecord)
+		writeCsvDataToWordDoc(singleRecord)
 	}
 
 	t1 := time.Now()

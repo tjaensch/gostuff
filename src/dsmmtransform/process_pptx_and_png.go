@@ -1,0 +1,48 @@
+package main
+
+import (
+	"fmt"
+	"os"
+	"os/exec"
+)
+
+func convertPptxToPng(singleRecord DsmmAssessmentRecord) {
+	os.Chdir("./output")
+	cmdName := "libreoffice"
+	cmdArgs := []string{"--headless", "--convert-to", "png", singleRecord.C + "_Scoreboard_rating_template.pptx"}
+	if _, err := exec.Command(cmdName, cmdArgs...).Output(); err != nil {
+		fmt.Printf("something went wrong with converting .pptx to .png: %s_Scoreboard_rating_template.pptx\n", singleRecord.C, err)
+	}
+	cmdName = "libreoffice"
+	cmdArgs = []string{"--headless", "--convert-to", "png", singleRecord.C + "_Star_rating_template.pptx"}
+	if _, err := exec.Command(cmdName, cmdArgs...).Output(); err != nil {
+		fmt.Printf("something went wrong with converting .pptx to .png: %s_Star_rating_template.pptx\n", singleRecord.C, err)
+	}
+	os.Chdir("..")
+}
+
+func updateWordTemplateWithNewPng(singleRecord DsmmAssessmentRecord) {
+	os.Chdir("./output")
+	cmdName := "cp"
+	cmdArgs := []string{singleRecord.C + "_Scoreboard_rating_template.png", "image7.png"}
+	if _, err := exec.Command(cmdName, cmdArgs...).Output(); err != nil {
+		fmt.Printf("something went wrong with copying .png file: %s_Scoreboard_rating_template.png\n", singleRecord.C, err)
+	}
+	os.Rename("./image7.png", "../DSMM_WORDDOC_template_unzipped/word/media/image7.png")
+	cmdName = "cp"
+	cmdArgs = []string{singleRecord.C + "_Star_rating_template.png", "image8.png"}
+	if _, err := exec.Command(cmdName, cmdArgs...).Output(); err != nil {
+		fmt.Printf("something went wrong with copying .png file: %s_Star_rating_template.png\n", singleRecord.C, err)
+	}
+	os.Rename("./image8.png", "../DSMM_WORDDOC_template_unzipped/word/media/image8.png")
+	// Create new Word template with updated media folder, image7.png and image8.png
+	os.Chdir("../DSMM_WORDDOC_template_unzipped")
+	cmdName = "zip"
+	cmdArgs = []string{"-r", "../zippedWord.zip", "_rels", "customXml", "docProps", "word", "[Content_Types].xml"}
+	if _, err := exec.Command(cmdName, cmdArgs...).Output(); err != nil {
+		fmt.Printf("something went wrong with zipping files in DSMM_WORDDOC_template_unzipped directory, program exiting", err)
+		os.Exit(1)
+	}
+	os.Chdir("..")
+	os.Rename("./zippedWord.zip", "./DSMM_WORDDOC_template/IRDSMMTemplate_Body.docx")
+}
