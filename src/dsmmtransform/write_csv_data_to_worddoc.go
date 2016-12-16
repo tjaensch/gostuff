@@ -187,6 +187,61 @@ func writeCsvDataToWordDoc(singleRecord DsmmAssessmentRecord) {
 		} else {
 			docx.Replace("DSM_AY", singleRecord.AY, -1)
 		}
+
+		if singleRecord.AZ == "" {
+			docx.Replace("DSM_AZ", "N/A", -1)
+		} else {
+			docx.Replace("DSM_AZ", singleRecord.AY, -1)
+		}
+
+		if singleRecord.BA == "" {
+			docx.Replace("DSM_BA", "N/A", -1)
+		} else {
+			docx.Replace("DSM_BA", singleRecord.AY, -1)
+		}
+
+		if singleRecord.BB == "" {
+			docx.Replace("DSM_BB", "N/A", -1)
+		} else {
+			docx.Replace("DSM_BB", singleRecord.AY, -1)
+		}
+
+		if singleRecord.BC == "" {
+			docx.Replace("DSM_BC", "N/A", -1)
+		} else {
+			docx.Replace("DSM_BC", singleRecord.AY, -1)
+		}
+
+		if singleRecord.BD == "" {
+			docx.Replace("DSM_BD", "N/A", -1)
+		} else {
+			docx.Replace("DSM_BD", singleRecord.AY, -1)
+		}
+
+		if singleRecord.BE == "" {
+			docx.Replace("DSM_BE", "N/A", -1)
+		} else {
+			docx.Replace("DSM_BE", singleRecord.AY, -1)
+		}
+
+		if singleRecord.BF == "" {
+			docx.Replace("DSM_BF", "N/A", -1)
+		} else {
+			docx.Replace("DSM_BF", singleRecord.AY, -1)
+		}
+
+		if singleRecord.BG == "" {
+			docx.Replace("DSM_BG", "N/A", -1)
+		} else {
+			docx.Replace("DSM_BG", singleRecord.AY, -1)
+		}
+
+		if singleRecord.BH == "" {
+			docx.Replace("DSM_BH", "N/A", -1)
+		} else {
+			docx.Replace("DSM_BH", singleRecord.AY, -1)
+		}
+
 		// Write to file with Dataset Short Name and version number as doc title
 			docx.WriteToFile("./output/" + singleRecord.C + "_" + singleRecord.K + ".docx")
 } // end writeCsvDataToWordDoc
