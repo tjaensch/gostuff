@@ -1,0 +1,9 @@
+singeRecord.default = "<a:prstGeom prst="star5"><a:avLst/></a:prstGeom><a:solidFill><a:srgbClr val="FFFFFF"/>"
+
+singleRecord.fullgrey="<a:prstGeom prst="star5"><a:avLst/></a:prstGeom><a:solidFill><a:schemeClr val="tx1"><a:lumMod val="50000"/><a:lumOff val="50000"/></a:schemeClr>"
+
+singleRecord.lightgrey="<a:prstGeom prst="star5"><a:avLst/></a:prstGeom><a:solidFill><a:srgbClr val="BFBFBF"/>"
+
+
+
+

@@ -1,74 +1,120 @@
 package main
 
 import (
-	"fmt"
 	"encoding/csv"
+	//"fmt"
 	"os"
-	"reflect"
+	//"reflect"
 )
 
 // Struct that represents values of one line of CSV input file
 type DsmmAssessmentRecord struct {
-	A  string
-	B  string
-	C  string
-	D  string
-	E  string
-	F  string
-	G  string
-	H  string
-	I  string
-	J  string
-	K  string
-	L  string
-	M  string
-	N  string
-	O  string
-	P  string
-	Q  string
-	R  string
-	S  string
-	T  string
-	U  string
-	V  string
-	W  string
-	X  string
-	Y  string
-	Z  string
-	AA string
-	AB string
-	AC string
-	AD string
-	AE string
-	AF string
-	AG string
-	AH string
-	AI string
-	AJ string
-	AK string
-	AL string
-	AM string
-	AN string
-	AO string
-	AP string
-	AQ string
-	AR string
-	AS string
-	AT string
-	AU string
-	AV string
-	AW string
-	AX string
-	AY string
-	AZ string
-	BA string
-	BB string
-	BC string
-	BD string
-	BE string
-	BF string
-	BG string
-	BH string
+	A           string
+	B           string
+	C           string
+	D           string
+	E           string
+	F           string
+	G           string
+	H           string
+	I           string
+	J           string
+	K           string
+	L           string
+	M           string
+	N           string
+	O           string
+	P           string
+	Q           string
+	R           string
+	S           string
+	T           string
+	U           string
+	V           string
+	W           string
+	X           string
+	Y           string
+	Z           string
+	AA          string
+	AB          string
+	AC          string
+	AD          string
+	AE          string
+	AF          string
+	AG          string
+	AH          string
+	AI          string
+	AJ          string
+	AK          string
+	AL          string
+	AM          string
+	AN          string
+	AO          string
+	AP          string
+	AQ          string
+	AR          string
+	AS          string
+	AT          string
+	AU          string
+	AV          string
+	AW          string
+	AX          string
+	AY          string
+	AZ          string
+	BA          string
+	BB          string
+	BC          string
+	BD          string
+	BE          string
+	BF          string
+	BG          string
+	BH          string
+	Stardefault string
+	Star1       string
+	Star2       string
+	Star3       string
+	Star4       string
+	Star5       string
+	Star6       string
+	Star7       string
+	Star8       string
+	Star9       string
+	Star10      string
+	Star11      string
+	Star12      string
+	Star13      string
+	Star14      string
+	Star15      string
+	Star16      string
+	Star17      string
+	Star18      string
+	Star19      string
+	Star20      string
+	Star21      string
+	Star22      string
+	Star23      string
+	Star24      string
+	Star25      string
+	Star26      string
+	Star27      string
+	Star28      string
+	Star29      string
+	Star30      string
+	Star31      string
+	Star32      string
+	Star33      string
+	Star34      string
+	Star35      string
+	Star36      string
+	Star37      string
+	Star38      string
+	Star39      string
+	Star40      string
+	Star41      string
+	Star42      string
+	Star43      string
+	Star44      string
+	Star45      string
 }
 
 // Read CSV data into struct slice
@@ -147,15 +193,63 @@ func getCsvData(datafile string) []DsmmAssessmentRecord {
 
 		// Append singleRecord to allRecords struct slice
 		allRecords = append(allRecords, singleRecord)
+
+		for _, singleRecord := range allRecords {
+			singleRecord.Stardefault = `<a:srgbClr val="BFBFBF"/>`
+			singleRecord.Star1 = singleRecord.Stardefault
+			singleRecord.Star2 = singleRecord.Stardefault
+			singleRecord.Star3 = singleRecord.Stardefault
+			singleRecord.Star4 = singleRecord.Stardefault
+			singleRecord.Star5 = singleRecord.Stardefault
+			singleRecord.Star6 = singleRecord.Stardefault
+			singleRecord.Star7 = singleRecord.Stardefault
+			singleRecord.Star8 = singleRecord.Stardefault
+			singleRecord.Star9 = singleRecord.Stardefault
+			singleRecord.Star10 = singleRecord.Stardefault
+			singleRecord.Star11 = singleRecord.Stardefault
+			singleRecord.Star12 = singleRecord.Stardefault
+			singleRecord.Star13 = singleRecord.Stardefault
+			singleRecord.Star14 = singleRecord.Stardefault
+			singleRecord.Star15 = singleRecord.Stardefault
+			singleRecord.Star16 = singleRecord.Stardefault
+			singleRecord.Star17 = singleRecord.Stardefault
+			singleRecord.Star18 = singleRecord.Stardefault
+			singleRecord.Star19 = singleRecord.Stardefault
+			singleRecord.Star20 = singleRecord.Stardefault
+			singleRecord.Star21 = singleRecord.Stardefault
+			singleRecord.Star22 = singleRecord.Stardefault
+			singleRecord.Star23 = singleRecord.Stardefault
+			singleRecord.Star24 = singleRecord.Stardefault
+			singleRecord.Star25 = singleRecord.Stardefault
+			singleRecord.Star26 = singleRecord.Stardefault
+			singleRecord.Star27 = singleRecord.Stardefault
+			singleRecord.Star29 = singleRecord.Stardefault
+			singleRecord.Star30 = singleRecord.Stardefault
+			singleRecord.Star31 = singleRecord.Stardefault
+			singleRecord.Star32 = singleRecord.Stardefault
+			singleRecord.Star33 = singleRecord.Stardefault
+			singleRecord.Star34 = singleRecord.Stardefault
+			singleRecord.Star35 = singleRecord.Stardefault
+			singleRecord.Star36 = singleRecord.Stardefault
+			singleRecord.Star37 = singleRecord.Stardefault
+			singleRecord.Star38 = singleRecord.Stardefault
+			singleRecord.Star39 = singleRecord.Stardefault
+			singleRecord.Star40 = singleRecord.Stardefault
+			singleRecord.Star41 = singleRecord.Stardefault
+			singleRecord.Star42 = singleRecord.Stardefault
+			singleRecord.Star43 = singleRecord.Stardefault
+			singleRecord.Star44 = singleRecord.Stardefault
+			singleRecord.Star45 = singleRecord.Stardefault
+		}
 	}
 
-	// Print all values from one record to stdout just for quick check that it works
+	/* // Print all values from one record to stdout just for quick check that it works
 	v := reflect.ValueOf(allRecords[35])
 	values := make([]interface{}, v.NumField())
 	for i := 0; i < v.NumField(); i++ {
 		values[i] = v.Field(i).Interface()
 	}
-	fmt.Println(values)
+	fmt.Println(values) */
 
 	return allRecords
 } // end getCsvData()

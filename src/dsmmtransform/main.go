@@ -37,6 +37,7 @@ func main() {
 
 	// Loop over all CSV records and process one by one
 	for _, singleRecord := range allRecords[35:38] {
+
 		parseCsvDataToPptxXml(singleRecord)
 		convertPptxToPng(singleRecord)
 		updateWordTemplateWithNewPng(singleRecord)
