@@ -33,10 +33,10 @@ func main() {
 	allRecords := getCsvData(csvfile)
 	prepDirs()
 
-	fmt.Println(allRecords[40].BH)
+	fmt.Println(allRecords[38].BH)
 
 	// Loop over all CSV records and process one by one
-	for _, singleRecord := range allRecords[38:41] {
+	for _, singleRecord := range allRecords[35:38] {
 		parseCsvDataToPptxXml(singleRecord)
 		convertPptxToPng(singleRecord)
 		updateWordTemplateWithNewPng(singleRecord)

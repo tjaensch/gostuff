@@ -22,7 +22,7 @@ func TestGetCsvData(t *testing.T) {
 }
 
 func TestParseCsvDataToPptxXml(t *testing.T) {
-	for _, singleRecord := range allRecords[1:4] {
+	for _, singleRecord := range allRecords[35:38] {
 		parseCsvDataToPptxXml(singleRecord)
 		if _, err := os.Stat("./output/" + singleRecord.C + "_Star_rating_template.pptx"); os.IsNotExist(err) {
 			t.Error("expected %s_Star_rating_template.pptx in output directory", singleRecord.C)
@@ -34,7 +34,7 @@ func TestParseCsvDataToPptxXml(t *testing.T) {
 }
 
 func TestConvertPptxToPn(t *testing.T) {
-	for _, singleRecord := range allRecords[1:4] {
+	for _, singleRecord := range allRecords[35:38] {
 		convertPptxToPng(singleRecord)
 		if _, err := os.Stat("./output/" + singleRecord.C + "_Star_rating_template.png"); os.IsNotExist(err) {
 			t.Error("expected %s_Star_rating_template.png in output directory", singleRecord.C)
@@ -46,7 +46,7 @@ func TestConvertPptxToPn(t *testing.T) {
 }
 
 func TestWriteCsvDataToWordDoc(t *testing.T) {
-	for _, singleRecord := range allRecords[1:4] {
+	for _, singleRecord := range allRecords[35:38] {
 		parseCsvDataToPptxXml(singleRecord)
 		convertPptxToPng(singleRecord)
 		updateWordTemplateWithNewPng(singleRecord)

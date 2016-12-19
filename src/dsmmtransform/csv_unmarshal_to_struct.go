@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"encoding/csv"
 	"os"
+	"reflect"
 )
 
 // Struct that represents values of one line of CSV input file
@@ -148,12 +150,12 @@ func getCsvData(datafile string) []DsmmAssessmentRecord {
 	}
 
 	// Print all values from one record to stdout just for quick check that it works
-	/* v := reflect.ValueOf(allRecords[40])
+	v := reflect.ValueOf(allRecords[35])
 	values := make([]interface{}, v.NumField())
 	for i := 0; i < v.NumField(); i++ {
 		values[i] = v.Field(i).Interface()
 	}
-	fmt.Println(values) */
+	fmt.Println(values)
 
 	return allRecords
 } // end getCsvData()
