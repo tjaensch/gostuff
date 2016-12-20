@@ -33,11 +33,10 @@ func main() {
 	allRecords := getCsvData(csvfile)
 	prepDirs()
 
-	fmt.Println(allRecords[38].BH)
-
 	// Loop over all CSV records and process one by one
 	for _, singleRecord := range allRecords[35:38] {
 
+		//assignDefaultStarRatings(singleRecord)
 		parseCsvDataToPptxXml(singleRecord)
 		convertPptxToPng(singleRecord)
 		updateWordTemplateWithNewPng(singleRecord)
