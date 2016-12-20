@@ -124,8 +124,6 @@ func getCsvData(datafile string) []DsmmAssessmentRecord {
 
 	// Assign default star ratings to singleRecord struct
 	singleRecord.Stardefault = `<a:srgbClr val="FFFFFF"/>`
-	singleRecord.Lightgrey = `<a:srgbClr val="BFBFBF"/>`
-	singleRecord.Fullgrey = `<a:schemeClr val="tx1"><a:lumMod val="50000"/><a:lumOff val="50000"/></a:schemeClr>`
 	singleRecord.Star1 =  singleRecord.Stardefault
 	singleRecord.Star2 =  singleRecord.Stardefault
 	singleRecord.Star3 =  singleRecord.Stardefault
