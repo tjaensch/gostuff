@@ -225,8 +225,8 @@ func getCsvData(datafile string) []DsmmAssessmentRecord {
 	singleRecord.Star45 = singleRecord.Stardefault
 
 	// Assign default level colors to singleRecord struct
-	singleRecord.LevelDarkblue = `<a:schemeClr val="accent5"><a:lumMod val="20000"/><a:lumOff val="80000"/></a:schemeClr>`
-	singleRecord.LevelLightblue = `<a:schemeClr val="accent5"><a:lumMod val="40000"/><a:lumOff val="60000"/></a:schemeClr>`
+	singleRecord.LevelDarkblue = `<a:srgbClr val="CCD5EA"/>`
+	singleRecord.LevelLightblue = `<a:srgbClr val="E7EBF5"/>`
 	singleRecord.PreservabilityLevel1 = singleRecord.LevelDarkblue
 	singleRecord.PreservabilityLevel2 = singleRecord.LevelLightblue
 	singleRecord.PreservabilityLevel3 = singleRecord.LevelDarkblue
