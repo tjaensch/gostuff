@@ -1,9 +1,0 @@
-level1 = <a:srgbClr val="E5F4E0"/>
-level2 = <a:srgbClr val="CBEAC0"/>
-level3 = <a:srgbClr val="B0DFA1"/>
-level4 = <a:srgbClr val="55A839"/>
-level5 = <a:srgbClr val="387026"/>
-
-
-
-

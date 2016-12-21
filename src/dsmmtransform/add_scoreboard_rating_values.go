@@ -9,28 +9,29 @@ func addScoreboardRatingValues(singleRecord DsmmAssessmentRecord) DsmmAssessment
 	singleRecord.Level5 = `<a:srgbClr val="387026"/>`
 
 	// Preservability
-	switch rating := singleRecord.O; rating {
-	case "0":
+	rating := singleRecord.O
+
+	if rating == "0" {
 		singleRecord.PreservabilityLevel1 = singleRecord.Level1
-	case "0.5":
+	} else if rating == "0.5" {
 		singleRecord.PreservabilityLevel1 = singleRecord.Level1
-	case "1":
+	} else if rating == "1" {
 		singleRecord.PreservabilityLevel1 = singleRecord.Level1
-	case "1.5":
+	} else if rating == "1.5" {
 		singleRecord.PreservabilityLevel1 = singleRecord.Level1
-	case "2":
+	} else if rating == "2" {
 		singleRecord.PreservabilityLevel2 = singleRecord.Level2
-	case "2.5":
+	} else if rating == "2.5" {
 		singleRecord.PreservabilityLevel2 = singleRecord.Level2
-	case "3":
+	} else if rating == "3" {
 		singleRecord.PreservabilityLevel3 = singleRecord.Level3
-	case "3.5":
+	} else if rating == "3.5" {
 		singleRecord.PreservabilityLevel3 = singleRecord.Level3
-	case "4":
+	} else if rating == "4" {
 		singleRecord.PreservabilityLevel4 = singleRecord.Level4
-	case "4.5":
+	} else if rating == "4.5" {
 		singleRecord.PreservabilityLevel4 = singleRecord.Level4
-	case "5":
+	} else if rating == "5" {
 		singleRecord.PreservabilityLevel5 = singleRecord.Level5
 	}
 
