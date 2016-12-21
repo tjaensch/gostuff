@@ -69,6 +69,7 @@ type DsmmAssessmentRecord struct {
 	BF          string
 	BG          string
 	BH          string
+	
 	Stardefault string
 	Lightgrey   string
 	Fullgrey    string
@@ -117,6 +118,59 @@ type DsmmAssessmentRecord struct {
 	Star43      string
 	Star44      string
 	Star45      string
+
+	LevelDarkblue string
+	LevelLightblue string
+	Level1 string
+	Level2 string
+	Level3 string
+	Level4 string
+	Level5 string
+	PreservabilityLevel1 string
+	PreservabilityLevel2 string
+	PreservabilityLevel3 string
+	PreservabilityLevel4 string
+	PreservabilityLevel5 string
+	AccessibilityLevel1 string
+	AccessibilityLevel2 string
+	AccessibilityLevel3 string
+	AccessibilityLevel4 string
+	AccessibilityLevel5 string
+	UsabilityLevel1 string
+	UsabilityLevel2 string
+	UsabilityLevel3 string
+	UsabilityLevel4 string
+	UsabilityLevel5 string
+	ProductionSustainabilityLevel1 string
+	ProductionSustainabilityLevel2 string
+	ProductionSustainabilityLevel3 string
+	ProductionSustainabilityLevel4 string
+	ProductionSustainabilityLevel5 string
+	DataQualityAssuranceLevel1 string
+	DataQualityAssuranceLevel2 string
+	DataQualityAssuranceLevel3 string
+	DataQualityAssuranceLevel4 string
+	DataQualityAssuranceLevel5 string
+	DataQualityControlMonitoringLevel1 string
+	DataQualityControlMonitoringLevel2 string
+	DataQualityControlMonitoringLevel3 string
+	DataQualityControlMonitoringLevel4 string
+	DataQualityControlMonitoringLevel5 string
+	DataQualityAssessmentLevel1 string
+	DataQualityAssessmentLevel2 string
+	DataQualityAssessmentLevel3 string
+	DataQualityAssessmentLevel4 string
+	DataQualityAssessmentLevel5 string
+	TransparencyTraceabilityLevel1 string
+	TransparencyTraceabilityLevel2 string
+	TransparencyTraceabilityLevel3 string
+	TransparencyTraceabilityLevel4 string
+	TransparencyTraceabilityLevel5 string
+	DataIntegrityLevel1 string
+	DataIntegrityLevel2 string
+	DataIntegrityLevel3 string
+	DataIntegrityLevel4 string
+	DataIntegrityLevel5 string
 }
 
 // Read CSV data into struct slice
@@ -169,6 +223,55 @@ func getCsvData(datafile string) []DsmmAssessmentRecord {
 	singleRecord.Star43 = singleRecord.Stardefault
 	singleRecord.Star44 = singleRecord.Stardefault
 	singleRecord.Star45 = singleRecord.Stardefault
+
+	// Assign default level colors to singleRecord struct
+	singleRecord.LevelDarkblue = `<a:schemeClr val="accent5"><a:lumMod val="20000"/><a:lumOff val="80000"/></a:schemeClr>`
+	singleRecord.LevelLightblue = `<a:schemeClr val="accent5"><a:lumMod val="40000"/><a:lumOff val="60000"/></a:schemeClr>`
+	singleRecord.PreservabilityLevel1 = singleRecord.LevelDarkblue
+	singleRecord.PreservabilityLevel2 = singleRecord.LevelLightblue
+	singleRecord.PreservabilityLevel3 = singleRecord.LevelDarkblue
+	singleRecord.PreservabilityLevel4 = singleRecord.LevelLightblue
+	singleRecord.PreservabilityLevel5 = singleRecord.LevelDarkblue
+	singleRecord.AccessibilityLevel1 = singleRecord.LevelDarkblue
+	singleRecord.AccessibilityLevel2 = singleRecord.LevelLightblue
+	singleRecord.AccessibilityLevel3 = singleRecord.LevelDarkblue
+	singleRecord.AccessibilityLevel4 = singleRecord.LevelLightblue
+	singleRecord.AccessibilityLevel5 = singleRecord.LevelDarkblue
+	singleRecord.UsabilityLevel1 = singleRecord.LevelDarkblue
+	singleRecord.UsabilityLevel2 = singleRecord.LevelLightblue
+	singleRecord.UsabilityLevel3 = singleRecord.LevelDarkblue
+	singleRecord.UsabilityLevel4 = singleRecord.LevelLightblue
+	singleRecord.UsabilityLevel5 = singleRecord.LevelDarkblue
+	singleRecord.ProductionSustainabilityLevel1 = singleRecord.LevelDarkblue
+	singleRecord.ProductionSustainabilityLevel2 = singleRecord.LevelLightblue
+	singleRecord.ProductionSustainabilityLevel3 = singleRecord.LevelDarkblue
+	singleRecord.ProductionSustainabilityLevel4 = singleRecord.LevelLightblue
+	singleRecord.ProductionSustainabilityLevel5 = singleRecord.LevelDarkblue
+	singleRecord.DataQualityAssuranceLevel1 = singleRecord.LevelDarkblue
+	singleRecord.DataQualityAssuranceLevel2 = singleRecord.LevelLightblue
+	singleRecord.DataQualityAssuranceLevel3 = singleRecord.LevelDarkblue
+	singleRecord.DataQualityAssuranceLevel4 = singleRecord.LevelLightblue
+	singleRecord.DataQualityAssuranceLevel5 = singleRecord.LevelDarkblue
+	singleRecord.DataQualityControlMonitoringLevel1 = singleRecord.LevelDarkblue
+	singleRecord.DataQualityControlMonitoringLevel2 = singleRecord.LevelLightblue
+	singleRecord.DataQualityControlMonitoringLevel3 = singleRecord.LevelDarkblue
+	singleRecord.DataQualityControlMonitoringLevel4 = singleRecord.LevelLightblue
+	singleRecord.DataQualityControlMonitoringLevel5 = singleRecord.LevelDarkblue
+	singleRecord.DataQualityAssessmentLevel1 = singleRecord.LevelDarkblue
+	singleRecord.DataQualityAssessmentLevel2 = singleRecord.LevelLightblue
+	singleRecord.DataQualityAssessmentLevel3 = singleRecord.LevelDarkblue
+	singleRecord.DataQualityAssessmentLevel4 = singleRecord.LevelLightblue
+	singleRecord.DataQualityAssessmentLevel5 = singleRecord.LevelDarkblue
+	singleRecord.TransparencyTraceabilityLevel1 = singleRecord.LevelDarkblue
+	singleRecord.TransparencyTraceabilityLevel2 = singleRecord.LevelLightblue
+	singleRecord.TransparencyTraceabilityLevel3 = singleRecord.LevelDarkblue
+	singleRecord.TransparencyTraceabilityLevel4 = singleRecord.LevelLightblue
+	singleRecord.TransparencyTraceabilityLevel5 = singleRecord.LevelDarkblue
+	singleRecord.DataIntegrityLevel1 = singleRecord.LevelDarkblue
+	singleRecord.DataIntegrityLevel2 = singleRecord.LevelLightblue
+	singleRecord.DataIntegrityLevel3 = singleRecord.LevelDarkblue
+	singleRecord.DataIntegrityLevel4 = singleRecord.LevelLightblue
+	singleRecord.DataIntegrityLevel5 = singleRecord.LevelDarkblue
 
 	csvfile, err := os.Open(datafile)
 	checkError("open csv file failed", err)

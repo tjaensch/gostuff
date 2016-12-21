@@ -37,6 +37,7 @@ func main() {
 	for _, singleRecord := range allRecords[35:38] {
 
 		singleRecord = addStarRatingValues(singleRecord)
+		singleRecord = addScoreboardRatingValues(singleRecord)
 		parseCsvDataToPptxXml(singleRecord)
 		convertPptxToPng(singleRecord)
 		updateWordTemplateWithNewPng(singleRecord)
