@@ -34,14 +34,17 @@ func main() {
 	prepDirs()
 
 	// Loop over all CSV records and process one by one
-	for _, singleRecord := range allRecords[35:38] {
+	for _, singleRecord := range allRecords[1:] {
 
-		singleRecord = addStarRatingValues(singleRecord)
-		singleRecord = addScoreboardRatingValues(singleRecord)
-		parseCsvDataToPptxXml(singleRecord)
-		convertPptxToPng(singleRecord)
-		updateWordTemplateWithNewPng(singleRecord)
-		writeCsvDataToWordDoc(singleRecord)
+		if _, err := os.Stat("./output/" + singleRecord.C + "_" + singleRecord.K + ".docx"); os.IsNotExist(err) {
+			singleRecord = addStarRatingValues(singleRecord)
+			singleRecord = addScoreboardRatingValues(singleRecord)
+			parseCsvDataToPptxXml(singleRecord)
+			convertPptxToPng(singleRecord)
+			updateWordTemplateWithNewPng(singleRecord)
+			writeCsvDataToWordDoc(singleRecord)
+			writeDocToPdf(singleRecord)
+		}
 	}
 
 	t1 := time.Now()
