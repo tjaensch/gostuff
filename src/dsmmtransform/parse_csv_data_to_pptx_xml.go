@@ -24,14 +24,14 @@ func parseCsvDataToPptxXml(singleRecord DsmmAssessmentRecord) {
 	// Change into Star_rating_template and zip up files
 	os.Chdir("./Star_rating_template")
 	cmdName := "zip"
-	cmdArgs := []string{"-r", "../" + singleRecord.C + "_Star_rating_template.zip", "_rels", "[Content_Types].xml", "ppt", "docProps"}
+	cmdArgs := []string{"-r", "../" + singleRecord.C + "_" + singleRecord.K + "_Star_rating_template.zip", "_rels", "[Content_Types].xml", "ppt", "docProps"}
 	if _, err = exec.Command(cmdName, cmdArgs...).Output(); err != nil {
 		fmt.Printf("Something went wrong with zipping files in source directory, program exiting.", err)
 		os.Exit(1)
 	}
 	os.Chdir("..")
 	// Rename .zip file to .pptx
-	err = os.Rename(singleRecord.C+"_Star_rating_template.zip", "./output/"+singleRecord.C+"_Star_rating_template.pptx")
+	err = os.Rename(singleRecord.C + "_" + singleRecord.K + "_Star_rating_template.zip", "./output/" + singleRecord.C + "_" + singleRecord.K + "_Star_rating_template.pptx")
 	checkError("renaming .zip file failed", err)
 
 	// Create Scoreboard_rating_pptx 2nd
@@ -45,14 +45,14 @@ func parseCsvDataToPptxXml(singleRecord DsmmAssessmentRecord) {
 	// Change into Scoreboard_rating_template and zip up files
 	os.Chdir("./Scoreboard_rating_template")
 	cmdName = "zip"
-	cmdArgs = []string{"-r", "../" + singleRecord.C + "_Scoreboard_rating_template.zip", "_rels", "[Content_Types].xml", "ppt", "docProps"}
+	cmdArgs = []string{"-r", "../" + singleRecord.C + "_" + singleRecord.K + "_Scoreboard_rating_template.zip", "_rels", "[Content_Types].xml", "ppt", "docProps"}
 	if _, err = exec.Command(cmdName, cmdArgs...).Output(); err != nil {
 		fmt.Printf("Something went wrong with zipping files in source directory, program exiting.", err)
 		os.Exit(1)
 	}
 	os.Chdir("..")
 	// Rename .zip file to .pptx
-	err = os.Rename(singleRecord.C+"_Scoreboard_rating_template.zip", "./output/"+singleRecord.C+"_Scoreboard_rating_template.pptx")
+	err = os.Rename(singleRecord.C + "_" + singleRecord.K + "_Scoreboard_rating_template.zip", "./output/" + singleRecord.C + "_" + singleRecord.K + "_Scoreboard_rating_template.pptx")
 	checkError("renaming .zip file failed", err)
 
 }
