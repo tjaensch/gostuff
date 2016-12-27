@@ -16,8 +16,8 @@ func init() {
 
 func TestGetCsvData(t *testing.T) {
 	allRecords = getCsvData(testFile)
-	if len(allRecords) != 765 {
-		t.Error("Expected CSV data slice to be 765, got ", len(allRecords))
+	if len(allRecords) != 775 {
+		t.Error("Expected CSV data slice to be 775, got ", len(allRecords))
 	}
 }
 

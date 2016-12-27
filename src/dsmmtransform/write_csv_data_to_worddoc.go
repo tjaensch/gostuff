@@ -237,12 +237,6 @@ func writeCsvDataToWordDoc(singleRecord DsmmAssessmentRecord) {
 			docx.Replace("DSM_BG", singleRecord.BG, -1)
 		}
 
-		if singleRecord.BH == "" {
-			docx.Replace("DSM_BH", "N/A", -1)
-		} else {
-			docx.Replace("DSM_BH", singleRecord.BH, -1)
-		}
-
 		// Write to file with Dataset Short Name and version number as doc title
 			docx.WriteToFile("./output/" + singleRecord.C + "_" + singleRecord.K + ".docx")
 } // end writeCsvDataToWordDoc

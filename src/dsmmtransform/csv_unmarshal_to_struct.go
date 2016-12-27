@@ -343,7 +343,6 @@ func getCsvData(datafile string) []DsmmAssessmentRecord {
 		singleRecord.BE = cell[56]
 		singleRecord.BF = cell[57]
 		singleRecord.BG = cell[58]
-		singleRecord.BH = cell[59]
 
 		// Append singleRecord to allRecords struct slice
 		allRecords = append(allRecords, singleRecord)
