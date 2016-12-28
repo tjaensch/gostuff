@@ -2,9 +2,7 @@ package main
 
 import (
 	"encoding/csv"
-	//"fmt"
 	"os"
-	//"reflect"
 )
 
 // Struct that represents values of one line of CSV input file
@@ -171,6 +169,8 @@ type DsmmAssessmentRecord struct {
 	DataIntegrityLevel3 string
 	DataIntegrityLevel4 string
 	DataIntegrityLevel5 string
+
+	Authorlist string
 }
 
 // Read CSV data into struct slice
@@ -347,15 +347,6 @@ func getCsvData(datafile string) []DsmmAssessmentRecord {
 		// Append singleRecord to allRecords struct slice
 		allRecords = append(allRecords, singleRecord)
 	}
-
-
-	/* // Print all values from one record to stdout just for quick check that it works
-	v := reflect.ValueOf(allRecords[35])
-	values := make([]interface{}, v.NumField())
-	for i := 0; i < v.NumField(); i++ {
-		values[i] = v.Field(i).Interface()
-	}
-	fmt.Println(values) */
 
 	return allRecords
 } // end getCsvData()

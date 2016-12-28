@@ -12,6 +12,8 @@ func writeCsvDataToWordDoc(singleRecord DsmmAssessmentRecord) {
 
 		docx := r.Editable()
 
+		docx.Replace("DSMM_Authorlist", singleRecord.Authorlist, -1)
+
 		// singleRecord.A == timestamp, only leave date in and remove time
 		docx.Replace("DSMM_A", singleRecord.A[:10], -1)
 		docx.Replace("DSMM_B", singleRecord.B, -1)
