@@ -34,7 +34,7 @@ func main() {
 	prepDirs()
 
 	// Loop over all CSV records and process one by one
-	for _, singleRecord := range allRecords[2:20] {
+	for _, singleRecord := range allRecords[1:] {
 
 	if _, err := os.Stat("./output/" + singleRecord.C + "_" + singleRecord.K + ".docx"); os.IsNotExist(err) {
 			singleRecord = addStarRatingValues(singleRecord)
