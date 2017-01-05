@@ -52,6 +52,7 @@ func TestWriteCsvDataToWordDoc(t *testing.T) {
 		parseCsvDataToPptxXml(singleRecord)
 		convertPptxToPng(singleRecord)
 		updateWordTemplateWithNewPng(singleRecord)
+		singleRecord = getAuthorList(singleRecord)
 		writeCsvDataToWordDoc(singleRecord)
 		writeDocToPdf(singleRecord)
 	}
