@@ -3,3 +3,4 @@ pkg
 src/github.com
 src/bootstrap_admin/startbootstrap-sb-admin-gh-pages
 *.js
+*.css
