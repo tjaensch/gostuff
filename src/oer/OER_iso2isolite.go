@@ -23,7 +23,7 @@ func checkError(reason string, err error) {
 
 var (
 	xmlFilePath string = "/nodc/projects/satdata/OER/Metadata/waf/"
-	xslFile    string = "/nodc/users/tjaensch/onestop.git/xsl/oer/XSL/OER_ISO2ISOLite_conversion.xsl"
+	xslFile    string = "/nodc/users/tjaensch/xsl/oer/XSL/OER_ISO2ISOLite_conversion.xsl"
 	//OER collection metadata template file
 	//isocofile  string = "/nodc/web/data.nodc/htdocs/nodc/archive/metadata/test/collection/NDBC-COOPS.xml"
 	xmlFiles    []string = findXmlFiles(xmlFilePath)
@@ -33,7 +33,7 @@ var (
 func main() {
 	log.Printf("Working digging up files...")
 	t0 := time.Now()
-	// prepDirs()
+	prepDirs()
 
 	var wg sync.WaitGroup
 
@@ -111,7 +111,6 @@ func xsltprocToISO(xmlFile string, xslFile string) {
 	var isoXML []byte
 	var err error
 	cmdName := "xsltproc"
-	//Convert to ISO
 	cmdArgs := []string{xslFile, xmlFilePath + getFileName(xmlFile) + ".xml"}
 	if isoXML, err = exec.Command(cmdName, cmdArgs...).Output(); err != nil {
 		fmt.Printf("Something went wrong with the XSLT conversion, program exiting.", err)
@@ -126,7 +125,7 @@ func xsltprocToISO(xmlFile string, xslFile string) {
 	var isoXML []byte
 	var err error
 	cmdName := "xsltproc"
-	cmdArgs := []string{"--stringparam", "collFile", isocofile, "/nodc/users/tjaensch/onestop.git/xsl/oer/XSL/granule.xsl", "./isolite_xml_output/" + getFileName(xmlFile) + ".xml"}
+	cmdArgs := []string{"--stringparam", "collFile", isocofile, "/nodc/users/tjaensch/xsl/oer/XSL/granule.xsl", "./isolite_xml_output/" + getFileName(xmlFile) + ".xml"}
 	if isoXML, err = exec.Command(cmdName, cmdArgs...).Output(); err != nil {
 		fmt.Printf("Something went wrong with the collection metadata addition, program exiting.", err)
 		os.Exit(1)

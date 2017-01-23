@@ -50,9 +50,9 @@ for filename in "$@"
 		   sed -i '4 a <title>'$filename'</title>' $filename.ncml;
 		   sed -i '5 a <filesize>'$filesize'</filesize>' $filename.ncml; then
 			#Apply modified UnidataDD2MI XSL to work with WOA data
-			xsltproc /nodc/users/tjaensch/onestop.git/xsl/boulder_demo/bash_process/XSL/ncml2iso_modified_from_UnidataDD2MI_demo_WOA_Thomas_edits.xsl $filename.ncml > $filename.xml
+			xsltproc /nodc/users/tjaensch/xsl/boulder_demo/bash_process/XSL/ncml2iso_modified_from_UnidataDD2MI_demo_WOA_Thomas_edits.xsl $filename.ncml > $filename.xml
 			#Apply WOA collection metadata
-			xsltproc --stringparam collFile $isocofile /nodc/users/tjaensch/onestop.git/xsl/boulder_demo/bash_process/XSL/granule.xsl $filename.xml > output/$filename.xml
+			xsltproc --stringparam collFile $isocofile /nodc/users/tjaensch/xsl/boulder_demo/bash_process/XSL/granule.xsl $filename.xml > output/$filename.xml
 		else
 			error_exit "Something went wrong with xsltproc, program exiting."
 		fi
