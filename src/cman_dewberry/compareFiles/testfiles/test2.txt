@@ -1,0 +1,11 @@
+netcdf NDBC_41001_201101_D1_v00 {
+dimensions:
+	time = 743 ;
+	time_bnds = 2 ;
+	time10 = 4458 ;
+	time10_bnds = 2 ;
+	timem = 861 ;
+	timem_bnds = 2 ;
+	time_wpm_20 = 743 ;
+	wave_wpm = 47 ;
+	wave_wpm_bnds = 2 ;
