@@ -23,9 +23,9 @@ func checkError(reason string, err error) {
 
 var (
 	xmlFilePath string = "/nodc/projects/satdata/OER/Metadata/waf/"
-	xslFile    string = "/nodc/users/tjaensch/xsl/oer/XSL/OER_ISO2ISOLite_conversion.xsl"
+	xslFile    string = "/nodc/users/tjaensch/xsl.git/oer/XSL/OER_ISO2ISOLite_conversion.xsl"
 	//OER collection metadata template file
-	//isocofile  string = "/nodc/web/data.nodc/htdocs/nodc/archive/metadata/test/collection/NDBC-COOPS.xml"
+	//isocofile  string = "/nodc/web/data.nodc/htdocs/nodc/archive/metadata/approved/iso/NDBC-COOPS.xml"
 	xmlFiles    []string = findXmlFiles(xmlFilePath)
 	xmlFileName string
 )
@@ -125,7 +125,7 @@ func xsltprocToISO(xmlFile string, xslFile string) {
 	var isoXML []byte
 	var err error
 	cmdName := "xsltproc"
-	cmdArgs := []string{"--stringparam", "collFile", isocofile, "/nodc/users/tjaensch/xsl/oer/XSL/granule.xsl", "./isolite_xml_output/" + getFileName(xmlFile) + ".xml"}
+	cmdArgs := []string{"--stringparam", "collFile", isocofile, "/nodc/users/tjaensch/xsl.git/oer/XSL/granule.xsl", "./isolite_xml_output/" + getFileName(xmlFile) + ".xml"}
 	if isoXML, err = exec.Command(cmdName, cmdArgs...).Output(); err != nil {
 		fmt.Printf("Something went wrong with the collection metadata addition, program exiting.", err)
 		os.Exit(1)

@@ -38,9 +38,9 @@ func checkError(reason string, err error) {
 
 var (
 	ncFilePath string = "/nodc/web/data.nodc/htdocs/ndbc/cmanwx"
-	xslFile    string = "/nodc/users/tjaensch/xsl/cman_dewberry/XSL/ncml2iso_modified_from_UnidataDD2MI_CMAN_Thomas_edits.xsl"
+	xslFile    string = "/nodc/users/tjaensch/xsl.git/cman_dewberry/XSL/ncml2iso_modified_from_UnidataDD2MI_CMAN_Thomas_edits.xsl"
 	//C-MAN collection metadata template file
-	isocofile    string   = "/nodc/web/data.nodc/htdocs/nodc/archive/metadata/test/collection/NDBC-CMANWx.xml"
+	isocofile    string   = "/nodc/web/data.nodc/htdocs/nodc/archive/metadata/approved/iso/NDBC-CMANWx.xml"
 	ncFiles      []string = findNcFiles(ncFilePath)
 	ncFileName   string
 	fileSize     int
@@ -219,7 +219,7 @@ func addCollectionMetadata(ncFile string) {
 	var isoXML []byte
 	var err error
 	cmdName := "xsltproc"
-	cmdArgs := []string{"--stringparam", "collFile", isocofile, "/nodc/users/tjaensch/xsl/cman_dewberry/XSL/granule.xsl", "./xml_output/" + getFileName(ncFile) + ".xml"}
+	cmdArgs := []string{"--stringparam", "collFile", isocofile, "/nodc/users/tjaensch/xsl.git/cman_dewberry/XSL/granule.xsl", "./xml_output/" + getFileName(ncFile) + ".xml"}
 	if isoXML, err = exec.Command(cmdName, cmdArgs...).Output(); err != nil {
 		fmt.Printf("Something went wrong with the collection metadata addition, program exiting.", err)
 		os.Exit(1)

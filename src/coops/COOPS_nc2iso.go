@@ -38,9 +38,9 @@ func checkError(reason string, err error) {
 
 var (
 	ncFilePath string = "/nodc/web/data.nodc/htdocs/ndbc/co-ops"
-	xslFile    string = "/nodc/users/tjaensch/xsl/coops/XSL/ncml2iso_modified_from_UnidataDD2MI_COOPS_Thomas_edits.xsl"
+	xslFile    string = "/nodc/users/tjaensch/xsl.git/coops/XSL/ncml2iso_modified_from_UnidataDD2MI_COOPS_Thomas_edits.xsl"
 	//CO-OPS collection metadata template file
-	isocofile  string = "/nodc/web/data.nodc/htdocs/nodc/archive/metadata/test/collection/NDBC-COOPS.xml"
+	isocofile  string = "/nodc/web/data.nodc/htdocs/nodc/archive/metadata/approved/iso/NDBC-COOPS.xml"
 	ncFiles    []string = findNcFiles(ncFilePath)
 	ncFileName string
 	fileSize   int
@@ -78,6 +78,7 @@ func main() {
 func prepDirs() {
 	os.Mkdir("./ncml", 0777)
 	os.Mkdir("./xml_output", 0777)
+	os.Mkdir("./netcdf3", 0777)
 }
 
 // Create fileSegments slice of slice for concurrent processing
@@ -132,8 +133,28 @@ func findNcFiles(ncFilePath string) []string {
 func ncdump(ncFile string) {
 	var ncml []byte
 	var err error
-	cmdName := "ncdump"
-	cmdArgs := []string{"-x", ncFile}
+	// Convert netcdf4 to netcdf3 for ncdump -x to work
+	cmdName := "ncks"
+	cmdArgs := []string{"-3", ncFile, "netcdf3/" + filepath.Base(ncFile)}
+	// Open log file
+	f, err := os.OpenFile("CMAN_nc2iso_conversion_failures.log", os.O_APPEND|os.O_CREATE|os.O_RDWR, 0666)
+	checkError("open log file failed", err)
+	defer f.Close()
+	// Assign it to the standard logger
+	log.SetOutput(f)
+	cmd := exec.Command(cmdName, cmdArgs...)
+	var out bytes.Buffer
+	var stderr bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &stderr
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println(ncFile + " stderror: " + stderr.String())
+		log.Println(ncFile + " stderror: " + stderr.String())
+	}
+
+	cmdName = "ncdump"
+	cmdArgs = []string{"-x", "./netcdf3/" + filepath.Base(ncFile)}
 	if ncml, err = exec.Command(cmdName, cmdArgs...).Output(); err != nil {
 		fmt.Printf("Something went wrong with ncdump, program exiting.", err)
 		os.Exit(1)
@@ -218,7 +239,7 @@ func addCollectionMetadata(ncFile string) {
 	var isoXML []byte
 	var err error
 	cmdName := "xsltproc"
-	cmdArgs := []string{"--stringparam", "collFile", isocofile, "/nodc/users/tjaensch/xsl/coops/XSL/granule.xsl", "./xml_output/" + getFileName(ncFile) + ".xml"}
+	cmdArgs := []string{"--stringparam", "collFile", isocofile, "/nodc/users/tjaensch/xsl.git/coops/XSL/granule.xsl", "./xml_output/" + getFileName(ncFile) + ".xml"}
 	if isoXML, err = exec.Command(cmdName, cmdArgs...).Output(); err != nil {
 		fmt.Printf("Something went wrong with the collection metadata addition, program exiting.", err)
 		os.Exit(1)
