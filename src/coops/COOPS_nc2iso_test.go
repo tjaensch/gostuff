@@ -64,10 +64,10 @@ func TestNcdump(t *testing.T) {
 }
 
 func TestAppendToNcml(t *testing.T) {
-	additions := ncmlAdditions{ncFileName: "NOS_1612480_201401_D1_v00", fileSize: 100, dataPath: "test/moo/blah", englishTitle: "English Title"}
+	additions := ncmlAdditions{ncFileName: getFileName(testFile), fileSize: getFileSize(testFile), dataPath: getFilePath(testFile), englishTitle: getEnglishTitle(testFile)}
 	appendToNcml(testFile, additions)
 	input, _ := ioutil.ReadFile("./ncml/" + getFileName(testFile) + ".ncml")
-	if !strings.Contains(string(input), "test/moo/blah") {
+	if !strings.Contains(string(input), "ndbc/co-ops/2014/01/") {
 		t.Error("appendtoNcml tanked")
 	}
 }

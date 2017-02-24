@@ -137,7 +137,7 @@ func ncdump(ncFile string) {
 	cmdName := "ncks"
 	cmdArgs := []string{"-3", ncFile, "netcdf3/" + filepath.Base(ncFile)}
 	// Open log file
-	f, err := os.OpenFile("CMAN_nc2iso_conversion_failures.log", os.O_APPEND|os.O_CREATE|os.O_RDWR, 0666)
+	f, err := os.OpenFile("COOPS_nc2iso_conversion_failures.log", os.O_APPEND|os.O_CREATE|os.O_RDWR, 0666)
 	checkError("open log file failed", err)
 	defer f.Close()
 	// Assign it to the standard logger
