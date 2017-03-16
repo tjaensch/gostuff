@@ -118,7 +118,7 @@ func findNcFiles(ncFilePath string) []string {
 	var files []byte
 	var err error
 	cmdName := "find"
-	cmdArgs := []string{"-L", ncFilePath, "-type", "f", "-name", "*.nc"}
+	cmdArgs := []string{"-L", ncFilePath, "-type", "f", "-name", "NDBC_*.nc"}
 	if files, err = exec.Command(cmdName, cmdArgs...).Output(); err != nil {
 		fmt.Printf("Something went wrong with finding .nc files in source directory, program exiting.", err)
 		os.Exit(1)
