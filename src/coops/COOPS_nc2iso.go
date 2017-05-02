@@ -104,7 +104,9 @@ func nc2iso(ncFiles []string) {
 			englishTitle string = getEnglishTitle(ncFile)
 			additions         = ncmlAdditions{ncFileName, fileSize, dataPath, englishTitle}
 		)
-		ncdump(ncFile)
+		if err := ncdump(ncFile); err != nil {
+				continue
+			}
 		appendToNcml(ncFile, additions)
 		xsltprocToISO(ncFile, xslFile)
 		addCollectionMetadata(ncFile)
@@ -130,7 +132,7 @@ func findNcFiles(ncFilePath string) []string {
 	return ncFiles[:len(ncFiles)-1]
 }
 
-func ncdump(ncFile string) {
+func ncdump(ncFile string) error {
 	var ncml []byte
 	var err error
 	// Convert netcdf4 to netcdf3 for ncdump -x to work
@@ -151,6 +153,7 @@ func ncdump(ncFile string) {
 	if err != nil {
 		fmt.Println(ncFile + " stderror: " + stderr.String())
 		log.Println(ncFile + " stderror: " + stderr.String())
+		return err
 	}
 
 	cmdName = "ncdump"
@@ -162,6 +165,7 @@ func ncdump(ncFile string) {
 	// Write ncdump conversion to file
 	err = ioutil.WriteFile("./ncml/"+getFileName(ncFile)+".ncml", ncml, 0644)
 	checkError("write ncml file failed, program exiting", err)
+	return nil
 }
 
 // Get just the file name without file extension
