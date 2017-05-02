@@ -105,7 +105,9 @@ func nc2iso(ncFiles []string) {
 				englishTitle string = getEnglishTitle(ncFile)
 				additions           = ncmlAdditions{ncFileName, fileSize, dataPath, englishTitle}
 			)
-			ncdump(ncFile)
+			if err := ncdump(ncFile); err != nil {
+				continue
+			}
 			appendToNcml(ncFile, additions)
 			xsltprocToISO(ncFile, xslFile)
 			addCollectionMetadata(ncFile)
@@ -132,7 +134,7 @@ func findNcFiles(ncFilePath string) []string {
 	return ncFiles[:len(ncFiles)-1]
 }
 
-func ncdump(ncFile string) {
+func ncdump(ncFile string) error {
 	var ncml []byte
 	var err error
 	// Convert netcdf4 to netcdf3 for ncdump -x to work
@@ -153,17 +155,19 @@ func ncdump(ncFile string) {
 	if err != nil {
 		fmt.Println(ncFile + " stderror: " + stderr.String())
 		log.Println(ncFile + " stderror: " + stderr.String())
+		return err
 	}
 
 	cmdName = "ncdump"
 	cmdArgs = []string{"-x", "./netcdf3/" + filepath.Base(ncFile)}
 	if ncml, err = exec.Command(cmdName, cmdArgs...).Output(); err != nil {
 		fmt.Printf("Something went wrong with ncdump, program exiting.", err)
-		os.Exit(1)
+		//os.Exit(1)
 	}
 	// Write ncdump conversion to file
 	err = ioutil.WriteFile("./ncml/"+getFileName(ncFile)+".ncml", ncml, 0644)
 	checkError("write ncml file failed, program exiting", err)
+	return nil
 }
 
 // Get just the file name without file extension
@@ -216,7 +220,7 @@ func appendToNcml(ncFile string, additions ncmlAdditions) {
 	checkError("open ncml file failed", err)
 	if _, err := additions.encode(file); err != nil {
 		fmt.Printf("append to ncml file failed: %s\n", err)
-		os.Exit(1)
+		//os.Exit(1)
 	}
 	defer file.Close()
 }
@@ -229,7 +233,7 @@ func xsltprocToISO(ncFile string, xslFile string) {
 	cmdArgs := []string{xslFile, "./ncml/" + getFileName(ncFile) + ".ncml"}
 	if isoXML, err = exec.Command(cmdName, cmdArgs...).Output(); err != nil {
 		fmt.Printf("Something went wrong with the XSLT conversion, program exiting.", err)
-		os.Exit(1)
+		//os.Exit(1)
 	}
 	// Write xsltproc conversion to file
 	err = ioutil.WriteFile("./xml_output/"+getFileName(ncFile)+".xml", isoXML, 0644)
@@ -246,7 +250,7 @@ func addCollectionMetadata(ncFile string) {
 	cmdArgs := []string{"--stringparam", "collFile", isocofile, "/nodc/users/tjaensch/xsl.git/cman/XSL/granule.xsl", "./xml_output/" + getFileName(ncFile) + ".xml"}
 	if isoXML, err = exec.Command(cmdName, cmdArgs...).Output(); err != nil {
 		fmt.Printf("Something went wrong with the collection metadata addition, program exiting.", err)
-		os.Exit(1)
+		//os.Exit(1)
 	}
 	err = ioutil.WriteFile("./xml_output/"+getFileName(ncFile)+".xml", isoXML, 0644)
 	if err == nil {
