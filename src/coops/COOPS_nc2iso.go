@@ -231,8 +231,8 @@ func xsltprocToISO(ncFile string, xslFile string) {
 	//Convert to ISO
 	cmdArgs := []string{xslFile, "./ncml/" + getFileName(ncFile) + ".ncml"}
 	if isoXML, err = exec.Command(cmdName, cmdArgs...).Output(); err != nil {
-		fmt.Printf("Something went wrong with the XSLT conversion, program exiting.", err)
-		os.Exit(1)
+		fmt.Printf("Something went wrong with the XSLT conversion for " + ncFile + ": ", err)
+		log.Println("Something went wrong with the XSLT conversion for " + ncFile + ": ", err)
 	}
 	// Write xsltproc conversion to file
 	err = ioutil.WriteFile("./xml_output/"+getFileName(ncFile)+".xml", isoXML, 0644)

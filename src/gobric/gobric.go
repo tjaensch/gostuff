@@ -26,16 +26,19 @@ func main() {
 	readMrrCsvSourceFile()
 }
 
-func readMrrCsvSourceFile() {
+func openCsvSourceFile() io.Reader {
 	mrr, err := os.Open(mrr_source)
 	checkError("Open mrr.csv failed", err)
-	
-	data := csv.NewReader(bufio.NewReader(mrr))
+	return mrr
+}
+
+func readMrrCsvSourceFile() {
+	data := csv.NewReader(bufio.NewReader(openCsvSourceFile()))
 	for {
 		record, err := data.Read()
 		if err == io.EOF {
 			break
 		}
-		fmt.Println(len(record[15]))
+		fmt.Println(record[16])
 	}
 }
