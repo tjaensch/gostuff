@@ -245,8 +245,8 @@ func addCollectionMetadata(ncFile string) {
 	cmdName := "xsltproc"
 	cmdArgs := []string{"--stringparam", "collFile", isocofile, "/nodc/users/tjaensch/xsl.git/coops/XSL/granule.xsl", "./xml_output/" + getFileName(ncFile) + ".xml"}
 	if isoXML, err = exec.Command(cmdName, cmdArgs...).Output(); err != nil {
-		fmt.Printf("Something went wrong with the collection metadata addition, program exiting.", err)
-		os.Exit(1)
+		fmt.Printf("Something went wrong with the XSLT conversion for " + ncFile + ": ", err)
+		log.Println("Something went wrong with the XSLT conversion for " + ncFile + ": ", err)
 	}
 	err = ioutil.WriteFile("./xml_output/"+getFileName(ncFile)+".xml", isoXML, 0644)
 	if err == nil {

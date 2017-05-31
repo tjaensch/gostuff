@@ -7,11 +7,13 @@ import (
 	"io"
 	//"log"
 	"os"
+	"reflect"
 	//"strings"
 )
 
 var (
 	mrr_source string = "/nodc/users/tjaensch/belay/belay/fixtures/mrr.csv"
+	data io.Reader = openCsvSourceFile()
 )
 
 // Generic error checking function
@@ -33,12 +35,12 @@ func openCsvSourceFile() io.Reader {
 }
 
 func readMrrCsvSourceFile() {
-	data := csv.NewReader(bufio.NewReader(openCsvSourceFile()))
+	r := csv.NewReader(bufio.NewReader(data))
 	for {
-		record, err := data.Read()
+		record, err := r.Read()
 		if err == io.EOF {
 			break
 		}
-		fmt.Println(record[16])
+		fmt.Println(reflect.TypeOf(record[15]))
 	}
 }
