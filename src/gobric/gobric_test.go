@@ -10,3 +10,7 @@ func TestReadMrrCsvSourceFile(t *testing.T) {
 		t.Error("No data, got ", testData)
 	}
 }
+
+func TestGranuleRulesRunRubric(t *testing.T) {
+	
+}
