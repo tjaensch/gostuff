@@ -4,16 +4,16 @@ import (
 	"bufio"
 	"encoding/csv"
 	"fmt"
-	"io"
+	//"io"
 	//"log"
 	"os"
-	"reflect"
+	//"reflect"
 	//"strings"
 )
 
 var (
 	mrr_source string = "/nodc/users/tjaensch/belay/belay/fixtures/mrr.csv"
-	data io.Reader = openCsvSourceFile()
+	data *csv.Reader = readMrrCsvSourceFile()
 )
 
 // Generic error checking function
@@ -28,19 +28,14 @@ func main() {
 	readMrrCsvSourceFile()
 }
 
-func openCsvSourceFile() io.Reader {
+func readMrrCsvSourceFile() *csv.Reader {
 	mrr, err := os.Open(mrr_source)
 	checkError("Open mrr.csv failed", err)
-	return mrr
-}
-
-func readMrrCsvSourceFile() {
-	r := csv.NewReader(bufio.NewReader(data))
-	for {
+	return csv.NewReader(bufio.NewReader(mrr))
+	/* for {
 		record, err := r.Read()
 		if err == io.EOF {
 			break
 		}
-		fmt.Println(reflect.TypeOf(record[15]))
-	}
+	} */
 }
