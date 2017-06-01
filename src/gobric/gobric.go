@@ -16,7 +16,7 @@ import (
 var (
 	mrr_source string      = "/nodc/users/tjaensch/belay/belay/fixtures/mrr.csv"
 	data       *csv.Reader = readMrrCsvSourceFile()
-	xmlFile    string      = "./testfiles/woa13_95A4_s00_01.xml"
+	xmlFile    string      = "./testfiles/woa13_95A4_s00_01_bad.xml"
 )
 
 // Generic error checking function
@@ -37,10 +37,10 @@ func readMrrCsvSourceFile() *csv.Reader {
 	return csv.NewReader(bufio.NewReader(mrr))
 }
 
-func granuleRulesRunRubric(xmlFile string) (int, int) {
+func granuleRulesRunRubric(xmlFile string) (float64, float64) {
 	var xmlNode []byte
-	xpathFound := 0
-	xpathNotFound := 0
+	xpathFound := 0.00
+	xpathNotFound := 0.00
 	for {
 		column, err := data.Read()
 		if err == io.EOF {
@@ -66,6 +66,12 @@ func granuleRulesRunRubric(xmlFile string) (int, int) {
 			continue
 		}
 	}
-	fmt.Printf("Required elements found: %d, required elements not found: %d ", xpathFound, xpathNotFound)
+	fmt.Printf(xmlFile + "\n")
+	fmt.Printf("Required elements found: %.0f\nRequired elements not found: %.0f\n", xpathFound, xpathNotFound)
+	fmt.Printf("Rubric score: %.2f\n", calculateRubricScore(xpathFound, xpathNotFound))
 	return xpathFound, xpathNotFound
+}
+
+func calculateRubricScore(xpathFound float64, xpathNotFound float64) float64 {
+		return 100.00 - (xpathNotFound / (xpathFound + xpathNotFound)) * 100
 }
