@@ -37,8 +37,10 @@ func readMrrCsvSourceFile() *csv.Reader {
 	return csv.NewReader(bufio.NewReader(mrr))
 }
 
-func granuleRulesRunRubric(xmlFile string) {
+func granuleRulesRunRubric(xmlFile string) (int, int) {
 	var xmlNode []byte
+	xpathFound := 0
+	xpathNotFound := 0
 	for {
 		column, err := data.Read()
 		if err == io.EOF {
@@ -54,12 +56,16 @@ func granuleRulesRunRubric(xmlFile string) {
 				os.Exit(1)
 			}
 			if string(xmlNode) == "" {
-				fmt.Println("Not found: ", column[16])
+				xpathNotFound++
+				fmt.Println("Required element not found: ", column[16])
 			} else {
-				fmt.Println("Found: " + column[16] + " --> " + string(xmlNode))
+				xpathFound++
+				//fmt.Println("Required element found: " + column[16])
 			}
 		} else {
 			continue
 		}
 	}
+	fmt.Printf("Required elements found: %d, required elements not found: %d ", xpathFound, xpathNotFound)
+	return xpathFound, xpathNotFound
 }
