@@ -41,6 +41,7 @@ func granuleRulesRunRubric(xmlFile string) (float64, float64) {
 	var xmlNode []byte
 	xpathFound := 0.00
 	xpathNotFound := 0.00
+	fmt.Printf(xmlFile + "\n")
 	for {
 		column, err := data.Read()
 		if err == io.EOF {
@@ -66,7 +67,6 @@ func granuleRulesRunRubric(xmlFile string) (float64, float64) {
 			continue
 		}
 	}
-	fmt.Printf(xmlFile + "\n")
 	fmt.Printf("Required elements found: %.0f\nRequired elements not found: %.0f\n", xpathFound, xpathNotFound)
 	fmt.Printf("Rubric score: %.2f\n", calculateRubricScore(xpathFound, xpathNotFound))
 	return xpathFound, xpathNotFound

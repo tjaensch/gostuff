@@ -167,6 +167,11 @@ func ncdump(ncFile string) error {
 	// Write ncdump conversion to file
 	err = ioutil.WriteFile("./ncml/"+getFileName(ncFile)+".ncml", ncml, 0644)
 	checkError("write ncml file failed, program exiting", err)
+
+	// Remove netcdf3 file after conversion
+	err = os.Remove("./netcdf3/" + filepath.Base(ncFile))
+	checkError("removing netcdf3 file failed, program exiting", err)
+	
 	return nil
 }
 
