@@ -16,7 +16,7 @@ import (
 var (
 	mrr_source string      = "/nodc/users/tjaensch/belay/belay/fixtures/mrr.csv"
 	data       *csv.Reader = readMrrCsvSourceFile()
-	xmlFile    string      = "./testfiles/woa13_95A4_s00_01_bad.xml"
+	xmlFile    string      = "/nodc/projects/satdata/Granule_OneStop/CO-OPS/xml/NOS_9414750_201406_D1_v00.xml"
 )
 
 // Generic error checking function
@@ -73,5 +73,5 @@ func granuleRulesRunRubric(xmlFile string) (float64, float64) {
 }
 
 func calculateRubricScore(xpathFound float64, xpathNotFound float64) float64 {
-		return 100.00 - (xpathNotFound / (xpathFound + xpathNotFound)) * 100
+		return (xpathFound / (xpathFound + xpathNotFound)) * 100
 }
