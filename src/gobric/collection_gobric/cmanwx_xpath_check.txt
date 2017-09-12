@@ -1,4 +1,5 @@
 /nodc/web/data.nodc/htdocs/nodc/archive/metadata/approved/iso/NDBC-CMANWx.xml
+
 Required element not found:  //gmd:contentInfo//gmd:contentType/gmd:MD_CoverageContentTypeCode/@codeListValue
 Required element not found:  //gmd:contentInfo//gmi:rangeElementDescription/gmi:MI_RangeElementDescription | //gmd:contentInfo//gmd:dimension
 Required element not found:  //gmd:contentInfo//gmd:attributeDescription
@@ -6,6 +7,7 @@ Required element not found:  //gmd:contentInfo/gmd:MD_FeatureCatalogueDescriptio
 Required element not found:  //gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:includedWithDataset
 Required element not found:  //gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes
 Required element not found:  //gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage//gmd:source
+
 Required elements found: 55
 Required elements not found: 7
 Rubric score: 88.71

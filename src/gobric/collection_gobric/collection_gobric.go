@@ -16,7 +16,7 @@ import (
 var (
 	mrr_source string      = "/nodc/users/tjaensch/belay/belay/fixtures/mrr.csv"
 	data       *csv.Reader = readMrrCsvSourceFile()
-	xmlFile    string      = "/nodc/web/data.nodc/htdocs/nodc/archive/metadata/approved/iso/GHRSST-ABOM-L4HRfnd-AUS-RAMSSA_09km.xml"
+	xmlFile    string      = "/nodc/web/data.nodc/htdocs/nodc/archive/metadata/approved/iso/NDBC-CMANWx.xml"
 )
 
 // Generic error checking function
