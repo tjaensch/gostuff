@@ -2,12 +2,20 @@ package main
 
 import (
 	//"io/ioutil"
-	//"os"
+	"os"
     "reflect"
 	"testing"
 )
 
 var testFile string = "AGE00147710"
+
+func TestDownloadStationsTextFile(t *testing.T) {
+	downloadStationsTextFile()
+	file, err := os.Stat("ghcnd-stations.txt")
+	if err != nil {
+		t.Error("File not found, got", file)
+	}
+}
 
 func TestReadInStationsFileInfo(t *testing.T) {
 	_, latMap, lonMap, stationLongNameMap := readInStationsFileInfo()
