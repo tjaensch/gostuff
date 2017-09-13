@@ -55,8 +55,10 @@ func downloadStationsTextFile() {
 	io.Copy(out, resp.Body)
 }
 
-func readInStationsFileInfo() ([]string, map[string]string, map[string]string, map[string]string) {
+func readInStationsFileInfo() ([]string, map[string]string, map[string]string, map[string]string, []string, []string) {
 	stationIds := make([]string, 0)
+	year := make([]string, 0)
+	month := make([]string, 0)
 	latMap := make(map[string]string)
 	lonMap := make(map[string]string)
 	stationLongNameMap := make(map[string]string)
@@ -68,8 +70,10 @@ func readInStationsFileInfo() ([]string, map[string]string, map[string]string, m
 		latMap[line[0:11]] = line[12:20]
 		lonMap[line[0:11]] = line[21:30]
 		stationLongNameMap[line[0:11]] = line[38:71]
+		year = append(year, line[11:15])
+		month = append(month, line[15:17])
 	}
-	return stationIds, latMap, lonMap, stationLongNameMap
+	return stationIds, latMap, lonMap, stationLongNameMap, year, month
 }
 
 func getIndividualDataFile(stationId string) string {
@@ -97,7 +101,7 @@ func getMetadataKeywordsForStationFile(stationId string) []string {
 func main() {
     
     downloadStationsTextFile()
-	stationIds, _, _, _ := readInStationsFileInfo()
+	stationIds, _, _, _, _, _ := readInStationsFileInfo()
 
 	getMetadataKeywordsForStationFile(stationIds[0])
 
