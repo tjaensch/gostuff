@@ -8,22 +8,34 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"text/template"
+	"time"
 )
+
+type IsoFields struct {
+	StationId        string
+	Date             string
+	Lat              string
+	Lon              string
+	Year             string
+	Month            string
+	MetadataKeywords []string
+}
 
 var variablesGCMDDefinitionsMap = map[string]string{
 	"PRCP": "Earth Science > Atmosphere > Precipitation > Precipitation Amount > 24 Hour Precipitation Amount",
 	"SNOW": "Earth Science > Terrestrial Hydrosphere > Snow/Ice > Snow Depth",
 	"SNWD": "Earth Science > Terrestrial Hydrosphere > Snow/Ice > Snow Depth",
-	"TM": "Earth Science > Atmosphere > Atmospheric Temperature > Surface Temperature > Maximum/Minimum Temperature > 24 Hour Maximum Temperature",
-	"AC": "Earth Science > Atmosphere > Clouds > Cloud Properties > Cloud Fraction",
+	"TM":   "Earth Science > Atmosphere > Atmospheric Temperature > Surface Temperature > Maximum/Minimum Temperature > 24 Hour Maximum Temperature",
+	"AC":   "Earth Science > Atmosphere > Clouds > Cloud Properties > Cloud Fraction",
 	"AWDR": "Earth Science > Atmosphere > Atmospheric Winds > Surface Winds > Wind Direction",
 	"AWND": "Earth Science > Atmosphere > Atmospheric Winds > Surface Winds > Wind Speed",
 	"EVAP": "Earth Science > Atmosphere > Atmospheric Water Vapor > Water Vapor Processes > Evaporation",
-	"FR": "Earth Science > Land Surface > Frozen Ground > Seasonally Frozen Ground",
+	"FR":   "Earth Science > Land Surface > Frozen Ground > Seasonally Frozen Ground",
 	"MDEV": "Earth Science > Atmosphere > Atmospheric Water Vapor > Water Vapor Processes > Evaporation",
 	"MDPR": "Earth Science > Atmosphere > Precipitation > Precipitation Amount > 24 Hour Precipitation Amount",
 	"MDSF": "Earth Science > Terrestrial Hydrosphere > Snow/Ice > Snow Depth",
-	"MDT": "Earth Science > Atmosphere > Atmospheric Temperature > Surface Temperature > Maximum/Minimum Temperature > 24 Hour Maximum Temperature",
+	"MDT":  "Earth Science > Atmosphere > Atmospheric Temperature > Surface Temperature > Maximum/Minimum Temperature > 24 Hour Maximum Temperature",
 	"PSUN": "Earth Science > Atmosphere > Atmospheric Radiation > Sunshine",
 	"SN":   "Earth Science > Land Surface > Soils > Soil Temperature",
 	"SX":   "Earth Science > Land Surface > Soils > Soil Temperature",
@@ -31,7 +43,7 @@ var variablesGCMDDefinitionsMap = map[string]string{
 	"TOBS": "Earth Science > Atmosphere > Atmospheric Temperature > Surface Temperature > Air Temperature",
 	"TSUN": "Earth Science > Atmosphere > Atmospheric Radiation > Sunshine",
 	"WDF":  "Earth Science > Atmosphere > Atmospheric Winds > Surface Winds > Wind Direction",
-	"WES": "Earth Science > Atmosphere > Precipitation > Snow Water Equivalent",
+	"WES":  "Earth Science > Atmosphere > Precipitation > Snow Water Equivalent",
 	"WSF":  "Earth Science > Atmosphere > Atmospheric Winds > Surface Winds > Wind Speed",
 	"WT":   "Earth Science > Atmosphere > Weather Events",
 	"WV":   "Earth Science > Atmosphere > Weather Events",
@@ -46,7 +58,7 @@ func checkError(reason string, err error) {
 }
 
 func downloadStationsTextFile() {
-    resp, err := http.Get("https://www1.ncdc.noaa.gov/pub/data/ghcn/daily/ghcnd-stations.txt")
+	resp, err := http.Get("https://www1.ncdc.noaa.gov/pub/data/ghcn/daily/ghcnd-stations.txt")
 	checkError("getting stations file failed", err)
 	defer resp.Body.Close()
 	out, err := os.Create("ghcnd-stations.txt")
@@ -57,8 +69,8 @@ func downloadStationsTextFile() {
 
 func readInStationsFileInfo() ([]string, map[string]string, map[string]string, map[string]string, []string, []string) {
 	stationIds := make([]string, 0)
-	year := make([]string, 0)
-	month := make([]string, 0)
+	years := make([]string, 0)
+	months := make([]string, 0)
 	latMap := make(map[string]string)
 	lonMap := make(map[string]string)
 	stationLongNameMap := make(map[string]string)
@@ -70,10 +82,10 @@ func readInStationsFileInfo() ([]string, map[string]string, map[string]string, m
 		latMap[line[0:11]] = line[12:20]
 		lonMap[line[0:11]] = line[21:30]
 		stationLongNameMap[line[0:11]] = line[38:71]
-		year = append(year, line[11:15])
-		month = append(month, line[15:17])
+		years = append(years, line[11:15])
+		months = append(months, line[15:17])
 	}
-	return stationIds, latMap, lonMap, stationLongNameMap, year, month
+	return stationIds, latMap, lonMap, stationLongNameMap, years, months
 }
 
 func getIndividualDataFile(stationId string) string {
@@ -87,22 +99,35 @@ func getIndividualDataFile(stationId string) string {
 }
 
 func getMetadataKeywordsForStationFile(stationId string) []string {
-    metadataKeywords := make([]string, 0)
-    stationData := getIndividualDataFile(stationId)
+	metadataKeywords := make([]string, 0)
+	stationData := getIndividualDataFile(stationId)
 
-    for key, value := range variablesGCMDDefinitionsMap {
-    	if strings.Contains(stationData, key) {
-    		metadataKeywords = append(metadataKeywords, value)
-    	}
-    }
-    return metadataKeywords
-} 
+	for key, value := range variablesGCMDDefinitionsMap {
+		if strings.Contains(stationData, key) {
+			metadataKeywords = append(metadataKeywords, value)
+		}
+	}
+	return metadataKeywords
+}
 
 func main() {
-    
-    downloadStationsTextFile()
-	stationIds, _, _, _, _, _ := readInStationsFileInfo()
 
-	getMetadataKeywordsForStationFile(stationIds[0])
+	downloadStationsTextFile()
+	stationIds, latMap, lonMap, _, years, months := readInStationsFileInfo()
+
+	data := IsoFields{
+		stationIds[0],
+		time.Now().Local().Format("2006-01-02"),
+		latMap[stationIds[0]],
+		lonMap[stationIds[0]],
+		years[0],
+		months[0],
+		getMetadataKeywordsForStationFile(stationIds[0]),
+	}
+
+	tmpl, err := template.New("test").Parse("stationId: {{.StationId}}, date: {{.Date}}, lat: {{.Lat}}, lon: {{.Lon}}, year: {{.Year}}, month: {{.Month}}, metadataKeywords: {{.MetadataKeywords}}")
+	checkError("creating template failed", err)
+	err = tmpl.Execute(os.Stdout, data)
+	checkError("executing template failed", err)
 
 }
