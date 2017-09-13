@@ -82,7 +82,7 @@ func getIndividualDataFile(stationId string) string {
 	return strings.Replace(string(stationData), stationId, "", -1)
 }
 
-func getMetadataKeywordsForStationFile(stationId string) {
+func getMetadataKeywordsForStationFile(stationId string) []string {
     metadataKeywords := make([]string, 0)
     stationData := getIndividualDataFile(stationId)
 
@@ -91,7 +91,7 @@ func getMetadataKeywordsForStationFile(stationId string) {
     		metadataKeywords = append(metadataKeywords, value)
     	}
     }
-    fmt.Print(len(metadataKeywords))
+    return metadataKeywords
 } 
 
 func main() {

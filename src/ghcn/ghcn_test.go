@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-var testFile string = "AGE00147710"
+var testfile string = "AGE00147710"
 
 func TestDownloadStationsTextFile(t *testing.T) {
 	downloadStationsTextFile()
@@ -28,8 +28,15 @@ func TestReadInStationsFileInfo(t *testing.T) {
 }
 
 func TestGetIndividualDataFile(t *testing.T) {
-	expected := getIndividualDataFile(testFile)
+	expected := getIndividualDataFile(testfile)
     if reflect.TypeOf(expected).Kind() != reflect.String {
     	t.Error("expected string type, got", reflect.TypeOf(expected))
     }
+}
+
+func TestGetMetadataKeywordsForStationFile(t *testing.T) {
+	metadataKeywordsForStationFile := getMetadataKeywordsForStationFile(testfile)
+	if len(metadataKeywordsForStationFile) < 1 {
+		t.Error("len(metadataKeywordsForStationFile) not right, got", len(metadataKeywordsForStationFile))
+	}
 }
