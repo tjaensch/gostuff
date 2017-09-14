@@ -18,6 +18,10 @@ type IsoFields struct {
 	Lat              string
 	Lon              string
 	MetadataKeywords []string
+	BeginYear        string
+	EndYear          string
+	BeginMonth       string
+	EndMonth         string
 }
 
 var variablesGCMDDefinitionsMap = map[string]string{
@@ -65,6 +69,27 @@ func downloadStationsTextFile() {
 	io.Copy(out, resp.Body)
 }
 
+func readInIndividualDataFileInfo(stationId string) ([]string, []string) {
+	years := make([]string, 0)
+	months := make([]string, 0)
+	resp, err := http.Get("https://www1.ncdc.noaa.gov/pub/data/ghcn/daily/all/" + stationId + ".dly")
+	checkError("getting individual data file failed", err)
+	defer resp.Body.Close()
+	out, err := os.Create(stationId + ".txt")
+	checkError("write file failed", err)
+	defer out.Close()
+	io.Copy(out, resp.Body)
+	f, _ := os.Open(stationId + ".txt")
+	scanner := bufio.NewScanner(f)
+	for scanner.Scan() {
+		line := scanner.Text()
+		years = append(years, line[11:15])
+		months = append(months, line[15:17])
+	}
+	os.Remove(stationId + ".txt")
+	return years, months
+}
+
 func readInStationsFileInfo() ([]string, map[string]string, map[string]string, map[string]string) {
 	stationIds := make([]string, 0)
 	latMap := make(map[string]string)
@@ -82,7 +107,7 @@ func readInStationsFileInfo() ([]string, map[string]string, map[string]string, m
 	return stationIds, latMap, lonMap, stationLongNameMap
 }
 
-func getIndividualDataFile(stationId string) string {
+func getIndividualDataFileAsString(stationId string) string {
 	resp, err := http.Get("https://www1.ncdc.noaa.gov/pub/data/ghcn/daily/all/" + stationId + ".dly")
 	checkError("http.Get failed", err)
 	defer resp.Body.Close()
@@ -94,7 +119,7 @@ func getIndividualDataFile(stationId string) string {
 
 func getMetadataKeywordsForStationFile(stationId string) []string {
 	metadataKeywords := make([]string, 0)
-	stationData := getIndividualDataFile(stationId)
+	stationData := getIndividualDataFileAsString(stationId)
 
 	for key, value := range variablesGCMDDefinitionsMap {
 		if strings.Contains(stationData, key) {
@@ -109,17 +134,25 @@ func main() {
 	downloadStationsTextFile()
 	stationIds, latMap, lonMap, _ := readInStationsFileInfo()
 
+	stationIds[0] = "AGE00147710"
+
+	years, months := readInIndividualDataFileInfo(stationIds[0])
+
 	data := IsoFields{
 		stationIds[0],
 		time.Now().Local().Format("2006-01-02"),
 		latMap[stationIds[0]],
 		lonMap[stationIds[0]],
 		getMetadataKeywordsForStationFile(stationIds[0]),
+		years[0],
+		years[len(years)-1],
+		months[0],
+		months[len(months)-1],
 	}
 
-	tmpl, err := template.New("test").Parse("stationId: {{.StationId}}, date: {{.Date}}, lat: {{.Lat}}, lon: {{.Lon}}, metadataKeywords: {{.MetadataKeywords}}")
+	tmpl, err := template.ParseFiles("templates/isolite.tmpl")
 	checkError("creating template failed", err)
-	err = tmpl.Execute(os.Stdout, data)
+	err = tmpl.ExecuteTemplate(os.Stdout, "isolite", data)
 	checkError("executing template failed", err)
 
 }

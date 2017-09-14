@@ -3,7 +3,7 @@ package main
 import (
 	//"io/ioutil"
 	"os"
-    "reflect"
+	"reflect"
 	"testing"
 )
 
@@ -27,11 +27,11 @@ func TestReadInStationsFileInfo(t *testing.T) {
 	}
 }
 
-func TestGetIndividualDataFile(t *testing.T) {
-	expected := getIndividualDataFile(testfile)
-    if reflect.TypeOf(expected).Kind() != reflect.String {
-    	t.Error("expected string type, got", reflect.TypeOf(expected))
-    }
+func TestGetIndividualDataFileAsString(t *testing.T) {
+	expected := getIndividualDataFileAsString(testfile)
+	if reflect.TypeOf(expected).Kind() != reflect.String {
+		t.Error("expected string type, got", reflect.TypeOf(expected))
+	}
 }
 
 func TestGetMetadataKeywordsForStationFile(t *testing.T) {
