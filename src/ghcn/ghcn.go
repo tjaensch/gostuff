@@ -17,8 +17,6 @@ type IsoFields struct {
 	Date             string
 	Lat              string
 	Lon              string
-	Year             string
-	Month            string
 	MetadataKeywords []string
 }
 
@@ -67,10 +65,8 @@ func downloadStationsTextFile() {
 	io.Copy(out, resp.Body)
 }
 
-func readInStationsFileInfo() ([]string, map[string]string, map[string]string, map[string]string, []string, []string) {
+func readInStationsFileInfo() ([]string, map[string]string, map[string]string, map[string]string) {
 	stationIds := make([]string, 0)
-	years := make([]string, 0)
-	months := make([]string, 0)
 	latMap := make(map[string]string)
 	lonMap := make(map[string]string)
 	stationLongNameMap := make(map[string]string)
@@ -82,10 +78,8 @@ func readInStationsFileInfo() ([]string, map[string]string, map[string]string, m
 		latMap[line[0:11]] = line[12:20]
 		lonMap[line[0:11]] = line[21:30]
 		stationLongNameMap[line[0:11]] = line[38:71]
-		years = append(years, line[11:15])
-		months = append(months, line[15:17])
 	}
-	return stationIds, latMap, lonMap, stationLongNameMap, years, months
+	return stationIds, latMap, lonMap, stationLongNameMap
 }
 
 func getIndividualDataFile(stationId string) string {
@@ -113,19 +107,17 @@ func getMetadataKeywordsForStationFile(stationId string) []string {
 func main() {
 
 	downloadStationsTextFile()
-	stationIds, latMap, lonMap, _, years, months := readInStationsFileInfo()
+	stationIds, latMap, lonMap, _ := readInStationsFileInfo()
 
 	data := IsoFields{
 		stationIds[0],
 		time.Now().Local().Format("2006-01-02"),
 		latMap[stationIds[0]],
 		lonMap[stationIds[0]],
-		years[0],
-		months[0],
 		getMetadataKeywordsForStationFile(stationIds[0]),
 	}
 
-	tmpl, err := template.New("test").Parse("stationId: {{.StationId}}, date: {{.Date}}, lat: {{.Lat}}, lon: {{.Lon}}, year: {{.Year}}, month: {{.Month}}, metadataKeywords: {{.MetadataKeywords}}")
+	tmpl, err := template.New("test").Parse("stationId: {{.StationId}}, date: {{.Date}}, lat: {{.Lat}}, lon: {{.Lon}}, metadataKeywords: {{.MetadataKeywords}}")
 	checkError("creating template failed", err)
 	err = tmpl.Execute(os.Stdout, data)
 	checkError("executing template failed", err)

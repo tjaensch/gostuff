@@ -18,7 +18,7 @@ func TestDownloadStationsTextFile(t *testing.T) {
 }
 
 func TestReadInStationsFileInfo(t *testing.T) {
-	_, latMap, lonMap, stationLongNameMap, _, _ := readInStationsFileInfo()
+	_, latMap, lonMap, stationLongNameMap := readInStationsFileInfo()
 	if len(latMap) != len(lonMap) {
 		t.Error("len(latMap) doesn't match len(lonMap)")
 	}
