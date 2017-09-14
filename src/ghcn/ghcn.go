@@ -152,7 +152,10 @@ func main() {
 
 	tmpl, err := template.ParseFiles("templates/isolite.tmpl")
 	checkError("creating template failed", err)
-	err = tmpl.ExecuteTemplate(os.Stdout, "isolite", data)
+	f, err := os.Create("ghcn-daily_v3.22." + time.Now().Local().Format("2006-01-02") + "_" + stationIds[0] + ".xml")
+	checkError("create file failed", err)
+	defer f.Close()
+	err = tmpl.ExecuteTemplate(f, "isolite", data)
 	checkError("executing template failed", err)
 
 }
