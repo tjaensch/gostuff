@@ -60,10 +60,10 @@
         </gmd:MD_BrowseGraphic>
       </gmd:graphicOverview>
       <gmd:descriptiveKeywords>
-        <gmd:MD_Keywords>
+        <gmd:MD_Keywords>{{range .MetadataKeywords}}
           <gmd:keyword>
-            <gco:CharacterString>Center time of day</gco:CharacterString>
-          </gmd:keyword>
+            <gco:CharacterString>{{.}}</gco:CharacterString>
+          </gmd:keyword>{{end}}
           <gmd:type>
             <gmd:MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_KeywordTypeCode" codeListValue="theme">theme</gmd:MD_KeywordTypeCode>
           </gmd:type>
