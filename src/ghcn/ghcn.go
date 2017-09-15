@@ -59,6 +59,11 @@ func checkError(reason string, err error) {
 	}
 }
 
+// Create file directories
+func prepDirs() {
+	os.Mkdir("./isolite", 0777)
+}
+
 func downloadStationsTextFile() {
 	resp, err := http.Get("https://www1.ncdc.noaa.gov/pub/data/ghcn/daily/ghcnd-stations.txt")
 	checkError("getting stations file failed", err)
@@ -104,6 +109,7 @@ func readInStationsFileInfo() ([]string, map[string]string, map[string]string, m
 		lonMap[line[0:11]] = line[21:30]
 		stationLongNameMap[line[0:11]] = line[38:71]
 	}
+	os.Remove("ghcnd-stations.txt")
 	return stationIds, latMap, lonMap, stationLongNameMap
 }
 
@@ -132,30 +138,32 @@ func getMetadataKeywordsForStationFile(stationId string) []string {
 func main() {
 
 	downloadStationsTextFile()
+	prepDirs()
 	stationIds, latMap, lonMap, _ := readInStationsFileInfo()
 
-	stationIds[0] = "AGE00147710"
+	for i := range stationIds {
+		years, months := readInIndividualDataFileInfo(stationIds[i])
 
-	years, months := readInIndividualDataFileInfo(stationIds[0])
+		data := IsoFields{
+			stationIds[i],
+			time.Now().Local().Format("2006-01-02"),
+			latMap[stationIds[i]],
+			lonMap[stationIds[i]],
+			getMetadataKeywordsForStationFile(stationIds[i]),
+			years[0],
+			years[len(years)-1],
+			months[0],
+			months[len(months)-1],
+		}
 
-	data := IsoFields{
-		stationIds[0],
-		time.Now().Local().Format("2006-01-02"),
-		latMap[stationIds[0]],
-		lonMap[stationIds[0]],
-		getMetadataKeywordsForStationFile(stationIds[0]),
-		years[0],
-		years[len(years)-1],
-		months[0],
-		months[len(months)-1],
+		tmpl, err := template.ParseFiles("templates/isolite.tmpl")
+		checkError("creating template failed", err)
+		f, err := os.Create("isolite/ghcn-daily_v3.22." + time.Now().Local().Format("2006-01-02") + "_" + stationIds[i] + ".xml")
+		checkError("create file failed", err)
+		defer f.Close()
+		err = tmpl.ExecuteTemplate(f, "isolite", data)
+		checkError("executing template failed", err)
+		fmt.Println(stationIds[i] + " successfully written to isolite directory")
 	}
-
-	tmpl, err := template.ParseFiles("templates/isolite.tmpl")
-	checkError("creating template failed", err)
-	f, err := os.Create("ghcn-daily_v3.22." + time.Now().Local().Format("2006-01-02") + "_" + stationIds[0] + ".xml")
-	checkError("create file failed", err)
-	defer f.Close()
-	err = tmpl.ExecuteTemplate(f, "isolite", data)
-	checkError("executing template failed", err)
 
 }
