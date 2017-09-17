@@ -135,35 +135,37 @@ func getMetadataKeywordsForStationFile(stationId string) []string {
 	return metadataKeywords
 }
 
+func processStationId(stationId string, latMap map[string]string, lonMap map[string]string) {
+	years, months := readInIndividualDataFileInfo(stationId)
+
+	data := IsoFields{
+		stationId,
+		time.Now().Local().Format("2006-01-02"),
+		latMap[stationId],
+		lonMap[stationId],
+		getMetadataKeywordsForStationFile(stationId),
+		years[0],
+		years[len(years)-1],
+		months[0],
+		months[len(months)-1],
+	}
+
+	tmpl, err := template.ParseFiles("templates/isolite.tmpl")
+	checkError("creating template failed", err)
+	f, err := os.Create("isolite/ghcn-daily_v3.22." + time.Now().Local().Format("2006-01-02") + "_" + stationId + ".xml")
+	checkError("create file failed", err)
+	defer f.Close()
+	err = tmpl.ExecuteTemplate(f, "isolite", data)
+	checkError("executing template failed", err)
+	fmt.Println(stationId + " successfully written to isolite directory")
+}
+
 func main() {
 
 	downloadStationsTextFile()
 	prepDirs()
-	stationIds, latMap, lonMap, _ := readInStationsFileInfo()
+	_, latMap, lonMap, _ := readInStationsFileInfo()
 
-	for i := range stationIds {
-		years, months := readInIndividualDataFileInfo(stationIds[i])
-
-		data := IsoFields{
-			stationIds[i],
-			time.Now().Local().Format("2006-01-02"),
-			latMap[stationIds[i]],
-			lonMap[stationIds[i]],
-			getMetadataKeywordsForStationFile(stationIds[i]),
-			years[0],
-			years[len(years)-1],
-			months[0],
-			months[len(months)-1],
-		}
-
-		tmpl, err := template.ParseFiles("templates/isolite.tmpl")
-		checkError("creating template failed", err)
-		f, err := os.Create("isolite/ghcn-daily_v3.22." + time.Now().Local().Format("2006-01-02") + "_" + stationIds[i] + ".xml")
-		checkError("create file failed", err)
-		defer f.Close()
-		err = tmpl.ExecuteTemplate(f, "isolite", data)
-		checkError("executing template failed", err)
-		fmt.Println(stationIds[i] + " successfully written to isolite directory")
-	}
+	processStationId("AGE00147710", latMap, lonMap)
 
 }
