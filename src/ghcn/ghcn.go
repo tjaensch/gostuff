@@ -11,6 +11,8 @@ import (
 	"strings"
 	"text/template"
 	"time"
+
+	"github.com/remeh/sizedwaitgroup"
 )
 
 type IsoFields struct {
@@ -75,27 +77,6 @@ func downloadStationsTextFile() {
 	io.Copy(out, resp.Body)
 }
 
-func readInIndividualDataFileInfo(stationId string) ([]string, []string) {
-	years := make([]string, 0)
-	months := make([]string, 0)
-	resp, err := http.Get("https://www1.ncdc.noaa.gov/pub/data/ghcn/daily/all/" + stationId + ".dly")
-	checkError("getting individual data file failed", err)
-	defer resp.Body.Close()
-	out, err := os.Create(stationId + ".txt")
-	checkError("write file failed", err)
-	defer out.Close()
-	io.Copy(out, resp.Body)
-	f, _ := os.Open(stationId + ".txt")
-	scanner := bufio.NewScanner(f)
-	for scanner.Scan() {
-		line := scanner.Text()
-		years = append(years, line[11:15])
-		months = append(months, line[15:17])
-	}
-	os.Remove(stationId + ".txt")
-	return years, months
-}
-
 func readInStationsFileInfo() ([]string, map[string]string, map[string]string) {
 	stationIds := make([]string, 0)
 	latMap := make(map[string]string, 1)
@@ -135,7 +116,23 @@ func getMetadataKeywordsForStationFile(stationId string) []string {
 }
 
 func processStationId(stationId string, latMap map[string]string, lonMap map[string]string) {
-	years, months := readInIndividualDataFileInfo(stationId)
+	years := make([]string, 1)
+	months := make([]string, 1)
+	resp, err := http.Get("https://www1.ncdc.noaa.gov/pub/data/ghcn/daily/all/" + stationId + ".dly")
+	checkError("getting individual data file failed", err)
+	defer resp.Body.Close()
+	out, err := os.Create(stationId + ".txt")
+	checkError("write file failed", err)
+	defer out.Close()
+	io.Copy(out, resp.Body)
+	f, _ := os.Open(stationId + ".txt")
+	scanner := bufio.NewScanner(f)
+	for scanner.Scan() {
+		line := scanner.Text()
+		years = append(years, line[11:15])
+		months = append(months, line[15:17])
+	}
+	os.Remove(stationId + ".txt")
 
 	data := IsoFields{
 		stationId,
@@ -151,7 +148,7 @@ func processStationId(stationId string, latMap map[string]string, lonMap map[str
 
 	tmpl, err := template.ParseFiles("templates/isolite.tmpl")
 	checkError("creating template failed", err)
-	f, err := os.Create("isolite/ghcn-daily_v3.22." + time.Now().Local().Format("2006-01-02") + "_" + stationId + ".xml")
+	f, err = os.Create("isolite/ghcn-daily_v3.22." + time.Now().Local().Format("2006-01-02") + "_" + stationId + ".xml")
 	checkError("create file failed", err)
 	defer f.Close()
 	err = tmpl.ExecuteTemplate(f, "isolite", data)
@@ -173,9 +170,16 @@ func main() {
 	prepDirs()
 	stationIds, latMap, lonMap := readInStationsFileInfo()
 
+	swg := sizedwaitgroup.New(8)
 	for _, stationId := range stationIds {
-		processStationId(stationId, latMap, lonMap)
+		swg.Add()
+		go func() {
+			defer swg.Done()
+			processStationId(stationId, latMap, lonMap)
+		}()
 	}
+
+	swg.Wait()
 
 	countOutputFiles()
 	t1 := time.Now()
