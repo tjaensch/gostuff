@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -160,12 +161,25 @@ func processStationId(stationId string, latMap map[string]string, lonMap map[str
 	fmt.Println(stationId + " successfully written to isolite directory")
 }
 
+func countOutputFiles() {
+	files, err := ioutil.ReadDir("./isolite")
+	checkError("counting output files failed, program exiting", err)
+	log.Printf("%d files written to isolite directory\n", len(files))
+}
+
 func main() {
+	log.Printf("Working digging up files...")
+	t0 := time.Now()
 
 	downloadStationsTextFile()
 	prepDirs()
-	_, latMap, lonMap, _ := readInStationsFileInfo()
+	stationIds, latMap, lonMap, _ := readInStationsFileInfo()
 
-	processStationId("AGE00147710", latMap, lonMap)
+	for _, stationId := range stationIds {
+		processStationId(stationId, latMap, lonMap)
+	}
 
+	countOutputFiles()
+	t1 := time.Now()
+	log.Printf("The program took %v minutes to run.\n", t1.Sub(t0).Minutes())
 }
