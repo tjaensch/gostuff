@@ -96,11 +96,10 @@ func readInIndividualDataFileInfo(stationId string) ([]string, []string) {
 	return years, months
 }
 
-func readInStationsFileInfo() ([]string, map[string]string, map[string]string, map[string]string) {
+func readInStationsFileInfo() ([]string, map[string]string, map[string]string) {
 	stationIds := make([]string, 0)
-	latMap := make(map[string]string)
-	lonMap := make(map[string]string)
-	stationLongNameMap := make(map[string]string)
+	latMap := make(map[string]string, 1)
+	lonMap := make(map[string]string, 1)
 	f, _ := os.Open("ghcnd-stations.txt")
 	scanner := bufio.NewScanner(f)
 	for scanner.Scan() {
@@ -108,10 +107,9 @@ func readInStationsFileInfo() ([]string, map[string]string, map[string]string, m
 		stationIds = append(stationIds, line[0:11])
 		latMap[line[0:11]] = line[12:20]
 		lonMap[line[0:11]] = line[21:30]
-		stationLongNameMap[line[0:11]] = line[38:71]
 	}
 	os.Remove("ghcnd-stations.txt")
-	return stationIds, latMap, lonMap, stationLongNameMap
+	return stationIds, latMap, lonMap
 }
 
 func getIndividualDataFileAsString(stationId string) string {
@@ -173,7 +171,7 @@ func main() {
 
 	downloadStationsTextFile()
 	prepDirs()
-	stationIds, latMap, lonMap, _ := readInStationsFileInfo()
+	stationIds, latMap, lonMap := readInStationsFileInfo()
 
 	for _, stationId := range stationIds {
 		processStationId(stationId, latMap, lonMap)
