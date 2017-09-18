@@ -174,7 +174,7 @@ func main() {
 	prepDirs()
 	stationIds, latMap, lonMap := readInStationsFileInfo()
 
-	swg := sizedwaitgroup.New(200)
+	swg := sizedwaitgroup.New(150)
 	for _, stationId := range stationIds {
 		swg.Add()
 		go func() {
